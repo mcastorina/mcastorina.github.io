@@ -4,15 +4,19 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+I am an engineer who loves to build things. I graduated from the
+University of Texas at Austin with two Bachelor’s degrees in Computer
+Science and Electrical Engineering. My current interests include
+data science and visualization, network security, lock picking, and
+microcontrollers. As my degrees portray, I love working with both
+the hardware and software side of things.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+Aside from engineering, I enjoy vegan cooking, playing soccer, rock
+climbing, playing with my dogs, and learning. I love puzzles and
+am always up for a challenge.
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+If you like what I do or find my posts useful, please share your
+appreciation with me on my Contact Form or donate to my Ko-fi page!
+I would love to receive your feedback.
 
-
-[jekyll-organization]: https://github.com/jekyll
+<a href="https://ko-fi.com/O5O0LAWC"><img src="/assets/kofi2.png" alt="ko-fi" width="150"/></a>
