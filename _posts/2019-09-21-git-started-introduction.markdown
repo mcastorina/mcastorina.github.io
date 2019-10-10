@@ -4,11 +4,11 @@ title:  "Git Started: Introduction"
 date:   2019-09-21 00:00:00 -0500
 categories: tutorials
 ---
-![git-started](/assets/git-started.png)
+![git-started](/assets/git-started/banner.png)
 
-This tutorial aims to explain git in a way beginners can understand. These
-series of posts, cleverly named *Git Started*, will begin with the major
-concepts, and we will explore how to use git later on.
+This tutorial aims to explain Git in a way beginners can understand. These
+series of posts, cleverly named ***Git Started***, will begin with the major
+concepts, and we will explore how to use `git` later on.
 
 ## What Even is Git?
 Many people will answer this by saying "Git is a version control
@@ -67,7 +67,8 @@ possibly even **request** you to **pull** their changes!
 
 ### Conclusion
 Git is a fantastic tool that gives you complete control over your
-<del>video game</del> project saves, and GitHub is a great place to collaborate and
-publish your projects. Hopefully the above concepts are easy to understand,
-and the next post in this series will go into the usage details of the
-Git CLI.
+<del>video game</del> project saves, and GitHub is a great place
+to collaborate and publish your projects. Hopefully the above
+concepts are easy to understand, and the
+[next post]({% post_url 2019-10-10-git-started-basic-usage %})
+in this series will go into the usage details of the Git CLI.
