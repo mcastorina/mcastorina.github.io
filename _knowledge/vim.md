@@ -13,7 +13,19 @@ category: Things I Like
 - [iamcco/markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim): Render markdown file in realtime with `:MarkdownPreview`
 - [airblade/vim-gitgutter](https://github.com/airblade/vim-gitgutter): Show git diff in the gutter
 
-## Binds
+## Default Binds
+
+| Bind | Description |
+| ---- | ----------- |
+| `gf` | Goto file. Start editing the file under the cursor. |
+| `gF` | Start editing the file under the cursor and jump to the line number following the filename. |
+| `gd` | Goto definition. |
+| `ga` | Print ASCII value of character under the cursor. |
+| `]p` | Paste line matching indent of current line. |
+| `-af` | Action around function (e.g. `daf` is delete around function) |
+| `-as` | Action around sentence. |
+
+## Custom Binds
 ```vimrc
 " Semicolon in normal mode is the same as colon
 nnoremap ; :
@@ -36,4 +48,7 @@ nnoremap <C-K> :tabprev<CR>
 
 " Format
 nnoremap <C-O> !!fmt<CR>
+
+" Goto file will open in new tab
+map gf <C-W>gF
 ```
