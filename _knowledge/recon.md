@@ -16,4 +16,21 @@ nmap -p- $IP
 nmap -sn $IP/24
 ```
 
+## smbmap
+Samba Share Enumerator
+
+```bash
+# enumerate samba $IP with guest credentials
+smbmap -H $IP -u guest
+```
+
+## dig
+DNS lookup utility
+
+```bash
+# lookup zone transfer
+dig axfr @$IP $HOST
+```
+
+
 Reference: [Nmap Man Page](https://nmap.org/book/man.html)
