@@ -8,6 +8,11 @@ category: Computer Languages
 The Bourne Again Shell, bash, is a standard command line interpreter
 that is POSIX compliant.
 
+## Hello World
+```bash
+echo "Hello, World!"
+```
+
 ## Redirection and Substitution
 
 | Symbol | Description | Example |

@@ -10,6 +10,15 @@ GoLang is a relatively new programming language. I consider it a
 provides more protections than C. It also has a garbage collector,
 lightweight concurrency models, and builtin `chan` and `error` types.
 
+## Hello World
+```go
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}
+```
+
 ## Concurrency
 GoLang offers a concurrency model using goroutines, which are
 lightweight threads managed by the Go runtime.

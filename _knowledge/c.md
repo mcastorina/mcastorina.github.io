@@ -12,6 +12,15 @@ understanding of how a computer works will benefit the C programmer.
 Due to its lack of strict checking and manual memory management, it is
 also very easy to make mistakes.
 
+## Hello World
+```c
+#include <stdio.h>
+
+int main(int argc, char **argv) {
+    printf("Hello, World!\n");
+}
+```
+
 ## Pointers
 A pointer is an address of a memory location. The type of the pointer
 defines how large that memory location is, so a `int*` is (in most cases)
