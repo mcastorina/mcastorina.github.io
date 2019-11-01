@@ -70,3 +70,41 @@ int *a   --->   | 0x04 |    0x7ffeeb8daefc
 The order of bytes in memory is the endianness of an architecture.
 Little endian is least significant byte first (like in the last
 example), and big endian is most significant byte first.
+
+## Structs
+Structs are logical groupings of values. By default, structs do not
+have a named type, but you can declare a struct as a type using
+`typedef`.  In memory, the struct members are next to each other
+with padding to ensure each member aligns on a 4 byte boundary
+(usually; it depends on your architecture). This happens because
+the architecture reads in memory 4 bytes at a time, and it cannot
+offset the read instruction.
+
+```c
+// struct definition
+struct my_struct {
+    int x;
+    int y;
+};
+
+// struct type definition
+typedef struct my_sturct {
+    int x;
+    int y;
+} my_sturct;
+
+// struct packing (the following size is 4 bytes)
+struct my_packed_struct {
+    unsigned int x : 20;  // x is 20 bits
+    unsigned int y : 12;  // y is 12 bits
+};
+```
+
+## Libraries
+C has many, many standard libraries. Here are a few useful ones.
+
+| Library | Description |
+| ------- | ----------- |
+| **stdio.h** | Provides standard I/O utilities including `printf` `fopen` `fgets` |
+| **stdint.h** | Provides many types including `uint8_t` `uint16_t` `uint32_t` `uint64_t` `uintptr_t` `int8_t` `int16_t` `int32_t` `int64_t` `intptr_t` |
+| **string.h** | Provides string functions including `memcpy` `strncpy` `strncat` `strlen` `strtok` |
