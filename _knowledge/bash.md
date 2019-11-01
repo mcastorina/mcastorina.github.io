@@ -141,3 +141,10 @@ select var in one two three; do
     echo "You selected: $var"
 done
 ```
+
+## Option Parsing
+There are two ways to parse command line options in bash: `getopt`
+and `getopts`.  `getopts` is a bash built-in while `getopt` is a
+command. I prefer using the enhanced `getopt` as it allows long options,
+however the enhanced version is not on macOS by default. For fun and
+portability, I wrote [my own version in pure bash](https://gist.github.com/mcastorina/682fa0ca0ff9646e283a5ef95e4cb36d).
