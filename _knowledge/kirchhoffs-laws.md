@@ -36,7 +36,7 @@ $$ i_1 - i_2 - i_3 = 0 $$
 
 $$ - i_1R_1 - i_2R_2 + \mathcal{E}_1 = 0 $$
 
-$$ - \mathcal{E}_1 + i_2R_2 - i_3R_3 - \mathcal{E}_2 $$
+$$ - \mathcal{E}_1 + i_2R_2 - i_3R_3 - \mathcal{E}_2 = 0 $$
 
 {% endraw %}
 
