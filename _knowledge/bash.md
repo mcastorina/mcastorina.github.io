@@ -142,6 +142,54 @@ select var in one two three; do
 done
 ```
 
+## Parameter Substitution
+Bash has built-in variable substitution and manipulation.
+
+```bash
+# set default if variable is unset
+${variable=default}
+
+# set default if variable is empty or unset
+${variable:=default}
+${variable:-default}
+${variable-default}
+
+# set value if variable is set
+${variable+value}
+${variable:+value}
+
+# use variable or abort and print err_msg if unset
+${variable?err_msg}
+${variable:?err_msg}
+
+# non-greedily remove the pattern that matches the prefix
+${var#pattern}
+# greedily remove the pattern that matches the prefix
+${var##pattern}
+
+# non-greedily remove the pattern that matches the suffix
+${var%pattern}
+# greedily remove the pattern that matches the suffix
+${var%%pattern}
+
+# substring var[pos:pos+len]
+${var:pos:len}
+
+# search and replace pattern with replacement
+${var/pattern/replacement}
+
+# global search and replace pattern with replacement
+${var//pattern/replacement}
+
+# search and replace the prefix of var
+${var/#pattern/replacement}
+
+# search and replace the suffix of var
+${var/%pattern/replacement}
+```
+
+Reference: [Advanced Bash-Scripting Guide: Manipulating Variables](http://www.tldp.org/LDP/abs/html/parameter-substitution.html)
+
 ## Option Parsing
 There are two ways to parse command line options in bash: `getopt`
 and `getopts`.  `getopts` is a bash built-in while `getopt` is a
