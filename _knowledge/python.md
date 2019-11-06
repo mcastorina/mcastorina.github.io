@@ -63,6 +63,33 @@ class Dog(Animal):
         print('Woof!')
 ```
 
+## Generator
+A generator is a special function that is used to create an iterator.
+In a generator function, `yield` is used instead of `return` to
+provide a sequence of values. This is useful for large datasets to
+work with one item at a time instead of the entire set.
+
+```python
+# very simple generator
+def generator():
+    yield 1
+    yield 2
+    yield 3
+
+for value in generator():
+    print(value)
+```
+
+### Anonymous Generator
+Like anonymous functions, Python allows anonymous function generators.
+
+```python
+generator = (x*x for x in range(5))
+
+for value in generator:
+    print(value)
+```
+
 ## Python Package Index
 [PyPI](https://pypi.org/) is a repository for python packages. It
 allows for anyone to publish or download published packages very
