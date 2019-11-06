@@ -16,6 +16,65 @@ code blocks as well.
 print('Hello, World!')
 ```
 
+## Types
+Python has the expected basic types of any programming language:
+boolean, int, float, string, arrays, and hashes. In addition to
+those, there are also complex numbers, tuples, and sets.
+
+| Type | Description | Example |
+| ---- | ----------- | ------- |
+| `int` | Any integer number regardless of size | `10` |
+| `float` | Floating point numbers | `0.5` |
+| `complex` | Complex number (real + imaginary) | `1+2j` |
+| `str` | String of characters | `'hello'` |
+| `list` | Array | `['hello', 'world']` |
+| `tuple` | Immutable list | `('hello', 'world')` |
+| `dict` | Hash | `{'hello': 'world'}` |
+
+The following functions are used to convert between data types.
+
+| Function | Description |
+| -------- | ----------- |
+| `int(x [,base])` | Converts x to an integer |
+| `float(x)` | Converts x to a floating point number |
+| `complex(real [,imag])` | Creates a complex number |
+| `str(x)` | Converts x to a string representation |
+| `tuple(x)` | Converts x to a tuple |
+| `list(x)` | Converts x to a list |
+| `set(x)` | Converts x to a set |
+| `dict(x)` | Creates a dictionary for a sequence of (key, value) tuples |
+| `frozenset(x)` | Converts x to a frozen set |
+| `chr(x)` | Converts an integer to a character |
+| `unichr(x)` | Converts an integer to a Unicode character |
+| `ord(x)` | Converts a character to its integer value |
+| `hex(x)` | Converts an integer to a hexadecimal string |
+| `oct(x)` | Converts an integer to an octal string |
+
+**Note:** A frozen set is an immutable set object
+
+### Type Checking
+There are two built-ins to check the type of a variable: `type` and `isinstance`.
+`type` checks the exact class matches, while `isinstance` checks if the variable
+is an instance of the class or any subclass.
+
+```python
+var = 'hello'
+
+if isinstance(var, int):
+    print("var is a number")
+elif isinstance(var, str):
+    print("var is a string")
+else:
+    print("var is something else")
+
+if type(var) is int:
+    print("var is a number")
+elif type(var) is str:
+    print("var is a string")
+else:
+    print("var is something else")
+```
+
 ## Classes
 Python has object oriented constructs like classes and inheritance.
 
