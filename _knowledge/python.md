@@ -75,6 +75,42 @@ else:
     print("var is something else")
 ```
 
+### Static Type Checking
+Python 3.6 allows static type checking by adding syntax to function
+definitions and variable declarations. This new syntax does not
+actually prevent the program from running if the assignments do not
+hold, and an external program [mypy](http://mypy-lang.org/) must be
+used to verify.
+
+```python
+from typing import Dict, List, Tuple
+
+# function takes a str and returns an int
+def example(a: str) -> int:
+    return len(a)
+
+# simple types
+num: int = 10
+string: str = 'hello'
+phase: complex = 1+1j
+
+# complex types
+nums: List[int] = [1, 2, 3, 4, 5, 6]
+table: Dict[str, int] = {'Introduction': 1}
+coord: Tuple[float, float] = (1.0, -1.0)
+
+# custom naming
+Coord = Tuple[float, float]
+coords: List[Coord] = [
+    (3.0, 4.0),
+    (0.707107, -0.707107),
+    (30.434420, -97.741539)
+]
+```
+
+To ensure your code does not have any issues, you must run `mypy
+[files ...]`.
+
 ## Classes
 Python has object oriented constructs like classes and inheritance.
 
