@@ -17,13 +17,15 @@ echo "Hello, World!"
 
 | Symbol | Description | Example |
 | ------ | ----------- | ------- |
-| `|`    | Pipe STDOUT from one command to STDIN of another | `echo 'hello world' | grep 'hello'` |
-| `>`    | Redirect STDOUT | `ls > output.txt` |
-| `>>`   | Redirect STDOUT and append to file | `ls / >> output.txt` |
-| `2>`   | Redirect STDERR | `ls 2> output-err.txt` |
-| `2>>`  | Redirect STDERR and append to file | `ls / 2>> output-err.txt` |
-| `<`    | Redirect file as STDIN | `echo 'hello world' > a; grep 'hello' < a` |
-| `<<<`  | Redirect string as STDIN | `grep 'hello' <<< 'hello world'` |
+| `|`   | Pipe STDOUT from one command to STDIN of another | `echo 'hello world' | grep 'hello'` |
+| `>`   | Redirect STDOUT | `ls > output.txt` |
+| `>>`  | Redirect STDOUT and append to file | `ls / >> output.txt` |
+| `2>`  | Redirect STDERR | `ls 2> output-err.txt` |
+| `2>>` | Redirect STDERR and append to file | `ls / 2>> output-err.txt` |
+| `<`   | Redirect file as STDIN | `echo 'hello world' > a; grep 'hello' < a` |
+| `<<EOF` | Read in text until `EOF` is encountered and send as STDIN | `grep 'hello' <<EOF\nhello world\nEOF` |
+| `<<-EOF` | Same as `<<EOF` with leading tabs removed | `grep 'hello' <<EOF\n\thello world\nEOF` |
+| `<<<` | Redirect string as STDIN | `grep 'hello' <<< 'hello world'` |
 | `>()` | Receive STDIN to command as a file | `echo 'hello world' > >(grep 'hello')` |
 | `<()` | Send STDOUT of command as a file | `grep 'hello' <(echo 'hello world')` |
 | `$()` | Use output of command as string | `echo '/tmp' > a; ls $(cat a)` |
