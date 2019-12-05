@@ -22,7 +22,7 @@ and subsequently, they can be expressed as polar coordinates.
 $$
 \begin{align}
 z &= x + jy \\
-  &= r(\cos \phi + j\sin \phi) \\
+  &= r\cdot(\cos \phi + j\sin \phi) \\
   &= r\cdot e^{j\phi}
 \end{align}
 $$
@@ -37,3 +37,11 @@ r &= |x+y| = \sqrt{x^2 + y^2} \\
 $$
 
 {% endraw %}
+
+## Complex Conjugate
+The complex conjugate is the number with an equal real part and an imaginary part opposite in sign.
+
+| Form | Complex Number | Complex Conjugate |
+| ---- | -------------- | ----------------- |
+| **Standard** | $$ a + jb $$ | $$ a - jb $$ |
+| **Polar** | $$ re^{j\phi} $$ | $$ re^{-j\phi} $$ |
