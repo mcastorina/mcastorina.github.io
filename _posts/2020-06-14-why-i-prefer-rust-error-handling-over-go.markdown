@@ -104,8 +104,8 @@ many times libraries will return an `errors.errorsString` type which
 you cannot detect the type of because it is un-exported!
 
 Now, maybe I am doing something wrong here, and if so, please correct me!
-Before I get a flood of emails (haha, like anyone is reading this), let me
-provide the *proper* way to check for file existence and permission errors.
+Before I get a flood of emails, let me provide the *proper* way to
+check for file existence and permission errors.
 
 ```go
 func main() {
