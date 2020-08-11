@@ -198,3 +198,28 @@ and `getopts`.  `getopts` is a bash built-in while `getopt` is a
 command. I prefer using the enhanced `getopt` as it allows long options,
 however the enhanced version is not on macOS by default. For fun and
 portability, I wrote [my own version in pure bash](https://gist.github.com/mcastorina/682fa0ca0ff9646e283a5ef95e4cb36d).
+
+## Common Operations
+**Read every line of a file**
+
+```bash
+while read line; do
+    echo $line
+done < file.txt
+```
+
+**Read input and continue / abort**
+
+```bash
+read -p 'Continue? [y/N]: ' i
+if [[ ${i::1} != 'y' && ${i::1} != 'Y' ]]; then
+    echo 'Aborting'
+    exit 1
+fi
+```
+
+**Generate a random string of alphanumeric characters**
+
+```bash
+cat /dev/random | tr -cd 'a-zA-Z0-9' | head -c 64
+```
