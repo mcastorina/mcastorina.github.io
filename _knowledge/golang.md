@@ -104,6 +104,31 @@ func main() {
 }
 ```
 
+## Loops
+GoLang uses `for` for all types of loops. Labels can be used to
+break or continue when in a nested context.
+
+```go
+// infinite loop
+for { }
+
+// standard for loop
+for i := 0; i < 10; i++ { }
+
+// while loop
+i := 0
+for i < 10 { i++ }
+
+// iterate over slice
+for index, item := range slice { }
+
+// labeled loop
+loop:
+for {
+    break loop
+}
+```
+
 ## Style
 GoLang has a very opinionated style.
 
