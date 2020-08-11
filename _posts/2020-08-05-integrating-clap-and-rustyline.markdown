@@ -7,9 +7,9 @@ categories: programming
 My [latest project](https://github.com/mcastorina/repost) is a
 command line interpreter written in Rust.  As such, I wanted to use
 [rustyline](https://github.com/kkawakam/rustyline) for the line
-reader and [clap](https://github.com/clap-rs/clap) for argument
-parsing. This post explores how I integrated these two libraries
-to leverage a single source of data for both argument parsing and
+reader and [clap](https://github.com/clap-rs/clap) to parse that
+line. This post explores how I integrated these two libraries
+to leverage a single source of data for both command parsing and
 tab completions.
 
 TLDR; [here is a POC gist](https://gist.github.com/mcastorina/7ad4782f75e3707f9f534c05b72e390c)
@@ -22,12 +22,10 @@ remove, or modify the argument parsing code, the tab completion
 will stay in sync.
 
 ## Premise
-The idea stemmed from wanting a single source of data for both
-libraries to use. Once I explored both libraries, I came up with an
-idea: I can define my clap App using YAML and parse the same YAML
-to feed into the tab completion. This approach has a few drawbacks
-(no validator support), however I believe the convenience is worth
-it.
+Once I explored both libraries, I came up with an idea: I can define
+my clap `App` using YAML and parse the same YAML to feed into the tab
+completion. This approach has a few drawbacks (no validator support),
+however I believe the convenience is worth it.
 
 In order for this to be viable, however, the YAML has to be part of
 the compiled binary. We cannot do this parsing at runtime, because we
@@ -96,7 +94,9 @@ the process a bit.
 
 For rustyline, we need to create a helper type that implements
 `Helper`, `Hinter`, `Highlighter`, `Validator`, and `Completer`.
-All we really need to do is implement `Completer` to get the recursive
+Luckily, there are no mandatory functions for each trait, so most
+of those are just `impl <Trait> for <Struct> {}`. We will, however,
+provide an implementation for `Completer`. We will make it get the recursive
 struct we generated, then walk the tree to find the list of possible
 completions. The last step is to filter out the candidates by the last word
 being typed, so `cr<TAB>` will actually complete instead of giving you a list
