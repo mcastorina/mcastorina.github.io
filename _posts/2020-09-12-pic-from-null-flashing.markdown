@@ -42,8 +42,12 @@ is not the case, however, and you must enable the setting in MPLabX.
 
 ![power-settings](/assets/pic/vdd-settings.png)
 
-Once I had that setting enabled, I got it flashing on the bread board,
-and then with the below ZIF configuration.
+Once I had that setting enabled, I got it flashing on the bread board using
+this schematic.
+
+![flash-schematic](/assets/pic/flash-schematic.jpg)
+
+Then I got it flashing with the ZIF:
 
 ![ZIF top](/assets/pic/zif-top.jpg)
 
