@@ -15,3 +15,5 @@ keeping my computer's layout to QWERTY. Typing on my phone is now
 a lot easier and faster, and it has definitely been a great way to
 learn the Dvorak layout. Surprisingly, this has not affected my
 normal keyboard usage at all.
+
+UPDATE: I now exclusively use Dvorak. Who saw that coming?

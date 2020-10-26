@@ -192,6 +192,40 @@ ${var/%pattern/replacement}
 
 Reference: [Advanced Bash-Scripting Guide: Manipulating Variables](http://www.tldp.org/LDP/abs/html/parameter-substitution.html)
 
+## Arguments
+Functions and scripts have access to arguments through `$1`, `$2`, `$3`
+(and so on) environment variables. There are many other useful ways to
+access the arguments.
+
+The following table will refer to this example:
+
+```bash
+./test.sh a b c
+```
+
+| Expression   | Description | Example Output |
+| ------------ | ----------- | -------------- |
+| `$0`         | The name of the shell script                 | `./test.sh` |
+| `$1`         | The first positional argument                | `a` |
+| `$2`         | The second positional argument               | `b` |
+| `$3`         | The third positional argument                | `c` |
+| `$@`         | All positional arguments starting from 1     | `a b c` |
+| `${@: -1}`   | The last positional argument                 | `c` |
+| `${@: -2}`   | The last 2 positional arguments              | `b c` |
+| `${@: 2: 1}` | 1 positional argument starting at position 2 | `b` |
+
+## Special Variables
+
+| Variable | Description |
+| -------- | ----------- |
+| `$#` | Number of positional arguments |
+| `$?` | Exit status of most recently executed foreground pipeline |
+| `$$` | Process ID of the shell |
+| `$!` | Process ID of the job most recently placed in the background |
+| `$_` | Last argument to the previous simple foreground command |
+
+Reference: [GNU Manual: Bash Special Parameters](https://www.gnu.org/software/bash/manual/html_node/Special-Parameters.html)
+
 ## Option Parsing
 There are two ways to parse command line options in bash: `getopt`
 and `getopts`.  `getopts` is a bash built-in while `getopt` is a
