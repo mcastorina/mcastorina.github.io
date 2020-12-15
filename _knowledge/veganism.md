@@ -56,7 +56,8 @@ protein eating plants than meat.
 **Soy has a lot of estrogen**
 
 Soy has *phytoestrogen* -- estrogen-like compounds structured
-similarly to estrogen but is not estrogen.
+similarly to estrogen but is not estrogen. Estrogen and other
+hormones are actually found in cow's milk.
 
 **Vegans are weak**
 
@@ -65,8 +66,26 @@ high achieving vegan athletes in football, martial arts, body
 building, soccer, track and field, marathons, arm wrestling, and
 more.
 
+**Vegans are killing plants too**
+
+Plants do not have a central nervous system and do not feel pain the
+same way as animals do.
+
+Even if they do, it is justifiable because we need to eat plants to
+survive. Meat, on the other hand, is not a necessity. Additionally,
+it takes 16 kilograms of plants to make 1 kilogram of meat, so veganism
+causes the least amount of harm and no unecessary harm.
+
+**Vegans are snobby**
+
+Ethical vegans may object when someone's action creates a victim.
+Think of it this way: would you object if you saw someone about to
+kill a dog? No animal wants to die; paying for meat supports the death
+of animals by definition.
+
 ## Resources
 
 - [Forks Over Knives](https://www.netflix.com/title/70185045)
 - [The Game Changers](https://www.netflix.com/title/81157840)
 - [The Best Speech You Will Ever Hear - Gary Yourofsky](https://youtu.be/U5hGQDLprA8)
+- [You Will Never Look at Your Life in the Same Way Again - Earthling Ed](https://www.youtube.com/watch?v=Z3u7hXpOm58)
