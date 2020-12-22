@@ -42,13 +42,13 @@ endfunction
 function! SendTerm()
     let data = s:get_visual_selection() . "\<CR>"
     " get the buffer window number for bash
-    let bnr = bufwinnr('!bash')
+    let bnr = buffer_number('!bash')
     if bnr > 0
         call term_sendkeys(bnr, data)
     else
         " spawn the bash terminal if not found
         vertical terminal bash
-        call term_sendkeys(bufwinnr('!bash'), data)
+        call term_sendkeys(buffer_number('!bash'), data)
     endif
 endfunction
 ```
