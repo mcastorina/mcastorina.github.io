@@ -41,3 +41,11 @@ Format letters are o(octal), x(hex), d(decimal), u(unsigned decimal),
   and z(hex, zero padded on the left).
 Size letters are b(byte), h(halfword), w(word), g(giant, 8 bytes).
 ```
+
+### Useful Commands
+
+* **Assembly TUI:** `layout asm`
+* **Code TUI:** `layout src`
+* **Register TUI:** `layout reg`
+* **Set assembly flavor to intel:** `set disassembly-flavor intel`
+* **Print mapped address space:** `info proc map`
