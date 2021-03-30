@@ -226,6 +226,62 @@ The following table will refer to this example:
 
 Reference: [GNU Manual: Bash Special Parameters](https://www.gnu.org/software/bash/manual/html_node/Special-Parameters.html)
 
+## Arrays
+There are two types of bash arrays: indexed and associative.
+
+An indexed array is created automatically if any variable is assigned
+to using the syntax `name[subscript]=value`. Alternatively, use `declare`:
+
+```bash
+declare -a var1 # creates an indexed array
+declare -A var2 # creates an associative array
+```
+
+Assigning to an array follows the same pattern for both indexed and
+associative arrays. Negative values in indexed arrays will be the offset
+from the last element.
+
+```bash
+var1=(val1 val2 val3)
+var2=(key1 val1 key2 val2 key3 val3)
+
+# alternative syntax
+var1=([0]=val1 [1]=val2 [2]=val3)
+var2=([key1]=val1 [key2]=val2 [key3]=val3)
+
+# single assignment
+var1[-1]=val4
+var2[key4]=val4
+```
+
+Arrays may be accessed using their respective index (or key).
+`@` or `*` may be used to access all values.
+
+```bash
+# get value
+echo "${var1[2]}"
+echo "${var2[key3]}"
+
+# get all keys
+echo "${!var1[@]}"
+echo "${!var2[@]}"
+```
+
+**Example**
+
+```bash
+# uncomment to make associative
+# declare -A arr
+arr=("hello world" foo bar baz)
+
+for k in "${!arr[@]}"; do
+    v="${arr[$k]}"
+    echo "arr[$k] = $v"
+done
+```
+
+Reference: [GNU Manual: Bash Arrays](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+
 ## Option Parsing
 There are two ways to parse command line options in bash: `getopt`
 and `getopts`.  `getopts` is a bash built-in while `getopt` is a
@@ -255,5 +311,11 @@ fi
 **Generate a random string of alphanumeric characters**
 
 ```bash
-cat /dev/random | tr -cd 'a-zA-Z0-9' | head -c 64
+cat /dev/urandom | tr -cd 'a-zA-Z0-9' | head -c 64
+```
+
+**Use vi keybindings in interactive sessions**
+
+```bash
+set -o vi
 ```
