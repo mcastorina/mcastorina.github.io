@@ -36,9 +36,9 @@ certain movement *yet*. Neither of these situations are bad, in fact,
 most of the gratification of overcoming obstacles comes from the work
 you had to put in to achieve it.
 
-All that being said, of course you do not have to do parkour to think
-this way! It is my experience with the sport that has taught me these
-ways of seeing the world. While I think parkour the sport is great
-and fun exercise, it is not for everyone. But I believe parkour the
-philosophy applies much more broadly, and anyone can apply the lessons
-from this discipline.
+All that being said, of course you do not have to do parkour to think this
+way! My experience with the sport has taught me how to overcome obstacles,
+mental blocks, and achieve large goals.  While I do believe that parkour
+is great and fun exercise, I know it is not for everyone. Parkour, the
+philosophy, however, applies much more broadly, and anyone can learn
+the lessons from this discipline.
