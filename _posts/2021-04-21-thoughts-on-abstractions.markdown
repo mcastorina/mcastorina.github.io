@@ -22,10 +22,15 @@ blue respectively. Now take this device, wrap a container around it,
 and only expose the red button.  The interface is simpler now, but the
 green and blue colors are no longer available.
 
-As developers, it's important to design abstractions that both contains
-complexity and are flexible. Because users will always start with the
-simplest tasks, the best software optimizes for the common case while
-keeping the more complex features available, once needed. Additionally,
-the simpler the building blocks, the easier it is to build on. Your
-software may be used in ways you could never imagine, so being simple
-and extensible allows for more innovation.
+In software, abstractions can be used in libraries, APIs (like the
+backend server used by a web interface), or even function definitions.
+It's so easy to add abstractions that developers often over-complicate
+software by adding leaky or poor abstractions.
+
+When it makes sense to add abstractions, however, it's important to
+design them to both contain complexity and be flexible. Because users
+will always start with the simplest tasks, the best software optimizes
+for the common case while keeping the more complex features available,
+once needed. Additionally, the simpler the building blocks, the easier
+it is to build on. Your software may be used in ways you could never
+imagine, so being simple and extensible allows for more innovation.
