@@ -30,6 +30,14 @@ into an experience where money could not ease my fears. I learned to
 enjoy life for what it is. I let go of those fears, and learned that
 money is not important for living the way I want to live.
 
+In order to see myself clearly, I had to stop everything else I was doing.
+I started to notice how I would react in certain situations, how I felt
+throughout the day, and what my mind would focus on. I could take time
+to explore these thoughts and feelings and empower myself to redefine
+my reality.  I was raised in my parents' and peers' view of the world,
+but now that I have this awareness, I can change how I think that is
+best for me.
+
 Having this level of self awareness is a skill that I could only learn
 by having nothing else on my plate, but it is absolutely a skill that
 I will keep with me for the rest of my life. As humans, we are always
