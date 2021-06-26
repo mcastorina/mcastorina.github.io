@@ -25,17 +25,25 @@ canvas {
     vertical-align: middle;
     height: 120px;
 }
+#not {
+    height: 230px;
+    width: 190px;
+}
 </style>
 <script type="text/javascript">
     window.globals = {
         pChannel: false,
-        nChannel: false
+        nChannel: false,
+        notA: false
     };
     function updatePChannel(checkbox) {
         window.globals.pChannel = checkbox.checked;
     }
     function updateNChannel(checkbox) {
         window.globals.nChannel = checkbox.checked;
+    }
+    function updateNotA(checkbox) {
+        window.globals.notA = checkbox.checked;
     }
 </script>
 <script type="text/paperscript" canvas="pchannel">
@@ -129,13 +137,13 @@ current flows when there is *no* voltage applied to the Gate.
         point: anchor + [15, 10],
         justification: 'center',
         fontSize: 20,
-        content: 'D'
+        content: 'S'
     });
     var source = new PointText({
         point: anchor + [15, 95],
         justification: 'center',
         fontSize: 20,
-        content: 'S'
+        content: 'D'
     });
 
     var symbol = new Symbol(new Path.Circle({
@@ -220,14 +228,169 @@ Great! Now you may be wondering why this is useful. Well, you can actually
 build a lot of interesting things just from these components alone,
 including memory, state machines, and eventually computers.
 
-### Using Transistors
+## Using Transistors
 Let's now build the components that will perform these binary operations
 using the only building block we have: transistors! I highly recommend
 you try this exercise on your own before seeing how I've done it here.
 
-// TODO: interactive animations
+[This online simulator](https://www.falstad.com/circuit/) is a good
+tool you may use.  The components we are using are the N-Channel and
+P-Channel MOSFETs (under Active Components).
 
-### More Bits
+### NOT Gate
+
+<script type="text/paperscript" canvas="not">
+    function inputPath(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        // n-channel input
+        path.moveTo(anchor + [-35, 24]);
+        path.lineBy([0, 48]);
+
+        var gateLength = 24;
+        path.moveTo(anchor + [-35 - gateLength, 48]);
+        path.lineBy([gateLength - 6, 0]);
+
+        var dot = new Path.Circle(anchor + [ -38, 48 ], 3);
+        dot.strokeColor = 'black';
+        dot.strokeWidth = 2;
+        path.addChild(dot);
+
+        // p-channel input
+        path.moveTo(anchor + [-35, 120]);
+        path.lineBy([0, 48]);
+
+        path.moveTo(anchor + [-35 - gateLength, 144]);
+        path.lineBy([gateLength, 0]);
+
+        // connecting line
+        path.moveTo(anchor + [-35 - gateLength, 48]);
+        path.lineBy([0, 96]);
+
+        path.moveTo(anchor + [-35 - 2*gateLength, 96]);
+        path.lineBy([gateLength, 0]);
+
+        return path;
+    }
+    function vddPath(anchor) {
+        var path = new Path();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        var outLength = 36;
+        path.moveTo(anchor);
+        path.lineBy([ 0, 24 ]);
+        path.lineBy([ -30, 0 ]);
+        path.lineBy([ 0, 48 ]);
+        path.lineBy([ 30, 0 ]);
+        path.lineBy([ 0, 24 ]);
+        path.lineBy([ outLength, 0 ]);
+
+        var text = new PointText({
+            point: anchor + [outLength + 25, 100],
+            justification: 'center',
+            fontSize: 20,
+            content: 'Out'
+        });
+
+        return path;
+    }
+    function gndPath(anchor) {
+        var path = new Path();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        var outLength = 36;
+        path.moveTo(anchor + [outLength, 96]);
+        path.lineBy([ -outLength, 0 ]);
+        path.lineBy([ 0, 24 ]);
+        path.lineBy([ -30, 0 ]);
+        path.lineBy([ 0, 48 ]);
+        path.lineBy([ 30, 0 ]);
+        path.lineBy([ 0, 24 ]);
+
+        return path;
+    }
+    function vddSymbol(anchor) {
+        var connectorLength = 0;
+
+        var triangle = new Path.RegularPolygon(anchor + [0, -connectorLength - 4], 3, 10);
+        triangle.strokeColor = 'black';
+        triangle.strokeWidth = 2;
+
+        var connector = new Path();
+        connector.strokeColor = 'black';
+        connector.strokeWidth = 2;
+        connector.moveTo(anchor + [0, -connectorLength]);
+        connector.lineBy([0, connectorLength]);
+
+        var text = new PointText({
+            point: anchor + [35, 0],
+            justification: 'center',
+            fontSize: 20,
+            content: 'Vdd'
+        });
+    }
+    function gndSymbol(anchor) {
+        var connectorLength = 0;
+
+        var connector = new CompoundPath();
+        connector.strokeColor = 'black';
+        connector.strokeWidth = 2;
+        anchor += [0, 192];
+
+        connector.moveTo(anchor + [-12, connectorLength]);
+        connector.lineBy([24, 0]);
+        connector.moveTo(anchor + [-8, connectorLength + 5]);
+        connector.lineBy([16, 0]);
+        connector.moveTo(anchor + [-4, connectorLength + 10]);
+        connector.lineBy([8, 0]);
+        connector.moveTo(anchor);
+        connector.lineBy([0, connectorLength]);
+
+        var text = new PointText({
+            point: anchor + [35, 0],
+            justification: 'center',
+            fontSize: 20,
+            content: 'Gnd'
+        });
+    }
+
+    var anchor = new Point(100, 20);
+    var vPath = vddPath(anchor);
+    var gPath = gndPath(anchor);
+    var inPath = inputPath(anchor);
+    vddSymbol(anchor);
+    gndSymbol(anchor);
+
+    var symbol = new Symbol(new Path.Circle({
+        center: [0, 0],
+        radius: 2,
+        fillColor: 'red'
+    }));
+    var dots = new Array();
+    for (var i = 0; i < 15; i++) {
+        dots.push(symbol.place(anchor));
+    }
+
+    function onFrame(event) {
+        inPath.strokeColor = window.globals.notA ? 'red' : 'black';
+        var p = window.globals.notA ? gPath : vPath;
+        for (var i = 0; i < dots.length; i++) {
+            var dotOffset = 100 * i / dots.length;
+            var offset = (event.count * 2 + dotOffset) % 101;
+            dots[i].position = p.getPointAt(p.length * offset / 100);
+        }
+    }
+</script>
+<p class="gate"><input type="checkbox" onclick="updateNotA(this);"><label>A</label></p>
+<canvas id="not" resize></canvas>
+
+// TODO: all animations
+
+## More Bits
 Just as a note, these components operate on at most 2 bits, where a bit
 is a `1` or a `0`.  As we build components up, we will want to work on
 larger groupings of bits, and it should be known that these operations
