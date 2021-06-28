@@ -46,7 +46,7 @@ canvas {
         window.globals.notA = checkbox.checked;
     }
 </script>
-<script type="text/paperscript" canvas="pchannel">
+<script type="text/paperscript" canvas="nchannel">
     var path = new CompoundPath();
     path.strokeColor = 'black';
     path.strokeWidth = 2;
@@ -90,7 +90,7 @@ canvas {
     }
 
     function onFrame(event) {
-        var runOffset = window.globals.pChannel ? (event.count * 2) : 0;
+        var runOffset = window.globals.nChannel ? (event.count * 2) : 0;
         var p = path.children[0];
         for (var i = 0; i < dots.length; i++) {
             var dotOffset = 100 * i / dots.length;
@@ -100,16 +100,16 @@ canvas {
     }
 </script>
 
-<p class="gate"><input type="checkbox" onclick="updatePChannel(this);"><label>G</label></p>
-<canvas id="pchannel" resize></canvas>
+<p class="gate"><input type="checkbox" onclick="updateNChannel(this);"><label>G</label></p>
+<canvas id="nchannel" resize></canvas>
 
 It is from this simple building block we can begin to form more complex
 logic. There are two common variants of transistors: P-Channel and
-N-Channel. The above is a P-Channel transistor, which means the current flows
-when voltage is applied to the Gate (G). An N-Channel transistor means the
+N-Channel. The above is an N-Channel transistor, which means the current flows
+when voltage is applied to the Gate (G). A P-Channel transistor means the
 current flows when there is *no* voltage applied to the Gate.
 
-<script type="text/paperscript" canvas="nchannel">
+<script type="text/paperscript" canvas="pchannel">
     var path = new CompoundPath();
     path.strokeColor = 'black';
     path.strokeWidth = 2;
@@ -157,7 +157,7 @@ current flows when there is *no* voltage applied to the Gate.
     }
 
     function onFrame(event) {
-        var runOffset = window.globals.nChannel ? 0 : (event.count * 2);
+        var runOffset = window.globals.pChannel ? 0 : (event.count * 2);
         var p = path.children[0];
         for (var i = 0; i < dots.length; i++) {
             var dotOffset = 100 * i / dots.length;
@@ -167,8 +167,8 @@ current flows when there is *no* voltage applied to the Gate.
     }
 </script>
 
-<p class="gate"><input type="checkbox" onclick="updateNChannel(this);"><label>G</label></p>
-<canvas id="nchannel" resize></canvas>
+<p class="gate"><input type="checkbox" onclick="updatePChannel(this);"><label>G</label></p>
+<canvas id="pchannel" resize></canvas>
 
 The dot on the input gate indicates negation and is a common symbol in
 digital logic.
@@ -236,6 +236,26 @@ you try this exercise on your own before seeing how I've done it here.
 [This online simulator](https://www.falstad.com/circuit/) is a good
 tool you may use.  The components we are using are the N-Channel and
 P-Channel MOSFETs (under Active Components).
+
+**Electronics Introduction**
+
+For those new to electronics, here are a few notes to help you build
+the below circuits.
+
+ * Voltage on a wire does not change
+ * Circuits generally have a power and ground component
+     * Do not connect power to ground - your circuit will melt as current
+       approaches infinity
+
+**Transistor Characteristics**
+
+Because N-Channel and P-Channel transistors are electrical components
+that abide by the laws of physics, there are some restrictions on
+how they can be used in circuits. They are not *completely* binary
+in allowing current to flow or not, and it actually depends on the
+"Gate to Source" voltage. The important thing to note is that N-Channel
+transistors should source low voltages, and P-Channel transistors should
+source high voltages.
 
 ### NOT Gate
 
