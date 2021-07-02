@@ -29,21 +29,19 @@ canvas {
     height: 230px;
     width: 190px;
 }
+#and {
+    height: 380px;
+    width: 420px;
+}
+#or {
+    height: 380px;
+    width: 420px;
+}
 </style>
 <script type="text/javascript">
-    window.globals = {
-        pChannel: false,
-        nChannel: false,
-        notA: false
-    };
-    function updatePChannel(checkbox) {
-        window.globals.pChannel = checkbox.checked;
-    }
-    function updateNChannel(checkbox) {
-        window.globals.nChannel = checkbox.checked;
-    }
-    function updateNotA(checkbox) {
-        window.globals.notA = checkbox.checked;
+    window.globals = {};
+    function updateState(checkbox, global) {
+        window.globals[global] = checkbox.checked;
     }
 </script>
 <script type="text/paperscript" canvas="nchannel">
@@ -100,7 +98,7 @@ canvas {
     }
 </script>
 
-<p class="gate"><input type="checkbox" onclick="updateNChannel(this);"><label>G</label></p>
+<p class="gate"><input type="checkbox" onclick="updateState(this, 'nChannel');"><label>G</label></p>
 <canvas id="nchannel" resize></canvas>
 
 It is from this simple building block we can begin to form more complex
@@ -167,11 +165,12 @@ current flows when there is *no* voltage applied to the Gate.
     }
 </script>
 
-<p class="gate"><input type="checkbox" onclick="updatePChannel(this);"><label>G</label></p>
+<p class="gate"><input type="checkbox" onclick="updateState(this, 'pChannel');"><label>G</label></p>
 <canvas id="pchannel" resize></canvas>
 
 The dot on the input gate indicates negation and is a common symbol in
-digital logic.
+digital logic. It helps me to remember that the `P` in "P-Channel" has
+a hole in the letter like the dot on the schematic.
 
 ## Binary Logic
 Before we start using these building blocks, let's cover what binary
@@ -257,6 +256,10 @@ in allowing current to flow or not, and it actually depends on the
 transistors should source low voltages, and P-Channel transistors should
 source high voltages.
 
+This limitation results in inverse operators being easier to build than
+their logical counterparts. To build an AND gate in practice, it is a
+NAND gate (NOT-AND) followed by a NOT gate.
+
 ### NOT Gate
 
 <script type="text/paperscript" canvas="not">
@@ -265,7 +268,7 @@ source high voltages.
         path.strokeColor = 'black';
         path.strokeWidth = 2;
 
-        // n-channel input
+        // p-channel input
         path.moveTo(anchor + [-35, 24]);
         path.lineBy([0, 48]);
 
@@ -278,7 +281,7 @@ source high voltages.
         dot.strokeWidth = 2;
         path.addChild(dot);
 
-        // p-channel input
+        // n-channel input
         path.moveTo(anchor + [-35, 120]);
         path.lineBy([0, 48]);
 
@@ -405,10 +408,571 @@ source high voltages.
         }
     }
 </script>
-<p class="gate"><input type="checkbox" onclick="updateNotA(this);"><label>A</label></p>
+<p class="gate"><input type="checkbox" onclick="updateState(this, 'notA');"><label>A</label></p>
 <canvas id="not" resize></canvas>
 
-// TODO: all animations
+### AND Gate
+
+<script type="text/paperscript" canvas="and">
+    var scale = 32;
+    function gatePath(anchor) {
+        var path = new Path();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+        path.moveTo((anchor + [0, 0.25])*scale);
+        path.lineBy(new Point(0, 0.5)*scale);
+        return path;
+    }
+    function pChannelPath(anchor, direction) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+        path.moveTo(anchor*scale);
+        if (direction == 'LR') {
+            path.lineBy(new Point(0.8, 0)*scale);
+            path.moveBy(new Point(0.2, -0.5)*scale);
+            path.lineBy(new Point(0, 1)*scale);
+            var dot = new Path.Circle((anchor + [0.9, 0])*scale, 0.1*scale);
+            path.addChild(dot);
+            return path;
+        }
+        path.lineBy(new Point(-0.8, 0)*scale);
+        path.moveBy(new Point(-0.2, -0.5)*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        var dot = new Path.Circle((anchor + [-0.9, 0])*scale, 0.1*scale);
+        path.addChild(dot);
+        return path;
+    }
+    function nChannelPath(anchor, direction) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+        path.moveTo(anchor*scale);
+        if (direction == 'LR') {
+            path.lineBy(new Point(1, 0)*scale);
+        } else {
+            path.lineBy(new Point(-1, 0)*scale);
+        }
+        path.moveBy(new Point(0, -0.5)*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        return path;
+    }
+    function nandAPPath(anchor) {
+        return gatePath(anchor + [1.2, 3]);
+    }
+    function nandBPPath(anchor) {
+        return gatePath(anchor + [4.8, 3]);
+    }
+    function nandANPath(anchor) {
+        return gatePath(anchor + [2.2, 7]);
+    }
+    function nandBNPath(anchor) {
+        return gatePath(anchor + [2.2, 9]);
+    }
+    function nandOutPath(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        path.moveTo((anchor + [1.2, 3.75])*scale);
+        path.lineTo((anchor + [1.2, 4])*scale);
+        path.lineTo((anchor + [2, 4])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.lineBy(new Point(2, 0)*scale);
+        path.lineBy(new Point(0, -1)*scale);
+        path.lineTo((anchor + [4.8, 4])*scale);
+        path.lineTo((anchor + [4.8, 3.75])*scale);
+
+        path.moveTo((anchor + [2.2, 7.25])*scale);
+        path.lineTo((anchor + [2.2, 7])*scale);
+        path.lineTo((anchor + [3, 7])*scale);
+        path.lineBy(new Point(0, -2)*scale);
+
+        path.moveTo((anchor + [3, 6])*scale);
+        path.lineBy(new Point(4, 0)*scale);
+
+        path.moveTo((anchor + [8, 4])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.moveTo((anchor + [8, 7])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+
+        path.moveTo((anchor + [7.8, 4.5])*scale);
+        path.lineBy(new Point(-0.8, 0)*scale);
+        path.lineBy(new Point(0, 3)*scale);
+        path.lineBy(new Point(1, 0)*scale);
+
+        var dot = new Path.Circle((anchor + [7.9, 4.5])*scale, 0.1*scale);
+        path.addChild(dot);
+
+        return path;
+    }
+    function nandGndPath(anchor) {
+        var path = new Path();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        path.moveTo((anchor + [2.2, 7.75])*scale);
+        path.lineTo((anchor + [2.2, 8])*scale);
+        path.lineTo((anchor + [3, 8])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.lineTo((anchor + [2.2, 9])*scale);
+        path.lineTo((anchor + [2.2, 9.25])*scale);
+
+        return path;
+    }
+    function notPPath(anchor) {
+        return gatePath(anchor + [8.2, 4]);
+    }
+    function notNPath(anchor) {
+        return gatePath(anchor + [8.2, 7]);
+    }
+    function notOutPath(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        path.moveTo((anchor + [8.2, 4.75])*scale);
+        path.lineTo((anchor + [8.2, 5])*scale);
+        path.lineTo((anchor + [9, 5])*scale);
+        path.lineBy(new Point(0, 2)*scale);
+        path.lineTo((anchor + [8.2, 7])*scale);
+        path.lineTo((anchor + [8.2, 7.25])*scale);
+
+        path.moveTo((anchor + [9, 6])*scale);
+        path.lineBy(new Point(1, 0)*scale);
+
+        return path;
+    }
+    function inputAPath(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        path.addChild(pChannelPath(anchor + [0, 3.5], 'LR'));
+        path.addChild(nChannelPath(anchor + [1, 7.5], 'LR'));
+        return path;
+    }
+    function inputBPath(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        path.addChild(pChannelPath(anchor + [6, 3.5], 'RL'));
+        path.addChild(nChannelPath(anchor + [1, 9.5], 'LR'));
+        return path;
+    }
+
+    function drawVdd(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'red';
+        path.strokeWidth = 2;
+
+        // NAND Vdd
+        var triangle1 = new Path.RegularPolygon((anchor + [3, 1])*scale, 3, scale/2.5);
+        path.addChild(triangle1);
+
+        path.moveTo((anchor + [3, 1 + 1/5])*scale);
+        path.lineBy(new Point(0, 1 - 1/5)*scale);
+
+        path.moveTo((anchor + [1.2, 3.25])*scale);
+        path.lineTo((anchor + [1.2, 3])*scale);
+        path.lineTo((anchor + [2, 3])*scale);
+        path.lineBy(new Point(0, -1)*scale);
+        path.lineBy(new Point(2, 0)*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.lineTo((anchor + [4.8, 3])*scale);
+        path.lineTo((anchor + [4.8, 3.25])*scale);
+
+        // NOT Vdd
+        var triangle2 = new Path.RegularPolygon((anchor + [9, 3])*scale, 3, scale/2.5);
+        path.addChild(triangle2);
+
+        path.moveTo((anchor + [9, 3 + 1/5])*scale);
+        path.lineTo((anchor + [9, 4])*scale);
+        path.lineTo((anchor + [8.2, 4])*scale);
+        path.lineTo((anchor + [8.2, 4.25])*scale);
+    }
+    function drawGnd(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+        // NAND Gnd
+        path.moveTo((anchor + [2.2, 9.75])*scale);
+        path.lineTo((anchor + [2.2, 10])*scale);
+        path.lineTo((anchor + [3, 10])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.moveBy(new Point(-0.4, 0)*scale);
+        path.lineBy(new Point(0.8, 0)*scale);
+        path.moveBy(new Point(-0.1, 0.15)*scale);
+        path.lineBy(new Point(-0.6, 0)*scale);
+        path.moveBy(new Point(0.1, 0.15)*scale);
+        path.lineBy(new Point(0.4, 0)*scale);
+
+        // NOT Gnd
+        path.moveTo((anchor + [8.2, 7.75])*scale);
+        path.lineTo((anchor + [8.2, 8])*scale);
+        path.lineTo((anchor + [9, 8])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.moveBy(new Point(-0.4, 0)*scale);
+        path.lineBy(new Point(0.8, 0)*scale);
+        path.moveBy(new Point(-0.1, 0.15)*scale);
+        path.lineBy(new Point(-0.6, 0)*scale);
+        path.moveBy(new Point(0.1, 0.15)*scale);
+        path.lineBy(new Point(0.4, 0)*scale);
+    }
+    function drawLabels(anchor) {
+        new PointText({
+            point: (anchor + [-0.5, 3.75])*scale,
+            justification: 'center',
+            fontSize: 20,
+            content: 'A'
+        });
+        new PointText({
+            point: (anchor + [6.5, 3.75])*scale,
+            justification: 'center',
+            fontSize: 20,
+            content: 'B'
+        });
+        new PointText({
+            point: (anchor + [0.5, 7.75])*scale,
+            justification: 'center',
+            fontSize: 20,
+            content: 'A'
+        });
+        new PointText({
+            point: (anchor + [0.5, 9.75])*scale,
+            justification: 'center',
+            fontSize: 20,
+            content: 'B'
+        });
+        new PointText({
+            point: (anchor + [11, 6.25])*scale,
+            justification: 'center',
+            fontSize: 20,
+            content: 'Out'
+        });
+    }
+
+    var anchor  = new Point(1, 0);
+    var nandAP  = nandAPPath(anchor);
+    var nandBP  = nandBPPath(anchor);
+    var nandAN  = nandANPath(anchor);
+    var nandBN  = nandBNPath(anchor);
+    var nandOut = nandOutPath(anchor);
+    var nandGnd = nandGndPath(anchor);
+    var notP    = notPPath(anchor);
+    var notN    = notNPath(anchor);
+    var notOut  = notOutPath(anchor);
+    var inputA  = inputAPath(anchor);
+    var inputB  = inputBPath(anchor);
+    drawVdd(anchor);
+    drawGnd(anchor);
+    drawLabels(anchor);
+
+    function onFrame(event) {
+        var a = window.globals.andA;
+        var b = window.globals.andB;
+        nandAP.strokeColor = a ? 'white' : 'red';
+        nandBP.strokeColor = b ? 'white' : 'red';
+        nandAN.strokeColor = a ? (b ? 'black' : 'red') : 'white';
+        nandBN.strokeColor = b ? 'black' : 'white';
+        nandOut.strokeColor = !(a && b) ? 'red' : 'black';
+        nandGnd.strokeColor = b ? 'black' : (a ? 'red' : 'cyan');
+        notP.strokeColor = (a && b) ? 'red' : 'white';
+        notN.strokeColor = !(a && b) ? 'black' : 'white';
+        notOut.strokeColor = a && b ? 'red' : 'black';
+        inputA.strokeColor = a ? 'red' : 'black';
+        inputB.strokeColor = b ? 'red' : 'black';
+    }
+</script>
+
+<p class="gate"><input type="checkbox" onclick="updateState(this, 'andA');"><label>A</label></p>
+<p class="gate"><input type="checkbox" onclick="updateState(this, 'andB');"><label>B</label></p>
+<br>
+<canvas id="and" resize></canvas>
+
+### OR Gate
+
+<script type="text/paperscript" canvas="or">
+    var scale = 32;
+    function gatePath(anchor) {
+        var path = new Path();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+        path.moveTo((anchor + [0, 0.25])*scale);
+        path.lineBy(new Point(0, 0.5)*scale);
+        return path;
+    }
+    function pChannelPath(anchor, direction) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+        path.moveTo(anchor*scale);
+        if (direction == 'LR') {
+            path.lineBy(new Point(0.8, 0)*scale);
+            path.moveBy(new Point(0.2, -0.5)*scale);
+            path.lineBy(new Point(0, 1)*scale);
+            var dot = new Path.Circle((anchor + [0.9, 0])*scale, 0.1*scale);
+            path.addChild(dot);
+            return path;
+        }
+        path.lineBy(new Point(-0.8, 0)*scale);
+        path.moveBy(new Point(-0.2, -0.5)*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        var dot = new Path.Circle((anchor + [-0.9, 0])*scale, 0.1*scale);
+        path.addChild(dot);
+        return path;
+    }
+    function nChannelPath(anchor, direction) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+        path.moveTo(anchor*scale);
+        if (direction == 'LR') {
+            path.lineBy(new Point(1, 0)*scale);
+        } else {
+            path.lineBy(new Point(-1, 0)*scale);
+        }
+        path.moveBy(new Point(0, -0.5)*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        return path;
+    }
+    function norAPPath(anchor) {
+        return gatePath(anchor + [2.2, 2]);
+    }
+    function norBPPath(anchor) {
+        return gatePath(anchor + [2.2, 4]);
+    }
+    function norANPath(anchor) {
+        return gatePath(anchor + [1.2, 8]);
+    }
+    function norBNPath(anchor) {
+        return gatePath(anchor + [4.8, 8]);
+    }
+    function norOutPath(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        path.moveTo((anchor + [2.2, 4.75])*scale);
+        path.lineTo((anchor + [2.2, 5])*scale);
+        path.lineTo((anchor + [3, 5])*scale);
+        path.lineBy(new Point(0, 2)*scale);
+
+        path.moveTo((anchor + [1.2, 8.25])*scale);
+        path.lineTo((anchor + [1.2, 8])*scale);
+        path.lineTo((anchor + [2, 8])*scale);
+        path.lineBy(new Point(0, -1)*scale);
+        path.lineBy(new Point(2, 0)*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.lineTo((anchor + [4.8, 8])*scale);
+        path.lineTo((anchor + [4.8, 8.25])*scale);
+
+        path.moveTo((anchor + [3, 6])*scale);
+        path.lineBy(new Point(4, 0)*scale);
+
+        path.moveTo((anchor + [8, 4])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.moveTo((anchor + [8, 7])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+
+        path.moveTo((anchor + [7.8, 4.5])*scale);
+        path.lineBy(new Point(-0.8, 0)*scale);
+        path.lineBy(new Point(0, 3)*scale);
+        path.lineBy(new Point(1, 0)*scale);
+
+        var dot = new Path.Circle((anchor + [7.9, 4.5])*scale, 0.1*scale);
+        path.addChild(dot);
+
+        return path;
+    }
+    function norVddPath(anchor) {
+        var path = new Path();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        path.moveTo((anchor + [2.2, 2.75])*scale);
+        path.lineTo((anchor + [2.2, 3])*scale);
+        path.lineTo((anchor + [3, 3])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.lineTo((anchor + [2.2, 4])*scale);
+        path.lineTo((anchor + [2.2, 4.25])*scale);
+
+        return path;
+    }
+    function notPPath(anchor) {
+        return gatePath(anchor + [8.2, 4]);
+    }
+    function notNPath(anchor) {
+        return gatePath(anchor + [8.2, 7]);
+    }
+    function notOutPath(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        path.moveTo((anchor + [8.2, 4.75])*scale);
+        path.lineTo((anchor + [8.2, 5])*scale);
+        path.lineTo((anchor + [9, 5])*scale);
+        path.lineBy(new Point(0, 2)*scale);
+        path.lineTo((anchor + [8.2, 7])*scale);
+        path.lineTo((anchor + [8.2, 7.25])*scale);
+
+        path.moveTo((anchor + [9, 6])*scale);
+        path.lineBy(new Point(1, 0)*scale);
+
+        return path;
+    }
+    function inputAPath(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        path.addChild(pChannelPath(anchor + [1, 2.5], 'LR'));
+        path.addChild(nChannelPath(anchor + [0, 8.5], 'LR'));
+        return path;
+    }
+    function inputBPath(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        path.addChild(pChannelPath(anchor + [1, 4.5], 'LR'));
+        path.addChild(nChannelPath(anchor + [6, 8.5], 'RL'));
+        return path;
+    }
+
+    function drawVdd(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'red';
+        path.strokeWidth = 2;
+
+        // NOR Vdd
+        var triangle1 = new Path.RegularPolygon((anchor + [3, 1])*scale, 3, scale/2.5);
+        path.addChild(triangle1);
+
+        path.moveTo((anchor + [3, 1 + 1/5])*scale);
+        path.lineBy(new Point(0, 1 - 1/5)*scale);
+
+        path.moveTo((anchor + [2.2, 2.25])*scale);
+        path.lineTo((anchor + [2.2, 2])*scale);
+        path.lineTo((anchor + [3, 2])*scale);
+
+        // NOT Vdd
+        var triangle2 = new Path.RegularPolygon((anchor + [9, 3])*scale, 3, scale/2.5);
+        path.addChild(triangle2);
+
+        path.moveTo((anchor + [9, 3 + 1/5])*scale);
+        path.lineTo((anchor + [9, 4])*scale);
+        path.lineTo((anchor + [8.2, 4])*scale);
+        path.lineTo((anchor + [8.2, 4.25])*scale);
+    }
+    function drawGnd(anchor) {
+        var path = new CompoundPath();
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+
+        // NOR Gnd
+        path.moveTo((anchor + [1.2, 8.75])*scale);
+        path.lineTo((anchor + [1.2, 9])*scale);
+        path.lineTo((anchor + [2, 9])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.lineBy(new Point(2, 0)*scale);
+        path.lineBy(new Point(0, -1)*scale);
+        path.lineTo((anchor + [4.8, 9])*scale);
+        path.lineTo((anchor + [4.8, 8.75])*scale);
+
+        path.moveTo((anchor + [3, 10])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.moveBy(new Point(-0.4, 0)*scale);
+        path.lineBy(new Point(0.8, 0)*scale);
+        path.moveBy(new Point(-0.1, 0.15)*scale);
+        path.lineBy(new Point(-0.6, 0)*scale);
+        path.moveBy(new Point(0.1, 0.15)*scale);
+        path.lineBy(new Point(0.4, 0)*scale);
+
+        // NOT Gnd
+        path.moveTo((anchor + [8.2, 7.75])*scale);
+        path.lineTo((anchor + [8.2, 8])*scale);
+        path.lineTo((anchor + [9, 8])*scale);
+        path.lineBy(new Point(0, 1)*scale);
+        path.moveBy(new Point(-0.4, 0)*scale);
+        path.lineBy(new Point(0.8, 0)*scale);
+        path.moveBy(new Point(-0.1, 0.15)*scale);
+        path.lineBy(new Point(-0.6, 0)*scale);
+        path.moveBy(new Point(0.1, 0.15)*scale);
+        path.lineBy(new Point(0.4, 0)*scale);
+    }
+    function drawLabels(anchor) {
+        new PointText({
+            point: (anchor + [0.5, 2.75])*scale,
+            justification: 'center',
+            fontSize: 20,
+            content: 'A'
+        });
+        new PointText({
+            point: (anchor + [0.5, 4.75])*scale,
+            justification: 'center',
+            fontSize: 20,
+            content: 'B'
+        });
+        new PointText({
+            point: (anchor + [-0.5, 8.75])*scale,
+            justification: 'center',
+            fontSize: 20,
+            content: 'A'
+        });
+        new PointText({
+            point: (anchor + [6.5, 8.75])*scale,
+            justification: 'center',
+            fontSize: 20,
+            content: 'B'
+        });
+        new PointText({
+            point: (anchor + [11, 6.25])*scale,
+            justification: 'center',
+            fontSize: 20,
+            content: 'Out'
+        });
+    }
+
+    var anchor  = new Point(1, 0);
+    var norAP   = norAPPath(anchor);
+    var norBP   = norBPPath(anchor);
+    var norAN   = norANPath(anchor);
+    var norBN   = norBNPath(anchor);
+    var norOut  = norOutPath(anchor);
+    var norVdd  = norVddPath(anchor);
+    var notP    = notPPath(anchor);
+    var notN    = notNPath(anchor);
+    var notOut  = notOutPath(anchor);
+    var inputA  = inputAPath(anchor);
+    var inputB  = inputBPath(anchor);
+    drawVdd(anchor);
+    drawGnd(anchor);
+    drawLabels(anchor);
+
+    function onFrame(event) {
+        var a = window.globals.orA;
+        var b = window.globals.orB;
+        norAP.strokeColor = a ? 'white' : 'red';
+        norBP.strokeColor = b ? 'white' : (a ? 'black' : 'red' );
+        norAN.strokeColor = a ? 'black' : 'white';
+        norBN.strokeColor = b ? 'black' : 'white';
+        norOut.strokeColor = !(a || b) ? 'red' : 'black';
+        norVdd.strokeColor = a ? (b ? 'cyan' : 'black') : 'red';
+        notP.strokeColor = (a || b) ? 'red' : 'white';
+        notN.strokeColor = !(a || b) ? 'black' : 'white';
+        notOut.strokeColor = (a || b) ? 'red' : 'black';
+        inputA.strokeColor = a ? 'red' : 'black';
+        inputB.strokeColor = b ? 'red' : 'black';
+    }
+</script>
+
+<p class="gate"><input type="checkbox" onclick="updateState(this, 'orA');"><label>A</label></p>
+<p class="gate"><input type="checkbox" onclick="updateState(this, 'orB');"><label>B</label></p>
+<br>
+<canvas id="or" resize></canvas>
 
 ## More Bits
 Just as a note, these components operate on at most 2 bits, where a bit
