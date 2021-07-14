@@ -115,10 +115,13 @@ thing we could do is have it represent numbers. Binary numbers are
 exactly like normal numbers, except we only have two symbols to work with
 (represented by "off" and "on").
 
-If we were to count up in binary, we would start with `0`, then `1`, then.. well that's all the symbols we have!
-To get around this, let's add a more significant digit `10`. Do you see any similarities with using [ten]() symbols to count?
-I hope so, because this way of thinking can be extended to any basis, including base 16 which uses 16 symbols! But we'll get to that later.
-For now, it's enough to know how to represent larger numbers using binary digits (bits).
+If we were to count up in binary, we would start with `0`, then `1`,
+then.. well that's all the symbols we have!  To get around this, let's
+add a more significant digit `10`. Do you see any similarities with
+using [ten](/assets/ground-up/base10.png) symbols to count?  I hope so,
+because this way of thinking can be extended to any basis, including base
+16 which uses 16 symbols! But we'll get to that later.  For now, it's
+enough to know how to represent larger numbers using binary digits (bits).
 
 ### Converting Between Binary and Decimal Numbers
 We have established that we can represent numbers in binary, and if we
