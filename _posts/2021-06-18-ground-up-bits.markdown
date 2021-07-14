@@ -4,12 +4,16 @@ title:  "Ground Up: Bits"
 date:   2021-06-22 00:00:00 -0500
 categories: tutorials
 ---
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js" integrity="sha512-ovjLI1ZcZe6bw+ImQ21r+sv8q/Vwob2kq7tFidK6E1LWfi0T4uobbmpfEU1//a9h9o5Kkt+MnMWf6rWlg0EiMw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 Welcome to a new series of posts cleverly titled ***Ground Up***,
 where I explain computing concepts from the ground up! We'll explore
 how computers work starting with transistors and going from there.
 This post specifically covers transistors, digital logic, and binary.
+
+* ***Part 1: Bits***
+* [Part 2: Gates]({% post_url 2021-07-06-ground-up-gates %})
 
 ## Transistors
 At the end of the day, computers are complex circuits built mostly of
@@ -236,26 +240,26 @@ reference.
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center">NOT</td>
-      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">~</code></td>
+      <td style="text-align: center"><b>NOT</b></td>
+      <td style="text-align: center">~</td>
       <td>Negate its input</td>
       <td><table><thead><tr><th>A</th><th>Output</th></tr></thead><tr><td>0</td><td>1</td></tr><tr><td>1</td><td>0</td></tr></table></td>
     </tr>
     <tr>
-      <td style="text-align: center">AND</td>
-      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">&amp;</code></td>
+      <td style="text-align: center"><b>AND</b></td>
+      <td style="text-align: center">&amp;</td>
       <td>Outputs <code class="language-plaintext highlighter-rouge">1</code> if both inputs are <code class="language-plaintext highlighter-rouge">1</code></td>
       <td><table><thead><tr><th>A</th><th>B</th><th>Output</th></tr></thead><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td></tr></table></td>
     </tr>
     <tr>
-      <td style="text-align: center">OR</td>
-      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">|</code></td>
+      <td style="text-align: center"><b>OR</b></td>
+      <td style="text-align: center">|</td>
       <td>Outputs <code class="language-plaintext highlighter-rouge">1</code> if either input is <code class="language-plaintext highlighter-rouge">1</code></td>
       <td><table><thead><tr><th>A</th><th>B</th><th>Output</th></tr></thead><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td></tr></table></td>
     </tr>
     <tr>
-      <td style="text-align: center">XOR</td>
-      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">^</code></td>
+      <td style="text-align: center"><b>XOR</b></td>
+      <td style="text-align: center">$$\oplus$$</td>
       <td>Outputs <code class="language-plaintext highlighter-rouge">1</code> if its inputs are not equal</td>
       <td><table><thead><tr><th>A</th><th>B</th><th>Output</th></tr></thead><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td></tr></table></td>
     </tr>
@@ -1438,5 +1442,7 @@ using the `AND` operation on each pair of bits. For example `0110 AND
 This post covered the very basics of computers: transistors, digital
 logic, and binary operators. If any parts were unclear, please feel
 free to contact me.
+
+[Take me to the next part!]({% post_url 2021-07-06-ground-up-gates %})
 
 <script>updateTables();</script>
