@@ -176,7 +176,7 @@ On the left is the binary representation, and the right is the decimal.
 <tr><td></td><td>1</td><td> </td><td> </td><td> </td></tr>
 <tr><td></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
 <tr><td>+</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
-<tr class='last-row'><td></td><td>10</td><td>1</td><td>1</td><td>0</td></tr>
+<tr class='last-row'><td></td><td>10</td><td>0</td><td>1</td><td>0</td></tr>
 </table>
 </div>
 
