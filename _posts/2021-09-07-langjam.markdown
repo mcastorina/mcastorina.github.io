@@ -1,0 +1,43 @@
+---
+layout: post
+title:  "LangJam"
+date:   2021-09-07 00:00:00 -0500
+categories: programming
+---
+Two weeks ago I participated in the first ever
+[LangJam](https://github.com/langjam/langjam), the goal of which was to
+create a programming language based on a theme in a 48 hour period.
+
+Now, I'm not exactly a seasoned programming language creator, but I
+am quite interested in the art. This jam was an excellent opportunity
+for me to grow my skills, interact with the community, and "complete"
+a minimal language just for fun.
+
+The theme for this LangJam was "first class comments." A challenging
+paradox for sure, however since I didn't have the time to learn the
+intricacies of AST parsing and code generation, I decided to make
+something that's very easy to understand and implement.
+
+After some inspiration from a close friend, I chose to
+create a language about "funny Vine quotes." As such, [my
+submission](https://github.com/langjam/jam0001/tree/main/miccah)
+translates Vine quotes into operations performed by a virtual
+machine. This is really as simple as "see X, do Y". The fun part was
+matching the quotes to what they did in the VM, of which you can see
+on my submission page. One of the nice things about this language is
+that unrecognized tokens are simply ignored, so you can write comments
+anywhere in the file.
+
+Additionally, I wanted to add a bit of higher level to my virtual machine
+by allowing if statements, for loops and functions, rather than relying
+on conditional jumps like traditional assembly languages. I managed to
+implement both `if` and `for` constructs pretty easily, however I did
+not have time for functions.
+
+Despite not completely finishing, it was a lot of fun creating my
+language.  There was even a bug in the VM (which I only found out
+after the deadline) that allowed you to print only one character before
+breaking! Overall though, I have to say that my experience as a complete
+noob to language development was excellent, and a big "thank you" goes
+to JT for organizing this excellent LangJam. I'm looking forward to the
+next one!
