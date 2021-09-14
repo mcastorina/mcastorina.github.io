@@ -90,6 +90,7 @@ This post specifically covers gates, binary math, and adders.
 
 * [Part 1: Bits]({% post_url 2021-06-18-ground-up-bits %})
 * ***Part 2: Gates***
+* [Part 3: Memory]({% post_url 2021-07-18-ground-up-memory %})
 
 ## Gates
 In the [previous section]({% post_url 2021-06-18-ground-up-bits %})

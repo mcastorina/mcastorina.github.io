@@ -14,6 +14,7 @@ This post specifically covers transistors, digital logic, and binary.
 
 * ***Part 1: Bits***
 * [Part 2: Gates]({% post_url 2021-07-06-ground-up-gates %})
+* [Part 3: Memory]({% post_url 2021-07-18-ground-up-memory %})
 
 ## Transistors
 At the end of the day, computers are complex circuits built mostly of
