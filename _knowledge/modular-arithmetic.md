@@ -1,7 +1,7 @@
 ---
 layout: default
 title:  "Modular Arithmetic"
-category: Hacking
+category: Math
 ---
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
@@ -86,7 +86,7 @@ For large numbers, [Montgomery Multiplication](https://en.wikipedia.org/wiki/Mon
 is an efficient algorithm for performing modular multiplication.
 
 ## Division
-Divison, or rather inverse multiplication, only sometimes exists in
+Division, or rather inverse multiplication, only sometimes exists in
 modular arithmetic. The inverse multiplication can be thought of as
 follows:
 
