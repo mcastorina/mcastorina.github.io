@@ -52,3 +52,7 @@ function! SendTerm()
     endif
 endfunction
 ```
+
+---
+
+**Update 2021-10-23:** There already exists a Vim plugin for this called [vim-slime](https://github.com/jpalardy/vim-slime)
