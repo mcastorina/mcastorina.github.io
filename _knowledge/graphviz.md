@@ -44,3 +44,9 @@ dot -Tpng hello.dot -o hello.png
 **hello.png**
 
 ![Hello, Graphviz!](/assets/kb/graphviz.png)
+
+## Useful Attributes
+| Attribute | Description |
+| --------- | ----------- |
+| [rankdir](https://graphviz.org/docs/attrs/rankdir/) | Set direction of graph layout (`LR` / `TB`) |
+| [label](https://graphviz.org/docs/attrs/label/) | Text label attached to objects |
