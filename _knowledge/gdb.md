@@ -9,8 +9,10 @@ The GNU Debugger is a tool used for debugging another program while
 it executes. You may set breakpoints, examine memory and registers,
 and step through the code line by line or instruction by instruction.
 
-This tool is most useful for reverse engineering an unknown executable
-or debugging a C program you are writing.
+This tool is most useful for reverse engineering an unknown
+executable or debugging a C program you are writing.  [GDB Enhancement
+Features](https://github.com/hugsy/gef) is a popular addon specifically
+for reverse engineering and exploitation.
 
 ## Commands
 There are many commands, but here are some common ones. Note that most
@@ -49,3 +51,6 @@ Size letters are b(byte), h(halfword), w(word), g(giant, 8 bytes).
 * **Register TUI:** `layout reg`
 * **Set assembly flavor to intel:** `set disassembly-flavor intel`
 * **Print mapped address space:** `info proc map`
+* **Print stack frame info:** `info frame`
+* **Write a string in memory:** `set {char [12]} 0xdeadbeef = "hello world"`
+* **Jump directly to instruction:** `jump *0xdeadbeef`
