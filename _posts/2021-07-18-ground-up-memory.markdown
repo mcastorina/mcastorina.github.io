@@ -247,8 +247,7 @@ circuit until it is enabled by a signal.
 
 ### Gated SR-Latch
 This circuit simply uses **AND** gates to allow the *S* or *R*
-signal through to the rest of the circuit. SR-Latches are useful for
-synchronizing changes on a clocked signal.
+signal through to the rest of the circuit.
 
 <div class="table-div">
 <table class="gate" id="gatedSRLatchTable">
@@ -405,13 +404,14 @@ synchronizing changes on a clocked signal.
 <canvas id="gatedSRLatchCircuit" resize></canvas>
 
 **Note:** a common variant of this latch is a *D-Latch* in which a single
-*data* bit is saved when the *gate* is enabled. This is easily achieved by
-setting *R* equal to *not S*.
+*data* bit is saved when the *gate* is enabled. This is easily achieved
+by wiring *R* to *not S*, so the latch is reset when the data is `0`
+and set when it is `1`.
 
 ### Flip Flops
 Flip flops are edge-triggered memory units usually built with two
-underlying gated latches. They are very useful for synchronizing changes
-to a clock signal.
+underlying gated latches. They are useful for precisely synchronizing
+changes to a clock signal.
 
 <div class="table-div">
 <table class="gate" id="dFlipFlopTable">
