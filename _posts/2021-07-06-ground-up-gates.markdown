@@ -81,6 +81,11 @@ p.gate {
         table[2].children[2].children[0].innerText = b;
         table[2].children[3].children[0].innerText = out;
     }
+    window.onload = function() {
+        window.globals.updateAdder();
+        window.globals.updateAdder2();
+        updateTables()
+    }
 </script>
 
 Welcome to a series of posts cleverly titled ***Ground Up***,

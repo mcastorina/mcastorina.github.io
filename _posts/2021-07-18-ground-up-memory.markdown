@@ -41,6 +41,12 @@ categories: tutorials
             table[i].style.backgroundColor = i == index ? 'yellow' : 'white';
         }
     }
+    window.onload = function() {
+        window.globals.updateSRLatch();
+        window.globals.updateGatedSRLatch();
+        window.globals.updateDFlipFlop();
+        updateTables()
+    }
 </script>
 <style type="text/css" media="all">
 .gate {

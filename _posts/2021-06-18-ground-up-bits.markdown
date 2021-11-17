@@ -87,6 +87,13 @@ canvas {
             table[i].style.backgroundColor = i == index ? 'yellow' : 'white';
         }
     }
+    window.onload = function() {
+        window.globals.updateNot();
+        window.globals.updateAnd();
+        window.globals.updateOr();
+        window.globals.updateXor();
+        updateTables();
+    }
 </script>
 <script type="text/paperscript" canvas="nchannel">
     var path = new CompoundPath();
