@@ -289,6 +289,24 @@ command. I prefer using the enhanced `getopt` as it allows long options,
 however the enhanced version is not on macOS by default. For fun and
 portability, I wrote [my own version in pure bash](https://gist.github.com/mcastorina/682fa0ca0ff9646e283a5ef95e4cb36d).
 
+## Trap
+Bash allows to trap signals and other events using the `trap` command.
+
+```bash
+trap "echo INT received" SIGINT
+```
+
+| Signal | Description |
+|:------:|:----------- |
+| `EXIT` | Executed on exit from the shell |
+| `DEBUG` | Executed before every simple command |
+| `RETURN` | Executed each time a shell function or script run by `.` or `source` builtins finishes executing |
+| `ERR` | Executed each time a command's failure would cause the shell to exit (when `-e` option is enabled) |
+| `SIGINT` | Interrupt signal |
+| `SIGTERM` | Terminate signal |
+
+See `man 7 signal` for a complete list of signals to trap.
+
 ## Common Operations
 **Read every line of a file**
 
@@ -306,6 +324,12 @@ if [[ ${i::1} != 'y' && ${i::1} != 'Y' ]]; then
     echo 'Aborting'
     exit 1
 fi
+```
+
+**Generate tempfile / cleanup**
+```bash
+tmpfile=$(mktemp)
+trap "rm $tmpfile" EXIT
 ```
 
 **Generate a random string of alphanumeric characters**
