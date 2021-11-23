@@ -32,6 +32,10 @@ commands may be abbreviated.
 | `step` | Run the next instruction of the program, going into a sub-routine if there is one |
 | `nexti` | Run the next instruction of the program |
 | `stepi` | Run the next instruction of the program, going into a sub-routine if there is one |
+| `commands` | Execute commands when a breakpoint is reached |
+| `handle` | Tell GDB how to handle signals (e.g. `handle SIGABRT nostop`) |
+| `inferiors` | List child processes |
+| `python-interactive` | Start an interactive python prompt |
 
 Most display commands accept a format for displaying the data as well.
 The FMT is specified like so: `CMD/FMT ...`.
@@ -54,3 +58,14 @@ Size letters are b(byte), h(halfword), w(word), g(giant, 8 bytes).
 * **Print stack frame info:** `info frame`
 * **Write a string in memory:** `set {char [12]} 0xdeadbeef = "hello world"`
 * **Jump directly to instruction:** `jump *0xdeadbeef`
+* **Debug child spawned processes:** `set follow-fork-mode child`
+* **Keep parent / child in debug session:** `set detach-on-fork off`
+* **Execute commands on process exit (using python API):**
+```
+python
+def onexit(event):
+    gdb.execute("inferior 1") # switch to parent
+    gdb.execute("continue")   # continue executing
+gdb.events.exited.connect(onexit)
+end
+```
