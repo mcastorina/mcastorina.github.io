@@ -209,7 +209,7 @@ The following table will refer to this example:
 | `$1`         | The first positional argument                | `a` |
 | `$2`         | The second positional argument               | `b` |
 | `$3`         | The third positional argument                | `c` |
-| `$@`         | All positional arguments starting from 1     | `a b c` |
+| `$@`         | All positional arguments starting from 1 as an array     | `a b c` |
 | `${@: -1}`   | The last positional argument                 | `c` |
 | `${@: -2}`   | The last 2 positional arguments              | `b c` |
 | `${@: 2: 1}` | 1 positional argument starting at position 2 | `b` |
@@ -219,6 +219,7 @@ The following table will refer to this example:
 | Variable | Description |
 | -------- | ----------- |
 | `$#` | Number of positional arguments |
+| `$*` | All positional arguments as a single string |
 | `$?` | Exit status of most recently executed foreground pipeline |
 | `$$` | Process ID of the shell |
 | `$!` | Process ID of the job most recently placed in the background |
