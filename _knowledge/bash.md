@@ -76,6 +76,7 @@ operations.
 | `-s` | True if the file exists and has a size greater than zero |
 | `-L` | True if the file exists and is a symbolic link |
 | `-O` | True if the file exists and its owner matches the effective user id of this process |
+| `-t` | True if the file descriptor is opened on a terminal |
 | `-nt` | True if `file1` is newer than `file2` |
 | `-ot` | True if `file1` is older than `file2` |
 | `-ef` | True if `file1` and `file2` refer to the same file |
