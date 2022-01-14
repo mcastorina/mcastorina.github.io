@@ -19,7 +19,8 @@ This post specifically covers transistors, digital logic, and binary.
 ## Transistors
 At the end of the day, computers are complex circuits built mostly of
 transistors. Transistors are electrical components that can be thought
-of as gates that allow or deny current to flow. That's it.
+of as gates that allow or deny current to flow. That's it. Try toggling
+the **gate** below to see how the current responds.
 
 <style type="text/css" media="all">
 .gate th, td {
@@ -34,9 +35,20 @@ p.gate {
     vertical-align: unset;
 }
 .table-div {
-    width: 30%;
+    padding: 20px;
     display: inline-block;
     vertical-align: middle;
+    text-align: center;
+    width: 30%;
+}
+.interactive {
+    padding: 20px;
+    margin: 20px auto;
+    border: 1px dashed gray;
+}
+.interactive.not { width: 60%; }
+.interactive.xor div.table-div {
+    width: 40%;
 }
 canvas {
     display: inline-block;
@@ -100,21 +112,25 @@ canvas {
 {% include_relative _ground_up/nchannel.js %}
 </script>
 
+<div class="interactive" style="width: 20%;">
 <p class="gate"><input type="checkbox" onclick="updateState(this, 'nChannel');"><label>G</label></p>
-<canvas id="nchannel" resize></canvas>
+<canvas id="nchannel" style="width: 100px;"></canvas>
+</div>
 
 It is from this simple building block we can begin to form more complex
 logic. There are two common variants of transistors: P-Channel and
-N-Channel. The above is an N-Channel transistor, which means the current flows
-when voltage is applied to the Gate (G). A P-Channel transistor means the
-current flows when there is *no* voltage applied to the Gate.
+N-Channel. The above is an N-Channel transistor, which means the current
+flows when voltage is applied to the Gate (G). A P-Channel transistor
+means the current flows when there is *no* voltage applied to the Gate.
 
 <script type="text/paperscript" canvas="pchannel">
 {% include_relative _ground_up/pchannel.js %}
 </script>
 
+<div class="interactive" style="width: 20%;">
 <p class="gate"><input type="checkbox" onclick="updateState(this, 'pChannel');"><label>G</label></p>
-<canvas id="pchannel" resize></canvas>
+<canvas id="pchannel" style="width: 100px;"></canvas>
+</div>
 
 The dot on the input gate indicates negation and is a common symbol in
 digital logic. It helps me to remember that the `P` in "P-Channel" has
@@ -212,6 +228,9 @@ it is a NAND gate (NOT-AND) followed by a NOT gate.
 
 ### NOT Gate
 
+Instructions: toggle the inputs to see how the circuit reacts.
+
+<div class="interactive not">
 <div class="table-div"><table class="gate" id="notTable">
     <tr>
         <th><input type="checkbox" onclick="updateState(this, 'notA');"><label>A</label></th>
@@ -225,9 +244,11 @@ it is a NAND gate (NOT-AND) followed by a NOT gate.
 {% include_relative _ground_up/not.js %}
 </script>
 <canvas id="not" resize></canvas>
+</div>
 
 ### AND Gate
 
+<div class="interactive and">
 <div class="table-div"><table class="gate" id="andTable">
     <tr>
         <th><input type="checkbox" onclick="updateState(this, 'andA');"><label>A</label></th>
@@ -244,9 +265,11 @@ it is a NAND gate (NOT-AND) followed by a NOT gate.
 {% include_relative _ground_up/and.js %}
 </script>
 <canvas id="and" resize></canvas>
+</div>
 
 ### OR Gate
 
+<div class="interactive or">
 <div class="table-div"><table class="gate" id="orTable">
     <tr>
         <th><input type="checkbox" onclick="updateState(this, 'orA');"><label>A</label></th>
@@ -263,9 +286,11 @@ it is a NAND gate (NOT-AND) followed by a NOT gate.
 {% include_relative _ground_up/or.js %}
 </script>
 <canvas id="or" resize></canvas>
+</div>
 
 ### XOR Gate
 
+<div class="interactive xor">
 <div class="table-div">
 <table class="gate" id="xorTable">
     <tr>
@@ -285,6 +310,7 @@ it is a NAND gate (NOT-AND) followed by a NOT gate.
 {% include_relative _ground_up/xor.js %}
 </script>
 <canvas id="xor" resize></canvas>
+</div>
 
 ## More Bits
 Just as a note, these components operate on at most 2 bits, where a bit
