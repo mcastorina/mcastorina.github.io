@@ -35,6 +35,14 @@ p.gate {
     display: inline-block;
     vertical-align: middle;
 }
+.interactive {
+    padding: 5px 0px 0px 5px;
+    margin: 20px auto;
+    border: 1px dashed gray;
+}
+.table-div table {
+    margin-bottom: 5px;
+}
 #adderCircuit {
     width: 400px;
     height: 360px;
@@ -249,6 +257,9 @@ $$
 Note: sometimes **AND** is represented as multiplication and **OR**
 as addition. Similarly you may see **XOR** represented with `^`.
 
+Instructions: toggle the inputs to see how the circuit reacts.
+
+<div class="interactive">
 <div class="table-div">
 <table class="gate" id="adderTable">
     <tr>
@@ -273,12 +284,14 @@ as addition. Similarly you may see **XOR** represented with `^`.
 {% include_relative _ground_up/adderCircuit.js %}
 </script>
 <canvas id="adderCircuit" resize></canvas>
+</div>
 
 Let's try stacking two together to add 2-bit numbers. For simplicity,
 we will package the above gates together into a single unit. You'll notice
 we connect <b>Out<sub>1</sub></b>, the overflow bit, directly to **C**,
 and this can be chained indefinitely.
 
+<div class="interactive" style="padding: 20px; width: 93%;">
 <div class="table-div">
 <table class="gate" id="adder2Table">
     <tr>
@@ -298,6 +311,7 @@ and this can be chained indefinitely.
 {% include_relative _ground_up/adder2Circuit.js %}
 </script>
 <canvas id="adder2Circuit" resize></canvas>
+</div>
 
 ## Conclusion
 Excellent! Hopefully you are starting to see the usefulness of all of
