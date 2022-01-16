@@ -34,6 +34,9 @@ the **gate** below to see how the current responds.
 p.gate {
     vertical-align: unset;
 }
+table {
+    margin: 30px auto;
+}
 .table-div {
     padding: 20px;
     display: inline-block;
@@ -325,6 +328,7 @@ using the `AND` operation on each pair of bits. For example `0110 AND
 | **A** | `0` | `1` | `1` | `0` |
 | **B** | `1` | `1` | `0` | `0` |
 | **Output** | `0` | `1` | `0` | `0` |
+{: style="width: 50%;"}
 
 ## Conclusion
 This post covered the very basics of computers: transistors, digital

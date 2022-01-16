@@ -57,6 +57,9 @@ categories: tutorials
 p.gate {
     vertical-align: unset;
 }
+table {
+    margin: 30px auto;
+}
 .table-div {
     display: inline-block;
     vertical-align: middle;
@@ -121,6 +124,7 @@ we will denote the new output as *Q'*.
 | `0` | `0` | `1` | `1` |
 | `0` | `1` | `X` | `0` |
 | `1` | `0` | `X` | `1` |
+{: style="width: 30%;"}
 
 **Note:** `X` indicates "do not care"
 

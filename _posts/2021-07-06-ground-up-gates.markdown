@@ -7,6 +7,9 @@ categories: tutorials
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js" integrity="sha512-ovjLI1ZcZe6bw+ImQ21r+sv8q/Vwob2kq7tFidK6E1LWfi0T4uobbmpfEU1//a9h9o5Kkt+MnMWf6rWlg0EiMw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style type="text/css" media="all">
+table {
+    margin: 30px auto;
+}
 .sum-table {
     display: inline-block;
     padding-right: 40px;
@@ -177,6 +180,7 @@ for converting $$6$$ to binary.
 | 3/2=1 | 1 |
 | 1/2=0 | 1 |
 | **Result** | 110 |
+{: style="width: 30%;"}
 
 Alternatively, $$6$$ is $$4 + 2$$ = $$2^{2} + 2^{1}$$ which means bit $$2$$ and $$1$$ are set: `110`.
 
@@ -218,6 +222,7 @@ transition table. We have two bits as input, and two bits as output.
 | `0` | `1` | `0`  | `1`  |
 | `1` | `0` | `0`  | `1`  |
 | `1` | `1` | `1`  | `0`  |
+{: style="width: 30%;"}
 
 This table describes adding two single bits together, with the output
 being a single two-bit number. <code>Out<sub>1</sub></code> is the
@@ -239,6 +244,7 @@ Let's modify the circuit to sum three bits: two inputs and a carry.
 | `1` | `0` | `1` | `1`  | `0`  |
 | `1` | `1` | `0` | `1`  | `0`  |
 | `1` | `1` | `1` | `1`  | `1`  |
+{: style="width: 30%;"}
 
 Now let's create this circuit using our building blocks.  The first step
 is to create a minimal boolean expression that models our transition
