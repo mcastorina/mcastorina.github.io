@@ -61,6 +61,14 @@ p.gate {
     display: inline-block;
     vertical-align: middle;
 }
+.interactive {
+    padding: 20px;
+    margin: 20px auto;
+    border: 1px dashed gray;
+}
+.table-div table {
+    margin-bottom: 5px;
+}
 #srLatchCircuit {
     width: 200px;
     height: 190px;
@@ -69,14 +77,14 @@ p.gate {
     margin-left: 40px;
 }
 #gatedSRLatchCircuit {
-    width: 400px;
+    width: 300px;
     height: 190px;
     display: inline-block;
     vertical-align: middle;
     margin-left: 40px;
 }
 #dFlipFlop {
-    width: 400px;
+    width: 320px;
     height: 190px;
     display: inline-block;
     vertical-align: middle;
@@ -128,6 +136,9 @@ we will use **NOR** gates.
 $$ Q' = \overline{(R + \overline{(S + Q)})} $$
 {% endraw %}
 
+Instructions: toggle the inputs to see how the circuit reacts.
+
+<div class="interactive" style="width: 65%;">
 <div class="table-div">
 <table class="gate" id="srLatchTable">
     <tr>
@@ -147,6 +158,7 @@ $$ Q' = \overline{(R + \overline{(S + Q)})} $$
 {% include_relative _ground_up/srLatchCircuit.js %}
 </script>
 <canvas id="srLatchCircuit" resize></canvas>
+</div>
 
 This circuit is a ***transparent*** latch, which means changes in the
 input are immediately reflected in the output. One way to add more
@@ -157,6 +169,7 @@ circuit until it is enabled by a signal.
 This circuit simply uses **AND** gates to allow the *S* or *R*
 signal through to the rest of the circuit.
 
+<div class="interactive" style="width: 90%;">
 <div class="table-div">
 <table class="gate" id="gatedSRLatchTable">
     <tr>
@@ -178,6 +191,7 @@ signal through to the rest of the circuit.
 {% include_relative _ground_up/gatedSRLatchCircuit.js %}
 </script>
 <canvas id="gatedSRLatchCircuit" resize></canvas>
+</div>
 
 **Note:** a common variant of this latch is a *D-Latch* in which a single
 *data* bit is saved when the *gate* is enabled. This is easily achieved
@@ -189,6 +203,7 @@ Flip flops are edge-triggered memory units usually built with two
 underlying gated latches. They are useful for precisely synchronizing
 changes to a clock signal.
 
+<div class="interactive" style="width: 80%;">
 <div class="table-div">
 <table class="gate" id="dFlipFlopTable">
     <tr>
@@ -206,6 +221,7 @@ changes to a clock signal.
 {% include_relative _ground_up/dFlipFlop.js %}
 </script>
 <canvas id="dFlipFlop" resize></canvas>
+</div>
 
 **Note:** the above uses two D-Latches, where the value of *D* gets saved
 when *E* is `1`. Notice how the final output *Q* only gets updated on
