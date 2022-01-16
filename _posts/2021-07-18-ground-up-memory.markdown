@@ -71,6 +71,7 @@ table {
 }
 .table-div table {
     margin-bottom: 5px;
+    margin-top: 5px;
 }
 #srLatchCircuit {
     width: 200px;

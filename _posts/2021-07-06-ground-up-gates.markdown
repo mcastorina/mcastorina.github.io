@@ -44,6 +44,7 @@ p.gate {
     border: 1px dashed gray;
 }
 .table-div table {
+    margin-top: 5px;
     margin-bottom: 5px;
 }
 #adderCircuit {
