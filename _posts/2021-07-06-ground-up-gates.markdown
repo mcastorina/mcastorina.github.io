@@ -108,6 +108,7 @@ This post specifically covers gates, binary math, and adders.
 * [Part 1: Bits]({% post_url 2021-06-18-ground-up-bits %})
 * ***Part 2: Gates***
 * [Part 3: Memory]({% post_url 2021-07-18-ground-up-memory %})
+* [Part 4: State Machines]({% post_url 2021-09-18-ground-up-state-machines %})
 
 ## Gates
 In the [previous section]({% post_url 2021-06-18-ground-up-bits %})

@@ -104,6 +104,7 @@ This post specifically covers how to create memory from gates.
 * [Part 1: Bits]({% post_url 2021-06-18-ground-up-bits %})
 * [Part 2: Gates]({% post_url 2021-07-06-ground-up-gates %})
 * ***Part 3: Memory***
+* [Part 4: State Machines]({% post_url 2021-09-18-ground-up-state-machines %})
 
 ## Memory
 Memory is a way for a system to persist state. So far, everything we have
@@ -240,3 +241,5 @@ off. This is just one way to create in-circuit memory, but it's a great
 building block to have in our toolset.
 
 As always if any parts were unclear, please feel free to contact me.
+
+[Take me to the next part!]({% post_url 2021-09-18-ground-up-state-machines %})
