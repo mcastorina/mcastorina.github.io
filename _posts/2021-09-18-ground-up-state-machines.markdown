@@ -146,12 +146,12 @@ means any input besides `x`.
 Because this is a Moore machine, we must define the output as a function
 of the state. We only have one output: *Locked*.
 
-| Current State | Locked |
-|:-------------:|:------:|
-| **A**         | `1`    |
-| **B**         | `1`    |
-| **C**         | `1`    |
-| **Unlock**    | `0`    |
+| Current State   | Locked   |
+| :-------------: | :------: |
+| **A**           | `1`      |
+| **B**           | `1`      |
+| **C**           | `1`      |
+| **Unlock**      | `0`      |
 {: style="width: 30%;" }
 
 ## Implementing a FSM
@@ -161,16 +161,16 @@ remember, which can be encoded in two bits (`00` `01` `10` `11`). We
 will need a few button inputs as well: `0` `1` `2` `3` and `Reset`. Let's
 make a truth table to help visualize the state transitions.
 
-| S          | B<sub>0</sub> | B<sub>1</sub> | B<sub>2</sub> | B<sub>3</sub> | R   || S'         |
-|:----------:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:---:||:----------:|
-| **A**      | `0`  | `0`  | `0`  | `1`  | `0` || **B**      |
-| **A**      |  _   |  _   |  _   |  _   |  _  || **A**      |
-| **B**      | `1`  | `0`  | `0`  | `0`  | `0` || **C**      |
-| **B**      |  _   |  _   |  _   |  _   |  _  || **A**      |
-| **C**      | `0`  | `1`  | `0`  | `0`  | `0` || **Unlock** |
-| **C**      |  _   |  _   |  _   |  _   |  _  || **A**      |
-| **Unlock** |  _   |  _   |  _   |  _   | `0` || **Unlock** |
-| **Unlock** |  _   |  _   |  _   |  _   | `1` || **A**      |
+| S            | B<sub>0</sub> | B<sub>1</sub> | B<sub>2</sub> | B<sub>3</sub> | R      |        | S'         |
+| :----------: | :----:        | :----:        | :----:        | :----:        | :----: | :----: | :----:     |
+| **A**        | `0`           | `0`           | `0`           | `1`           | `0`    |        | **B**      |
+| **A**        | _             | _             | _             | _             | _      |        | **A**      |
+| **B**        | `1`           | `0`           | `0`           | `0`           | `0`    |        | **C**      |
+| **B**        | _             | _             | _             | _             | _      |        | **A**      |
+| **C**        | `0`           | `1`           | `0`           | `0`           | `0`    |        | **Unlock** |
+| **C**        | _             | _             | _             | _             | _      |        | **A**      |
+| **Unlock**   | _             | _             | _             | _             | `0`    |        | **Unlock** |
+| **Unlock**   | _             | _             | _             | _             | `1`    |        | **A**      |
 {: style="width: 50%;" }
 
 **Note:** `_` indicates "do not care" and was chosen instead of `X`
