@@ -345,3 +345,9 @@ cat /dev/urandom | tr -cd 'a-zA-Z0-9' | head -c 64
 ```bash
 set -o vi
 ```
+
+**Get the script directory**
+```bash
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+```
+[Source](https://stackoverflow.com/a/246128)
