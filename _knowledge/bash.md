@@ -125,7 +125,8 @@ done
 
 # while
 while true; do
-    echo 'infinte loop!'
+    echo 'infinte loop?'
+    break
 done
 
 # case
