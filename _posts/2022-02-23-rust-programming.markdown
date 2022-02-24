@@ -39,7 +39,7 @@ between `code change` and `result of code change` is a bit too high and is
 better in other languages. Overall, however, I've found for Rust that if the
 code compiles, then it runs as expected.
 
-This shift in coding sytle was very much a natural progression as I use the
+This shift in coding style was very much a natural progression as I use the
 language more, and I really enjoy programming this way. It's often quoted that
 Rust surfaces the inherent complexity of software development, and while I
 agree with that statement, I have also found that the Rust compiler is a
