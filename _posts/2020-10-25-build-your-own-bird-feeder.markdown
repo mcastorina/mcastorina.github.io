@@ -2,7 +2,7 @@
 layout: post
 title:  "Build your own Birdfeeder"
 date:   2020-10-25 00:00:00 -0500
-categories: hacking,misc
+tags: hacking misc
 ---
 I have been thinking a lot about a verse from *PoC||GTFO* titled "[A Parable
 on the Importance of Tools; or, Build your own fucking birdfeeder.](/assets/birdfeeder.pdf)"

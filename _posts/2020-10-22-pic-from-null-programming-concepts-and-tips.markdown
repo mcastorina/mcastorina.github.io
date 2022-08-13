@@ -2,7 +2,7 @@
 layout: post
 title:  "PIC from NULL: Programming Concepts and Tips"
 date:   2020-11-07 00:00:00 -0500
-categories: tutorials
+tags: tutorials
 ---
 This tutorial aims to get beginners started with PIC programming.
 This is the second post of the cleverly named series ***PIC from NULL***.

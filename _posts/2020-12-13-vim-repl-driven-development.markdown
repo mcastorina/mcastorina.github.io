@@ -2,7 +2,7 @@
 layout: post
 title:  "Vim REPL Driven Development"
 date:   2020-12-13 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 
 If you have ever programmed with REPL driven development, you will know

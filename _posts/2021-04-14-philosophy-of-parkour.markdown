@@ -2,7 +2,7 @@
 layout: post
 title:  "Philosophy of Parkour"
 date:   2021-04-20 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 I first learned of parkour around 2012. I thought it was so cool, but
 I was too scared to even start. All the videos I saw were these crazy

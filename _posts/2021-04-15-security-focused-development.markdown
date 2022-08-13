@@ -2,7 +2,7 @@
 layout: post
 title:  "Security Focused Development"
 date:   2021-04-27 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 
 As the security industry grows and more and more critical systems are

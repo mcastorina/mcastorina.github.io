@@ -2,7 +2,7 @@
 layout: post
 title:  "Copying a new SSH key to a passwordless server"
 date:   2021-06-01 00:00:00 -0500
-categories: tutorials
+tags: tutorials
 ---
 This is a scenario I have ran into a couple of times. I have a server
 that doesn't allow logins with a password, and I need to setup a new

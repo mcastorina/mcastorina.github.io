@@ -2,7 +2,7 @@
 layout: post
 title:  "Interviewing is a full time job"
 date:   2022-03-16 09:00:00 -0600
-categories: misc
+tags: misc
 ---
 
 *This post is a recap of my recent experience job searching and a "thank you" for

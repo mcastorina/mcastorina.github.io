@@ -2,7 +2,7 @@
 layout: post
 title:  "IoT Hacking: Starting Out"
 date:   2020-08-10 00:00:00 -0500
-categories: hacking
+tags: hacking
 ---
 This past weekend I (virtually) attended DEFCON 28. It was my first
 DEFCON experience, and I have to say it was really great! There

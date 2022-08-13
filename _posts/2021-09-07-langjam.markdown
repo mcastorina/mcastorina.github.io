@@ -2,7 +2,7 @@
 layout: post
 title:  "LangJam"
 date:   2021-09-07 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 Two weeks ago I participated in the first ever
 [LangJam](https://github.com/langjam/langjam), the goal of which was to

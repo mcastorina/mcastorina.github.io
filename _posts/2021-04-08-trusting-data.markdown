@@ -2,7 +2,7 @@
 layout: post
 title:  "Trusting Data"
 date:   2021-04-13 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 
 When creating programs, you will almost certainly operate on data. This

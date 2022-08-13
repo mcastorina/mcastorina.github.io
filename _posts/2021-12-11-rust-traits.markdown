@@ -2,7 +2,7 @@
 layout: post
 title:  "Rust traits are more powerful than I thought"
 date:   2021-12-11 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 
 I have been learning the Rust programming language in my spare time for

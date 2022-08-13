@@ -2,7 +2,7 @@
 layout: post
 title:  "A Thought on REPL Driven Development"
 date:   2020-11-22 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 
 I recently watched a talk by Bret Victor titled ["Inventing on

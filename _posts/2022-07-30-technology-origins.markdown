@@ -2,7 +2,7 @@
 layout: post
 title:  "My Technology Origin Story"
 date:   2022-07-30 00:00:00 -0500
-categories: programming,misc
+tags: programming misc
 ---
 
 How did I get interested in computers and programming?

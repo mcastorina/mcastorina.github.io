@@ -2,7 +2,7 @@
 layout: post
 title:  "Behind Success"
 date:   2020-11-11 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 
 Behind every success is a mountain of failures. Each failure informs

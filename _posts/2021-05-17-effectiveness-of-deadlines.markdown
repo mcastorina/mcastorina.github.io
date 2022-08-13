@@ -2,7 +2,7 @@
 layout: post
 title:  "Effectiveness of Deadlines"
 date:   2021-05-18 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 
 Eight weeks ago [I started tracking what I worked on each

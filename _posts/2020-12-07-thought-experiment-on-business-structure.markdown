@@ -2,7 +2,7 @@
 layout: post
 title:  "A Thought Experiment on Business Structure"
 date:   2020-12-07 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 
 This is a thought experiment about a hypothetical company. What if every

@@ -2,7 +2,7 @@
 layout: post
 title:  "HTTPS for your Home Server"
 date:   2021-11-11 00:00:00 -0500
-categories: tutorials
+tags: tutorials
 ---
 
 Do you have a home server and would like to securely connect to it? Or

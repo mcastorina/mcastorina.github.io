@@ -2,7 +2,7 @@
 layout: post
 title:  "Creativity in Software"
 date:   2021-10-22 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 
 I recently listened to an excellent talk by Jordan Peterson titled

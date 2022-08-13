@@ -2,7 +2,7 @@
 layout: post
 title:  "Finding my Principles"
 date:   2021-06-15 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 Last year I saw a talk by Bret Victor titled ["Inventing on
 Principle"](https://vimeo.com/36579366). If you have not seen it,

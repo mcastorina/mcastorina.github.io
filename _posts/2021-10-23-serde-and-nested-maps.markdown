@@ -2,7 +2,7 @@
 layout: post
 title:  "Serde and Nested Maps"
 date:   2021-10-23 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 
 In one of my Rust projects I am parsing very nested

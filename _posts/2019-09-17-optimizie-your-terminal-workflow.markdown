@@ -2,7 +2,7 @@
 layout: post
 title:  "Optimize Your Terminal Workflow"
 date:   2019-09-17 13:12:15 -0500
-categories: tutorials
+tags: tutorials
 ---
 Working in a terminal emulator is great for getting things done
 fast, and there are so many useful plugins and tools to make that

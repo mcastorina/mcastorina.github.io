@@ -2,7 +2,7 @@
 layout: post
 title:  "MSP430 Programming and Debugging"
 date:   2022-01-08 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 
 (on linux)

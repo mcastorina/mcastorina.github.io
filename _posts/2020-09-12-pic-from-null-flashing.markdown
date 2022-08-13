@@ -2,7 +2,7 @@
 layout: post
 title:  "PIC from NULL: Flashing"
 date:   2020-10-04 00:00:00 -0500
-categories: tutorials
+tags: tutorials
 ---
 As part of my reintroduction to electrical engineering, I thought
 it would be fun to PICk up a new type of microcontroller:

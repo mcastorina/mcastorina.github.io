@@ -2,7 +2,7 @@
 layout: post
 title:  "How Zim Helped Organize My Life"
 date:   2020-01-26 12:00:00 -0600
-categories: misc
+tags: misc
 ---
 I am a lifelong learner, and I love to take notes. Any type of
 notes. There is something about recording knowledge that just gets

@@ -2,7 +2,7 @@
 layout: post
 title:  "Little things make big things"
 date:   2021-03-23 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 All big things started small. It started as a thought, a seed, and with
 consistent watering grew into a big tree.

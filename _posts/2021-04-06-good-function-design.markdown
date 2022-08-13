@@ -2,7 +2,7 @@
 layout: post
 title:  "Good Function Design"
 date:   2021-04-06 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 A fundamental part of software development is creating functions. It
 keeps your code organized, readable, and prevents duplication. Like

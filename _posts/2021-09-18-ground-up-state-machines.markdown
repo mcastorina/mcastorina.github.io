@@ -2,7 +2,7 @@
 layout: post
 title:  "Ground Up: State Machines"
 date:   2022-01-19 00:00:00 -0500
-categories: tutorials
+tags: tutorials ground-up
 ---
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js" integrity="sha512-ovjLI1ZcZe6bw+ImQ21r+sv8q/Vwob2kq7tFidK6E1LWfi0T4uobbmpfEU1//a9h9o5Kkt+MnMWf6rWlg0EiMw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

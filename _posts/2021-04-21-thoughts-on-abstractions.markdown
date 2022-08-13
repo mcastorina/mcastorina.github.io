@@ -2,7 +2,7 @@
 layout: post
 title:  "Thoughts on Abstractions"
 date:   2021-05-04 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 Computers are like onions. They stink, make you cry, and when you leave
 them out in the sun they get brown and start sprouting little white hairs.

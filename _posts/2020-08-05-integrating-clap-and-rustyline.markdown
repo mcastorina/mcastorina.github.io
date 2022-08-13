@@ -2,7 +2,7 @@
 layout: post
 title:  "Integrating clap and rustyline"
 date:   2020-08-05 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 My [latest project](https://github.com/mcastorina/repost) is a
 command line interpreter written in Rust.  As such, I wanted to use

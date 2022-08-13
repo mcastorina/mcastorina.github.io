@@ -2,7 +2,7 @@
 layout: post
 title:  "Gratitude"
 date:   2021-06-08 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 Gratitude is one of the simplest and most wildly rewarding practices
 I have ever adopted in my life. It's so sneakily simple that you may

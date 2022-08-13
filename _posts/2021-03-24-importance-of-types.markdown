@@ -2,7 +2,7 @@
 layout: post
 title:  "The Importance of Types"
 date:   2021-03-30 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 There are many programming languages, but they can all be put into one
 of two groups. Those that are dynamically typed and those that are not.

@@ -2,7 +2,7 @@
 layout: post
 title:  "QWERTY to Dvorak: My Experience"
 date:   2020-02-29 12:00:00 -0600
-categories: misc
+tags: misc
 ---
 
 I recently transitioned to the Dvorak keyboard layout from the

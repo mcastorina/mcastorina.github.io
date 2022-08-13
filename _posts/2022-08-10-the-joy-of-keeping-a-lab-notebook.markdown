@@ -2,7 +2,7 @@
 layout: post
 title:  "The Joy of Keeping a Lab Notebook"
 date:   2022-08-12 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 
 In November of 2017, I began keeping a lab notebook for experiments (inspired

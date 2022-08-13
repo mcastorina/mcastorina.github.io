@@ -2,7 +2,7 @@
 layout: post
 title:  "CTFs are about Learning"
 date:   2020-12-20 00:00:00 -0500
-categories: hacking
+tags: hacking
 ---
 
 Capture the Flag (CTF) events are common competitions in the security

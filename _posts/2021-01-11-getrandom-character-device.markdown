@@ -2,7 +2,7 @@
 layout: post
 title:  "getrandom Character Device"
 date:   2021-01-11 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 
 Today I read this article titled [Myths about

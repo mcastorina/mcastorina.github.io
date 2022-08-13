@@ -2,7 +2,7 @@
 layout: post
 title:  "Opinionated Design"
 date:   2021-05-11 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 When I first learned how to program, I was so excited about how I could
 create *anything*! The possibilities were endless and I could create

@@ -2,7 +2,7 @@
 layout: post
 title:  "What to Learn"
 date:   2021-10-21 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 
 I recently read a blog post by Dan Luu titled [What to

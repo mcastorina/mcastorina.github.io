@@ -2,7 +2,7 @@
 layout: post
 title:  "QWERTY to Dvorak: A Short Story"
 date:   2020-02-29 12:00:00 -0600
-categories: misc
+tags: misc
 ---
 It wasn't easy, and it wasn't hard. It happened before I knew it
 was happening. I was just trying to learn Dvorak for fun, but I

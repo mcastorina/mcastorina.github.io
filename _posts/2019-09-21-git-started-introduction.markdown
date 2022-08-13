@@ -2,7 +2,7 @@
 layout: post
 title:  "Git Started: Introduction"
 date:   2019-09-21 00:00:00 -0500
-categories: tutorials
+tags: tutorials git-started
 ---
 ![git-started](/assets/git-started/banner.png)
 

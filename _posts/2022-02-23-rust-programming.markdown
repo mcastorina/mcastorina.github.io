@@ -2,7 +2,7 @@
 layout: post
 title:  "How I Design Rust Programs"
 date:   2022-02-23 09:00:00 -0600
-categories: programming
+tags: programming
 ---
 
 As I have learned and gained more experience using Rust, I noticed that the way

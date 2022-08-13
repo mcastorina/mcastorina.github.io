@@ -2,7 +2,7 @@
 layout: post
 title:  "How doing nothing allowed me to grow"
 date:   2021-05-25 00:00:00 -0500
-categories: misc
+tags: misc
 ---
 In January of this year, I left my corporate software engineering position
 to do nothing, and it was one of the best decisions I have made.

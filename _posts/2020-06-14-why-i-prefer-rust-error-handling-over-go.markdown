@@ -2,7 +2,7 @@
 layout: post
 title:  "Why I Prefer Rust Error Handling Over Go"
 date:   2020-06-25 00:00:00 -0500
-categories: programming
+tags: programming
 ---
 A large part of software development is handling errors. Generally
 speaking, we cannot predict and account for everything that is
