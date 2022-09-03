@@ -3,6 +3,38 @@
 
 @import "minima";
 
-.tag {
-    font-size: 8pt;
+$banner-color: #caff85;
+$banner-border-color: #143d01;
+$background-color: #aba;
+
+body {
+    background-color: $background-color;
+}
+
+.site-header {
+    background-color: $banner-color;
+    border-bottom: 0.6em solid $banner-border-color;
+}
+
+.site-footer {
+    div { color: black; }
+    background-color: $banner-color;
+    border-top: 0.6em solid $banner-border-color;
+    padding-bottom: 0;
+}
+
+.tag { font-size: 8pt; }
+.interactive { background-color: #fff; }
+.post, .home {
+    padding: 1em;
+    background-color: #fff;
+    // min-height: 100vh;
+}
+.post-list li {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.page-content {
+    padding: 0 0;
 }
