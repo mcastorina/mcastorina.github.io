@@ -38,3 +38,6 @@ body {
 .page-content {
     padding: 0 0;
 }
+.wrapper {
+    max-width: calc(800px - ((30px - 1em) * 2));
+}
