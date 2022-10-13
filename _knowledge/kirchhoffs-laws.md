@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title:  "Kirchhoff's Laws"
 category: Electrical Engineering
 ---

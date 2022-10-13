@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "MAC"
 category: Technologies
 ---
 
-# MAC
 Message authentication code (MAC) is a piece of data that is used to
 confirm that the message came from the stated sender and has not been
 changed.

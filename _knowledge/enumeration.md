@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Enumeration"
 category: Hacking
 ---
 
-# Enumeration
 Once you have a foothold, the next step is to enumerate. This is
 an important step, because to exploit a system, you have to know
 what is on it!

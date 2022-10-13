@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Bash"
 category: Computer Languages
 ---
 
-# Bash
 The Bourne Again Shell, bash, is a standard command line interpreter
 that is POSIX compliant.
 

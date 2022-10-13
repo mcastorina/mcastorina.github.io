@@ -1,11 +1,10 @@
 ---
-layout: default
+layout: post
 title:  "Linear Congruential Generator"
 category: Math
 ---
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-# Linear Congruential Generator
 Linear Congruential Generator is an algorithm to produce a sequence of
 pseudorandom numbers.
 

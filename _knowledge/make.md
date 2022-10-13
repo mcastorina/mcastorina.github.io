@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Make"
 category: Software Development
 ---
 
-# Make
 Make is a utility to maintain groups of programs. Its purpose is
 to automatically determine which pieces of a large program need to
 be recompiled and issue the commands to recompile them. Generally,

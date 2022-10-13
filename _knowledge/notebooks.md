@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Notebooks"
 category: Things I Like
 ---
 
-# Notebooks
 For some reason, I really enjoy owning notebooks and writing in
 them. My favorite I have found is the [Leuchtterm 1917
 Notebook](https://www.amazon.com/Leuchtturm1917-Medium-Dotted-Hardcover-Notebook/dp/B002TSIMW4).

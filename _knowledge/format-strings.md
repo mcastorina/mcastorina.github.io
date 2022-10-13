@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Format Strings"
 category: Hacking
 ---
 
-# Format Strings
 The `printf` family of functions accept a format string as an argument
 which may be used for formatting the list of arguments passed to the
 function.

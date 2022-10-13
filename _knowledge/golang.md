@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "GoLang"
 category: Computer Languages
 ---
 
-# GoLang
 GoLang is a relatively new programming language. I consider it a
 "middle level" language because it is strictly-typed, compiled, and
 provides more protections than C. It also has a garbage collector,

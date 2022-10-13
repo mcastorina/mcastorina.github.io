@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "XSS"
 category: Hacking
 ---
 
-# Cross-Site Scripting (XSS)
 XSS is a vulnerability in a website that allows an attacker to inject
 client-side scripts into web pages viewed by other clients. A common
 target for this attack is user session cookies.

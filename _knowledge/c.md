@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "C"
 category: Computer Languages
 ---
 
-# C
 The C programming language is commonly used in embedded and operating
 systems. I see it as a "low level" language that is one step above
 assembly. It is very easy to work with raw resources, and a firm

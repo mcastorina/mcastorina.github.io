@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Logic Gates"
 category: Electrical Engineering
 ---
 
-# Logic Gates
 The building blocks for integrated circuits and electronics. A logic
 gate is the electrical implementation of boolean expressions.
 

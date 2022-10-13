@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "ELF"
 category: Technologies
 ---
 
-# ELF
 The Executable and Linkable Format is a standard file format for
 executable files, object code, shared libraries, and core dumps.
 

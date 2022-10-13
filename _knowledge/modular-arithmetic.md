@@ -1,11 +1,10 @@
 ---
-layout: default
+layout: post
 title:  "Modular Arithmetic"
 category: Math
 ---
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-# Modular Arithmetic
 Modular arithmetic is a type of mathematical arithmetic in which numbers
 (consisting entirely of integers) wrap around a modulus. An intuitive
 example is time past 12:00 wraps around to 1:00, however in math the

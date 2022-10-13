@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Ruby"
 category: Computer Languages
 ---
 
-# Ruby
 Ruby is a programming language that is similar to Python but with
 notable differences. I consider it a "high level" language because
 it uses dynamic types, garbage collection, and everything is an

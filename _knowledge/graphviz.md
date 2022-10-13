@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Graphviz"
 category: Software Development
 ---
 
-# Graphviz
 Graphviz is an open source graph visualization software. It reads
 a text file description of a graph and generates an image automatically.
 

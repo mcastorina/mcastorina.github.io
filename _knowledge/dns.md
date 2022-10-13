@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "DNS"
 category: Technologies
 ---
 
-# DNS
 The Domain Name System is a decentralized naming system for computers
 connected on a network. It primarily translates human readable
 domain names into IP addresses. The job of assigning domain names

@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Linux"
 category: Software Development
 ---
 
-# Linux
 Linux is a family of open source operating systems stemming from
 Unix. Common Linux distributions include: Debian, Ubuntu, and Fedora.
 Personally, my Linux distribution of choice is Arch Linux.

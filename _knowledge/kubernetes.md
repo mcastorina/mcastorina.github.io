@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Kubernetes"
 category: Software Development
 ---
 
-# Kubernetes
 Kubernetes is an open source container orchestration platform for
 automating application deployment, scaling, and management. It is
 commonly used to deploy microservices because it provides mediations

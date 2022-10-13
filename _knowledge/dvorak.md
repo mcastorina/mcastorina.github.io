@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Dvorak Keyboard"
 category: Miscellaneous
 ---
 
-# Dvorak Keyboard
 The Dvorak keyboard layout is designed to be a faster, more ergonomic
 alternative to the QWERTY layout.
 

@@ -1,11 +1,10 @@
 ---
-layout: default
+layout: post
 title:  "Electrical Components"
 category: Electrical Engineering
 ---
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-# Electrical Components
 These components are a few of the many building blocks of analog circuits.
 
 <table>

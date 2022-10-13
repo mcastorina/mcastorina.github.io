@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Git"
 category: Software Development
 ---
 
-# Git
 Git is a revision control system that is very popular in software
 development. Sites like [GitHub](https://github.com) and
 [GitLab](https://gitlab.com) offer hosting services for your projects.

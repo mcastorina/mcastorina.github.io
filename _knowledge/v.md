@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "V"
 category: Computer Languages
 ---
 
-# V
 V is a very young compiled language targeting many domains. It's a very
 exciting project that has a lot of potential in many domains. I would
 best describe it as a mix of [Rust](/knowledge/rust.html) and

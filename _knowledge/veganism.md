@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Veganism"
 category: Lifestyle
 ---
 
-# Veganism
 Veganism is the practice of abstaining from using animal products,
 especially in food, but it applies to all parts of life.
 

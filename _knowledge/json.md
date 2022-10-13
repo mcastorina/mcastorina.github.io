@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "JSON"
 category: Technologies
 ---
 
-# JSON
 **JavaScript Object Notation** is a standard file format that uses human
 readable text to transmit structured data objects. It originated from
 JavaScript, however, it is a language independent format.

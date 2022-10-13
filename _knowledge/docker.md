@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Docker"
 category: Software Development
 ---
 
-# Docker
 Docker is a set of products that use OS-level virtualisation to
 deliver software packages called containers. The primary advantage
 of containerization is it allows for applications and their

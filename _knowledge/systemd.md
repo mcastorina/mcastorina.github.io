@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Systemd"
 category: Technologies
 ---
 
-# Systemd
 
 A suite of basic building blocks for initalizing and managing a Linux system.
 

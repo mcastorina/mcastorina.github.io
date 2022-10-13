@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Python"
 category: Computer Languages
 ---
 
-# Python
 Python is a general purpose programming language that is very easy
 to use. I consider it a "high level" language because it has object
 oriented structures, garbage collection, dynamic typing, and it is

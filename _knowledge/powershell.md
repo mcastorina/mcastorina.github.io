@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "PowerShell"
 category: Computer Languages
 ---
 
-# PowerShell
 PowerShell is a command line interpreter originally built for Windows
 but is available for all systems. Its best advantage over bash is
 its focus on structured data manipulation. It follows a Verb-Noun syntax

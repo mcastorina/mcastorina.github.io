@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Java"
 category: Computer Languages
 ---
 
-# Java
 Java is the first "real" language I learned. I consider it a "middle
 level" language for its static typing, garbage collection, rich
 libraries, and object oriented focus.

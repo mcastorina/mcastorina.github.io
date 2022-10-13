@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "REST"
 category: Software Development
 ---
 
-# REST
 Representational state transfer (REST) is a software style for creating
 web services. A RESTful web service allows the requesting system to
 access and manipulate textual representations of resources by using a

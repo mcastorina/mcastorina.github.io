@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Learning"
 category: Lifestyle
 ---
 
-# Learning
 I am a life long learner. I love to learn new things specifically
 about building and designing things. I think this roots from my
 childhood: playing with [Legos](https://www.lego.com/en-us) and

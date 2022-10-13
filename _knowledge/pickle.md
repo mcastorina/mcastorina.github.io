@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Pickle"
 category: Hacking
 ---
 
-# Pickle
 Python includes a serialization library called `pickle` to write /
 read Python objects. It uses a stack based language for the interpreter.
 

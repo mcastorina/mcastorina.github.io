@@ -1,11 +1,10 @@
 ---
-layout: default
+layout: post
 title:  "Complex Numbers"
 category: Electrical Engineering
 ---
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-# Complex Numbers
 Complex numbers are numbers that consist of a real and imaginary
 part. Usually it is of the form $$a + jb$$ where $$a$$ and $$b$$
 are real values and $$j$$ represents $$\sqrt{-1}$$. Complex numbers

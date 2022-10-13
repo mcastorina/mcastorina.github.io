@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "SQL Injection"
 category: Hacking
 ---
 
-# SQL Injection
 
 SQL injection is a type of attack that injects malicious SQL statements
 into input forms in an attempt to bypass authorization or retrieve

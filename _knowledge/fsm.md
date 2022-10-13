@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Finite State Machine"
 category: Electrical Engineering
 ---
 
-# Finite State Machine
 A finite state machine is a mathematical model of computation to
 define the solution to a problem. It describes the system as a
 machine that changes state in reaction to inputs to produce the

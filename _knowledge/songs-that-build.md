@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title:  "Songs that Build"
 category: Things I Like
 ---

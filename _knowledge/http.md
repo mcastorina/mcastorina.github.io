@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "HTTP"
 category: Technologies
 ---
 
-# HTTP
 Hypertext Transfer Protocol is an application protocol for distributed
 information systems. HTTP is the foundation of data communication
 for the Internet. It is a request-response protocol in which the

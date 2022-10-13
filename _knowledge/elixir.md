@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Elixir"
 category: Computer Languages
 ---
 
-# Elixir
 Elixir is a functional, dynamically typed programming language that runs
 on the BEAM (Erlang).
 

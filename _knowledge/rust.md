@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Rust"
 category: Computer Languages
 ---
 
-# Rust
 Rust is a systems programming language designed for memory safety
 and performance. It takes a novel approach to memory management
 through an ownership system. The rust compiler keeps track of which

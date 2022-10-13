@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "UART"
 category: Technologies
 ---
 
-# UART
 **Universal Asynchronous Receiver-Transmitter** (UART) is a serial
 communication protocol, usually used in embedded systems. It requires
 only two wires (plus a common ground). One wire transmits and the other

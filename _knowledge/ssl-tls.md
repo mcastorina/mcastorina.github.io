@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "SSL/TLS"
 category: Technologies
 ---
 
-# SSL/TLS
 **SSL** (secure sockets layer) and **TLS** (transport layer security)
 are two protocols that attempt to provide *confidentiality*, *integrity*,
 and *authentication* when communicating across networks. Technically,

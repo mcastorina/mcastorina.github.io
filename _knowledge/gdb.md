@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "GDB"
 category: Hacking
 ---
 
-# GDB
 The GNU Debugger is a tool used for debugging another program while
 it executes. You may set breakpoints, examine memory and registers,
 and step through the code line by line or instruction by instruction.

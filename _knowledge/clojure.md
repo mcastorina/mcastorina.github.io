@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: post
 title:  "Clojure"
 category: Computer Languages
 ---
 
-# Clojure
 Clojure is a functional dialect of lisp. It is built on top of Java
 which makes interoperability easy. One thing I like about Clojure:
 the more concise the code is, the more readable it is. Additionally,
