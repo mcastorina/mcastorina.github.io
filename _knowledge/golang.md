@@ -23,7 +23,7 @@ GoLang offers a concurrency model using goroutines, which are
 lightweight threads managed by the Go runtime.
 
 ```go
-go func(){
+go func() {
     // do something
 }()
 ```
@@ -33,7 +33,7 @@ Channels are a "typed conduit through which you can send and receive
 values with the channel operator, `<-`." It is basically a buffer
 to send and receive data. Sending will block when the buffer is
 full, and receiving will block when the buffer is empty. By default, a
-channel has only one slot, but you can change the length on initialization.
+channel is unbuffered, but you can change the size on initialization.
 
 ```go
 package main
@@ -66,14 +66,17 @@ if item, ok := m["hello"]; ok {
     // item exists
 }
 
-// convert an array to a map
-m := map[string]bool{}
+// convert an array to a set
+m := make(map[string]struct{}, len(arr))
 for _, item := range arr {
-    m[item] = true
+    m[item] = struct{}{}
 }
 ```
 
 **Note:** Maps are not safe for concurrent use.
+
+**Note:** `map[T]struct{}` is the idiomatic way to create a set because the
+size of an empty struct is 0.
 
 
 ## Pointers
@@ -121,12 +124,67 @@ for i < 10 { i++ }
 // iterate over slice
 for index, item := range slice { }
 
+// iterate over a map
+for key, value := range m { }
+
 // labeled loop
 loop:
 for {
     break loop
 }
 ```
+
+## Interfaces
+Go uses interfaces for a sort of "duck typing." An interface is defined as a
+group of methods that must exist on a concrete type. They are generally best
+used as inputs for a library to allow users to implement and use their own
+types.
+
+```go
+type Example interface {
+    Examp() string
+}
+```
+
+**Note:** The empty interface `interface{}` (now known as `any`) is a way to
+accept any possible type.
+
+An interface can be used in place of a concrete type, but only the methods
+defined in the interface will be accessible. If you want the underlying type
+of an interface, type coercion can be used.
+
+```go
+type Foo struct { id int }
+func (f Foo) Examp() string {
+	return "Foo!"
+}
+
+func doSomething(e Example) {
+	fmt.Println(e.Examp())
+	if f, ok := e.(Foo); ok {
+		fmt.Println("e is Foo with ID", f.id)
+	}
+}
+```
+
+## Generics
+As of Go 1.18, generics exist in the language for very limited use cases. The
+idea being that generics would be a solution for code that you would need to
+generate for different types. Generics in Go aren't fully monomorphized in
+order to keep fast compile times. Most of the time, generics will be resolved
+at runtime.
+
+```go
+func add[T ~int | ~float64](a, b T) T {
+	return a + b
+}
+```
+
+**Note:** `~` is referencing the underlying type.
+
+Generics can be constrained by interfaces as well. See the
+[exp/constraints](https://pkg.go.dev/golang.org/x/exp/constraints) package for
+some useful constraints.
 
 ## Style
 GoLang has a very opinionated style.
