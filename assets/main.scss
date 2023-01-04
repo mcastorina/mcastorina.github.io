@@ -39,5 +39,11 @@ body {
     padding: 0 0;
 }
 .wrapper {
-    max-width: calc(800px - ((30px - 1em) * 2));
+    max-width: calc(850px - ((30px - 1em) * 2));
+}
+
+details div {
+    padding-left: 8px;
+    margin: 8px 20px 8px 20px;
+    border-left: 1px solid black;
 }
