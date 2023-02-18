@@ -1,0 +1,33 @@
+---
+layout: post
+title:  "I am not interested in AI tools"
+date:   2023-02-18 09:00:00 -0500
+tags: programming misc
+---
+
+There's certainly good arguments for using AI tools like *GitHub Copilot* or
+*ChatGPT*, and there are certainly good arguments against them. This post isn't
+about either. Instead, here's my anecdote as to why I haven't felt drawn to
+even try them out.
+
+I was talking to a friend about *DALL-E* and how it is affecting the art
+community. The whole AI art gave me this odd dystopian feeling that I couldn't
+quite articulate until this conversation. She told me that art isn't about the
+end result. Artists make art because they love the process of making art.
+
+And that's why I'm not drawn to using AI tools for programming. I love the
+process of programming. I love the clean solutions, the bugs, the tests, the
+frustrations. I love thinking about trade-offs, the refactors and rewrites, the
+investigations and root causes, and the boundless minutia at every level.
+
+Maybe it's just me, but I think a lot of programmers enjoy the process of
+programming. It is, after all, a somewhat frustrating endeavor, especially
+starting out. The process of writing a program involves failing over and over
+again, and even when you succeed, there's never a point where a program is
+"finished." It can be exhausting, but maybe the end result is worth it for some
+people. I can certainly understand wanting to make the process more enjoyable,
+and maybe AI tools provide that.
+
+Maybe AI will transform what it means to program, and maybe it won't. Maybe
+I'll be drawn to AI in the future, and maybe nothing more will come of it. For
+now though, I'm content using my dumb fingers to write my own dumb programs.
