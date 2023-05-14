@@ -61,8 +61,11 @@ practices.
 [CS Primer](https://csprimer.com/) is a subscription platform for learning
 computer science by writing code. It is self paced and covers a wide range of
 advanced topics. Being a paid service, it mostly resembles university courses
-with access to a community of other enrolled students and office hours with the
-creator.
+with access to video explanations, a community of other enrolled students, and
+office hours with the creator.
+
+Each topic has one free explanation video and programming challenge for you to
+try out as well.
 
 
 ## More?
