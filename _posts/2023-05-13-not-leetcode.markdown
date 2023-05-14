@@ -48,6 +48,23 @@ that delve into real world protocols and systems. It has (at the time of
 writing) 18 challenges and 9 kata (small challenges).
 
 
+## Cryptopals
+
+[Cryptopals](https://www.cryptopals.com/) focuses on exercises that demonstrate
+attacks on real-world crypto. The goal is to build up knowledge of
+cryptosystems and how to attack them in order to instill defensive programming
+practices.
+
+
+## CS Primer
+
+[CS Primer](https://csprimer.com/) is a subscription platform for learning
+computer science by writing code. It is self paced and covers a wide range of
+advanced topics. Being a paid service, it mostly resembles university courses
+with access to a community of other enrolled students and office hours with the
+creator.
+
+
 ## More?
 
 These are just the ones I've encountered, if you know of others I'd love to
