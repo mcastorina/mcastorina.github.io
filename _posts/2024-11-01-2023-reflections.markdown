@@ -1,0 +1,63 @@
+---
+layout: post
+title:  "2023 Reflections and 2024 Goals"
+date:   2024-11-01 09:00:00 -0700
+tags: misc
+---
+
+Okay, I know I'm *finally* finishing this post in NOVEMBER when 2024 is almost
+over, and it was mainly postponed because I lacked 2024 goals. So I've
+reflected on why and shared my thoughts below.
+
+But first, 2023 reflections! I made a *huge* life change that made it a great
+year for me.
+
+{% details **I moved to Seattle!** %}
+
+It took me awhile to get everything ready and find a place to rent, but I
+finally did it! I chose Seattle for a few reasons. The nature in the Pacific
+Northwest really calls to me, and I want to go on hikes and enjoy it. I also
+have a few friends in Seattle, so it was an easier transition socially.
+Finally, Seattle has a pretty good tech scene, so I'll have more opportunities
+to make friends. So far, I really love it here and am grateful I made the jump!
+
+![Rainer](/assets/rainer.jpg)
+
+{% enddetails %}
+
+{% details **Went on some hikes** %}
+
+My friend and I took a great road trip to Sequoia and Yosemite. It was such an
+amazing trip, and while I would enjoy the beauty of these parks alone, I had so
+much more fun sharing the memories with my friend.
+
+![Yosemite](/assets/yosemite.jpg)
+{: style="width: 30%; margin: auto;"}
+
+<br>
+
+I also went on a hike in the Seattle area! Similarly, the views were
+beautiful, but the friends really made it a great experience.
+
+![Maple Pass](/assets/maple-pass.jpg)
+
+{% enddetails %}
+
+{% details **Joined a parkour community** %}
+
+I started attending parkour classes in Seattle and found the community to be
+really lovely and welcoming. I'm happy to say I've made friends there and I
+regularly train twice a week.
+
+{% enddetails %}
+
+<br>
+
+So now for 2024 goals, or, lack of goals. At first, I thought I was
+procrastinating on this blog post because of laziness or low blogging
+motivation (I mean, it *has* been over a year since my last post) or some other
+excuse. But I realized it's an indication that I couldn't think of any goals
+for 2024. And that's okay! I made a huge change in my life near the end of 2023
+and I just felt like I needed time to settle. I didn't *need* to have goals for
+2024. I was at a time in my life where I just wanted to experience and enjoy
+it. And I did.
