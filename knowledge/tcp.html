@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>TCP | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="TCP" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Transmission Control Protocol is a network communication protocol designed to reliably send ordered data packets over an IP network." />
+<meta property="og:description" content="Transmission Control Protocol is a network communication protocol designed to reliably send ordered data packets over an IP network." />
+<link rel="canonical" href="/knowledge/tcp.html" />
+<meta property="og:url" content="/knowledge/tcp.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-11-01T16:30:21+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="TCP" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-11-01T16:30:21+00:00","datePublished":"2024-11-01T16:30:21+00:00","description":"Transmission Control Protocol is a network communication protocol designed to reliably send ordered data packets over an IP network.","headline":"TCP","mainEntityOfPage":{"@type":"WebPage","@id":"/knowledge/tcp.html"},"url":"/knowledge/tcp.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">TCP</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2024-11-01T16:30:21+00:00" itemprop="datePublished">Nov 1, 2024
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Transmission Control Protocol is a network communication protocol
+designed to reliably send ordered data packets over an IP network.</p>
+
+<h2 id="segment-structure">Segment Structure</h2>
+<p>A TCP segment consists of a TCP header and a data section. There
+are 10 mandatory fields for the header.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+      <th>Offset</th>
+      <th>Size (Bits)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Source port</strong></td>
+      <td>The sending port</td>
+      <td>0</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <td><strong>Destination port</strong></td>
+      <td>The receiving port</td>
+      <td>16</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <td><strong>Sequence number</strong></td>
+      <td>The initial sequence number (if SYN set) otherwise the accumulated sequence number</td>
+      <td>32</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <td><strong>Acknowledgement number</strong></td>
+      <td>If ACK set, the expectant next sequence number</td>
+      <td>64</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <td><strong>Data offset</strong></td>
+      <td>Size of the TCP header in 32-bit words (min 5, max 15)</td>
+      <td>96</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><strong>Reserved</strong></td>
+      <td>For future use (should be set to 000)</td>
+      <td>100</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td><strong>Flags</strong></td>
+      <td>9 1-bit flags</td>
+      <td>103</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <td><strong>Window Size</strong></td>
+      <td>The size of the receive window</td>
+      <td>112</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <td><strong>Checksum</strong></td>
+      <td>Error checking for the header</td>
+      <td>128</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <td><strong>Urgent pointer</strong></td>
+      <td>If URG is set, offset from the sequence number indicating the last urgent data byte</td>
+      <td>144</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <td><strong>Options</strong></td>
+      <td>Optional header fields</td>
+      <td>160</td>
+      <td>0-320</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The flags section indicates which fields are relevant in the header. There are 9 total flags.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flag</th>
+      <th>Description</th>
+      <th>Total Offset</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>NS</strong></td>
+      <td>ECN-nonce - concealment protection (experimental)</td>
+      <td>103</td>
+    </tr>
+    <tr>
+      <td><strong>CWR</strong></td>
+      <td>Congestion Window Reduced</td>
+      <td>104</td>
+    </tr>
+    <tr>
+      <td><strong>ECE</strong></td>
+      <td>If SYN, the TCP peer is ECN capable, else congestion indicator</td>
+      <td>105</td>
+    </tr>
+    <tr>
+      <td><strong>URG</strong></td>
+      <td>Indicates the Urgent pointer field is significant</td>
+      <td>106</td>
+    </tr>
+    <tr>
+      <td><strong>ACK</strong></td>
+      <td>Indicates the Acknowledgement field is significant</td>
+      <td>107</td>
+    </tr>
+    <tr>
+      <td><strong>PSH</strong></td>
+      <td>Asks to push the buffered data to the receiving application</td>
+      <td>108</td>
+    </tr>
+    <tr>
+      <td><strong>RST</strong></td>
+      <td>Reset the connection</td>
+      <td>109</td>
+    </tr>
+    <tr>
+      <td><strong>SYN</strong></td>
+      <td>Synchronize sequence numbers</td>
+      <td>110</td>
+    </tr>
+    <tr>
+      <td><strong>FIN</strong></td>
+      <td>Last packet from sender</td>
+      <td>111</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="protocol-operation">Protocol Operation</h2>
+<p>The protocol is divided into three phases: connection establishment,
+data transfer, and connection termination.</p>
+
+<h3 id="connection-establishment">Connection Establishment</h3>
+<p>TCP uses a three-way handshake to establish a connection.</p>
+
+<ol>
+  <li><strong>SYN</strong> - The client sends <strong>SYN</strong> with a random sequence number <code class="language-plaintext highlighter-rouge">x</code></li>
+  <li><strong>SYN-ACK</strong> - The server replies with <strong>SYN-ACK</strong> with an acknowledgement number <code class="language-plaintext highlighter-rouge">x+1</code> and a random sequence number <code class="language-plaintext highlighter-rouge">y</code></li>
+  <li><strong>ACK</strong> - The client sends <strong>ACK</strong> back to the server with an acknowledgement number <code class="language-plaintext highlighter-rouge">y+1</code> and a sequence number <code class="language-plaintext highlighter-rouge">x+1</code></li>
+</ol>
+
+<h3 id="connection-termination">Connection Termination</h3>
+<p>TCP uses a four-way handshake to terminate a connection. Each
+endpoint needs to send a <strong>FIN</strong> and a final <strong>ACK</strong> to terminate its
+side of the connection.</p>
+
+<ol>
+  <li><strong>FIN</strong> - The initiator sends <strong>FIN</strong></li>
+  <li><strong>ACK</strong> - The receiver responds with <strong>ACK</strong></li>
+  <li><strong>FIN</strong> - The receiver sends <strong>FIN</strong></li>
+  <li><strong>ACK</strong> - The initiator responds with the final <strong>ACK</strong></li>
+</ol>
+
+<p>It is also possible to combine the receiver’s flags in steps 2 and 3 for a <strong>FIN-ACK</strong>.</p>
+
+  </div><a class="u-url" href="/knowledge/tcp.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

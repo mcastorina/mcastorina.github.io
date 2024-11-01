@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>x86 Assembly | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="x86 Assembly" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="x86 Assembly x86 (32-bit) and x86-64 (64-bit) assembly is syntactic sugar for machine code that gets executed by a CPU. The two flavors of assembly are intel and att, however intel is much more digestible." />
+<meta property="og:description" content="x86 Assembly x86 (32-bit) and x86-64 (64-bit) assembly is syntactic sugar for machine code that gets executed by a CPU. The two flavors of assembly are intel and att, however intel is much more digestible." />
+<link rel="canonical" href="/knowledge/x86.html" />
+<meta property="og:url" content="/knowledge/x86.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-11-01T16:30:21+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="x86 Assembly" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-11-01T16:30:21+00:00","datePublished":"2024-11-01T16:30:21+00:00","description":"x86 Assembly x86 (32-bit) and x86-64 (64-bit) assembly is syntactic sugar for machine code that gets executed by a CPU. The two flavors of assembly are intel and att, however intel is much more digestible.","headline":"x86 Assembly","mainEntityOfPage":{"@type":"WebPage","@id":"/knowledge/x86.html"},"url":"/knowledge/x86.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">x86 Assembly</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2024-11-01T16:30:21+00:00" itemprop="datePublished">Nov 1, 2024
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h1 id="x86-assembly">x86 Assembly</h1>
+<p>x86 (32-bit) and x86-64 (64-bit) assembly is syntactic sugar for
+machine code that gets executed by a CPU. The two flavors of assembly
+are intel and att, however intel is much more digestible.</p>
+
+<p><a href="https://guyinatuxedo.github.io/01-intro_assembly/assembly/index.html">Assembly Introduction Reference</a></p>
+
+<p><a href="https://en.wikibooks.org/wiki/X86_Assembly/X86_Architecture">Wikibooks Reference</a></p>
+
+<h2 id="registers">Registers</h2>
+<p>There are 16 registers available, 3 of which are special purpose.</p>
+
+<ul>
+  <li><strong>rbp:</strong> base pointer (points to the bottom of the stack frame)</li>
+  <li><strong>rsp:</strong> stack pointer (points to the top of the stack)</li>
+  <li><strong>rip:</strong> instruction pointer (points to the instruction to be executed)</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">8 Byte Register</th>
+      <th style="text-align: center">Lower 4 Bytes</th>
+      <th style="text-align: center">Lower 2 Bytes</th>
+      <th style="text-align: center">Lower Byte</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">rbp</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ebp</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">bp</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">bpl</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">rsp</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">esp</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">sp</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">spl</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">rip</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">eip</code></td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">rax</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">eax</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ax</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">al</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">rbx</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ebx</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">bx</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">bl</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">rcx</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ecx</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">cx</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">cl</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">rdx</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">edx</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">dx</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">dl</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">rsi</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">esi</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">si</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">sil</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">rdi</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">edi</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">di</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">dil</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r8</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r8d</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r8w</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r8b</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r9</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r9d</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r9w</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r9b</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r10</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r10d</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r10w</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r10b</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r11</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r11d</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r11w</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r11b</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r12</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r12d</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r12w</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r12b</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r13</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r13d</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r13w</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r13b</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r14</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r14d</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r14w</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r14b</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r15</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r15d</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r15w</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">r15b</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="segment-registers">Segment Registers</h3>
+<p>Early CPU implementations had special registers for <a href="https://en.wikipedia.org/wiki/Memory_segmentation">memory
+segmentation</a>,
+essentially allowing more addresses than could fit in a single register.
+The x86-64 architecture does not use segmentation in 64-bit mode, though
+it is still supported for backwards compatibility. In 64-bit mode, all
+segment registers are forced to 0 except for FS and GS which allows the
+OS to use them for special purposes.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Register (2 Bytes)</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">cs</code></td>
+      <td style="text-align: left">Code segment</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ds</code></td>
+      <td style="text-align: left">Data segment</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ss</code></td>
+      <td style="text-align: left">Stack segment</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">es</code></td>
+      <td style="text-align: left">Extra segment</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">fs</code></td>
+      <td style="text-align: left">Extra segment</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">gs</code></td>
+      <td style="text-align: left">Extra segment</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="https://en.wikipedia.org/wiki/X86_memory_segmentation">Reference</a></p>
+
+<h2 id="calling-conventions">Calling Conventions</h2>
+<p>When a function is called in assembly, generally what happens:</p>
+
+<ol>
+  <li>Save caller-saved registers (if any)</li>
+  <li>Push the arguments onto the stack (if any)</li>
+  <li>Push the <strong>return address</strong> onto the stack</li>
+  <li>Push the <strong>base pointer</strong> onto the stack</li>
+  <li>Set the <strong>stack pointer</strong> to the <strong>base pointer</strong></li>
+  <li>Subtract the <strong>stack pointer</strong> to make room for local variables</li>
+  <li>The return value will be stored in <strong>rax</strong> (64-bit) or <strong>eax</strong> (32-bit)</li>
+</ol>
+
+<h3 id="64-bit-conventions">64-bit Conventions</h3>
+<ul>
+  <li>Function arguments are first put into registers <code class="language-plaintext highlighter-rouge">rdi</code>, <code class="language-plaintext highlighter-rouge">rsi</code>, <code class="language-plaintext highlighter-rouge">rdx</code>,
+<code class="language-plaintext highlighter-rouge">rcx</code>, <code class="language-plaintext highlighter-rouge">r8</code>, <code class="language-plaintext highlighter-rouge">r9</code> respectively, then pushed onto the stack <em>in reverse
+order</em> if there are more</li>
+  <li><strong>caller-saved registers:</strong> <code class="language-plaintext highlighter-rouge">r10</code>, <code class="language-plaintext highlighter-rouge">r11</code>, and any registers that
+parameters are put into</li>
+  <li><strong>callee-saved registers:</strong> <code class="language-plaintext highlighter-rouge">rbx</code>, <code class="language-plaintext highlighter-rouge">rbp</code>, <code class="language-plaintext highlighter-rouge">r12</code>, <code class="language-plaintext highlighter-rouge">r13</code>, <code class="language-plaintext highlighter-rouge">r14</code>, and <code class="language-plaintext highlighter-rouge">r15</code></li>
+</ul>
+
+<p><a href="https://aaronbloomfield.github.io/pdr/book/x86-64bit-ccc-chapter.pdf">Reference</a></p>
+
+<h3 id="32-bit-conventions">32-bit Conventions</h3>
+<ul>
+  <li>All function arguments are pushed onto the stack <em>in reverse order</em></li>
+  <li><strong>caller-saved registers:</strong> <code class="language-plaintext highlighter-rouge">eax</code>, <code class="language-plaintext highlighter-rouge">ecx</code>, and <code class="language-plaintext highlighter-rouge">edx</code></li>
+  <li><strong>callee-saved registers:</strong> <code class="language-plaintext highlighter-rouge">ebx</code>, <code class="language-plaintext highlighter-rouge">edi</code>, and <code class="language-plaintext highlighter-rouge">esi</code></li>
+</ul>
+
+<p><a href="https://aaronbloomfield.github.io/pdr/book/x86-32bit-ccc-chapter.pdf">Reference</a></p>
+
+<h2 id="system-calls">System Calls</h2>
+<p>System calls are a way for programs to request the kernel to do something
+on the user’s behalf, such as open, read, write files or fork and exec
+processes.</p>
+
+<p>In <strong>64-bit</strong>, the <code class="language-plaintext highlighter-rouge">syscall</code> instruction is used with the syscall number in
+<code class="language-plaintext highlighter-rouge">rax</code>. Arguments are put into registers <code class="language-plaintext highlighter-rouge">rdi</code>, <code class="language-plaintext highlighter-rouge">rsi</code>, <code class="language-plaintext highlighter-rouge">rdx</code>, <code class="language-plaintext highlighter-rouge">rcx</code>,
+<code class="language-plaintext highlighter-rouge">r8</code>, and <code class="language-plaintext highlighter-rouge">r9</code>. <code class="language-plaintext highlighter-rouge">rcx</code> and <code class="language-plaintext highlighter-rouge">r11</code> will be clobbered by the syscall and
+the return value will be in <code class="language-plaintext highlighter-rouge">rax</code>.</p>
+
+<p>In <strong>32-bit</strong>, the <code class="language-plaintext highlighter-rouge">int 0x80</code> instruction is used with the syscall number
+in <code class="language-plaintext highlighter-rouge">eax</code>. Arguments are put into registers <code class="language-plaintext highlighter-rouge">rbx</code>, <code class="language-plaintext highlighter-rouge">rcx</code>, <code class="language-plaintext highlighter-rouge">rdx</code>, <code class="language-plaintext highlighter-rouge">rsi</code>,
+<code class="language-plaintext highlighter-rouge">rdi</code>, and <code class="language-plaintext highlighter-rouge">rbp</code>. The return value will be in <code class="language-plaintext highlighter-rouge">eax</code>.</p>
+
+<p><a href="https://blog.packagecloud.io/eng/2016/04/05/the-definitive-guide-to-linux-system-calls/">Reference</a></p>
+
+<h3 id="common-system-call-numbers">Common System Call Numbers</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Platform</th>
+      <th>Number</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>32-bit</td>
+      <td><code class="language-plaintext highlighter-rouge">0xb</code></td>
+      <td><code class="language-plaintext highlighter-rouge">execve(char *path, char *argv[], char *envp[])</code></td>
+    </tr>
+    <tr>
+      <td>64-bit</td>
+      <td><code class="language-plaintext highlighter-rouge">0x3b</code></td>
+      <td><code class="language-plaintext highlighter-rouge">execve(char *path, char *argv[], char *envp[])</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="https://syscalls32.paolostivanin.com/">32-Bit Reference</a></p>
+
+<p><a href="https://syscalls64.paolostivanin.com/">64-Bit Reference</a></p>
+
+<h2 id="flags">Flags</h2>
+<p>Flags are stored in a special 32-bit <code class="language-plaintext highlighter-rouge">EFLAGS</code> register.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Bit</th>
+      <th style="text-align: center">Name</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">CF</code></td>
+      <td style="text-align: left"><strong>Carry Flag</strong>; set if the last arithmetic operation carried or borrowed a bit beyond the size of the register</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">PF</code></td>
+      <td style="text-align: left"><strong>Parity Flag</strong>; set if the number of set bits in the least significant byte is a multiple of 2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">AF</code></td>
+      <td style="text-align: left"><strong>Adjust Flag</strong>; carry of binary coded decimal numbers arithmetic operations</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">6</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ZF</code></td>
+      <td style="text-align: left"><strong>Zero Flag</strong>; set if the result of an operation is 0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">7</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">SF</code></td>
+      <td style="text-align: left"><strong>Sign Flag</strong>; set if the result of an operation is negative</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">8</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">TF</code></td>
+      <td style="text-align: left"><strong>Trap Flag</strong>; set if step by step debugging</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">IF</code></td>
+      <td style="text-align: left"><strong>Interruption Flag</strong>; set if interrupts are enabled</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">10</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">DF</code></td>
+      <td style="text-align: left"><strong>Direction Flag</strong>; stream direction. If set, string operations will decrement their pointer rather than incrementing it, reading memory backwards</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">11</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">OF</code></td>
+      <td style="text-align: left"><strong>Overflow Flag</strong>; set if signed arithmetic operations result in a value too large for the register to contain</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">12/13</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">IOPL</code></td>
+      <td style="text-align: left"><strong>I/O Privilege Level field (2 bits)</strong>; I/O Privilege Level of the current process</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">14</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">NT</code></td>
+      <td style="text-align: left"><strong>Nested Task flag</strong>; controls chaining of interrupts. Set if the current process is linked to the next process</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">16</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">RF</code></td>
+      <td style="text-align: left"><strong>Resume Flag</strong>; response to debug exceptions</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">17</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">VM</code></td>
+      <td style="text-align: left"><strong>Virtual-8086 Mode</strong>; set if in 8086 compatibility mode</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">18</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">AC</code></td>
+      <td style="text-align: left"><strong>Alignment Check</strong>; set if alignment checking of memory references is done</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">19</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">VIF</code></td>
+      <td style="text-align: left"><strong>Virtual Interrupt Flag</strong>; virtual image of IF</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">20</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">VIP</code></td>
+      <td style="text-align: left"><strong>Virtual Interrupt Pending flag</strong>; set if an interrupt is pending</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">21</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ID</code></td>
+      <td style="text-align: left"><strong>Identification flag</strong>; support for CPUID instruction if can be set</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="instructions">Instructions</h2>
+<p>Instructions are variable length and encoded in bytes (not included here). This is not an exhaustive list.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Instruction</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">mov dst, src</code></td>
+      <td style="text-align: left">Move data from register <code class="language-plaintext highlighter-rouge">src</code> to register <code class="language-plaintext highlighter-rouge">dst</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">mov dst, [src]</code></td>
+      <td style="text-align: left">Move data from memory at register <code class="language-plaintext highlighter-rouge">src</code> to register <code class="language-plaintext highlighter-rouge">dst</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">mov [dst], src</code></td>
+      <td style="text-align: left">Move data from register <code class="language-plaintext highlighter-rouge">src</code> to memory at register <code class="language-plaintext highlighter-rouge">dst</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">lea dst, [src]</code></td>
+      <td style="text-align: left"><strong>load effective address</strong>; move the address of <code class="language-plaintext highlighter-rouge">src</code> to <code class="language-plaintext highlighter-rouge">dst</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">add dst, src</code></td>
+      <td style="text-align: left">Add <code class="language-plaintext highlighter-rouge">dst</code> and <code class="language-plaintext highlighter-rouge">src</code> and store the result in <code class="language-plaintext highlighter-rouge">dst</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">sub dst, src</code></td>
+      <td style="text-align: left">Subtract <code class="language-plaintext highlighter-rouge">dst</code> and <code class="language-plaintext highlighter-rouge">src</code> and store the result in <code class="language-plaintext highlighter-rouge">dst</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">xor dst, src</code></td>
+      <td style="text-align: left">Xor <code class="language-plaintext highlighter-rouge">dst</code> and <code class="language-plaintext highlighter-rouge">src</code> and store the result in <code class="language-plaintext highlighter-rouge">dst</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">push src</code></td>
+      <td style="text-align: left">Grow the stack (subtract bytes) and copy the value in <code class="language-plaintext highlighter-rouge">src</code> to the top of the stack</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">pop dst</code></td>
+      <td style="text-align: left">Copy the value at the top of the stack into <code class="language-plaintext highlighter-rouge">dst</code> and shrink the stack (add bytes)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">jmp addr</code></td>
+      <td style="text-align: left">Set the instruction pointer (<code class="language-plaintext highlighter-rouge">rip</code>) to <code class="language-plaintext highlighter-rouge">addr</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">call addr</code></td>
+      <td style="text-align: left">Push <code class="language-plaintext highlighter-rouge">rip</code> onto the stack, then jump to <code class="language-plaintext highlighter-rouge">addr</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">leave</code></td>
+      <td style="text-align: left">Resets the stack frame; set the stack pointer to the base pointer, then pop the base pointer from stack</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ret</code></td>
+      <td style="text-align: left">Pop <code class="language-plaintext highlighter-rouge">rip</code> from the stack</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">jnz addr</code></td>
+      <td style="text-align: left">Jump to <code class="language-plaintext highlighter-rouge">addr</code> if the zero flag is not set</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">jz addr</code></td>
+      <td style="text-align: left">Jump to <code class="language-plaintext highlighter-rouge">addr</code> if the zero flag is set</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="https://en.wikipedia.org/wiki/X86_instruction_listings">Reference</a></p>
+
+<h2 id="pie-and-relro">PIE and RELRO</h2>
+<p><strong>Position Independent Executable</strong> and <strong>Relocation Read-Only</strong> are
+security measures to make exploiting binaries harder.</p>
+
+<p>PIE means that the assembly code is position independent, and the
+linker can perform address space layout randomization (ASLR). This
+is only referring to the main executable (i.e. not dynamically linked
+code). In most cases, ASLR is applied to shared libraries, the stack,
+and the heap regardless of PIE. ASLR works in tandem with the PLT and GOT.</p>
+
+<p>The <strong>PLT</strong> (Procedure Linkage Table) is a table of function stubs that
+are called in place of the actual, dynamically linked functions. The
+address of the actual dynamically linked function is stored in the
+<strong>GOT</strong> (Global Offset Table), which is populated by the dynamic linker
+at runtime. By default, the GOT is populated lazily whenever the PLT
+stub is called, however these can be controlled at linkage time with the
+<code class="language-plaintext highlighter-rouge">-zlazy</code> and <code class="language-plaintext highlighter-rouge">-znow</code> flags to <code class="language-plaintext highlighter-rouge">ld</code> or <code class="language-plaintext highlighter-rouge">gcc</code>.</p>
+
+<p>An executable can be checked for PIE and linkage flags with</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>readelf --dynamic $EXE
+</code></pre></div></div>
+
+<p>Additionally, there are two types of RELRO: partial and full. <strong>Partial
+RELRO</strong> is the default and forces the GOT to come before the BSS in memory
+(see <a href="/knowledge/elf.html">ELF</a>). This prevents a buffer overflow of a
+global variable overwriting GOT entries. <strong>Full RELRO</strong> makes the entire
+GOT read-only, which increases the startup time for the executable
+as all symbols must be resolved before the program starts. This can
+significantly impact startup times, and as such is not the default.</p>
+
+  </div><a class="u-url" href="/knowledge/x86.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

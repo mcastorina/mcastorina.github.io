@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>strtime | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="strtime" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="GNU Date" />
+<meta property="og:description" content="GNU Date" />
+<link rel="canonical" href="/knowledge/strtime.html" />
+<meta property="og:url" content="/knowledge/strtime.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-11-01T16:30:21+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="strtime" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-11-01T16:30:21+00:00","datePublished":"2024-11-01T16:30:21+00:00","description":"GNU Date","headline":"strtime","mainEntityOfPage":{"@type":"WebPage","@id":"/knowledge/strtime.html"},"url":"/knowledge/strtime.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">strtime</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2024-11-01T16:30:21+00:00" itemprop="datePublished">Nov 1, 2024
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="gnu-date">GNU Date</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Directive</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%%</code></td>
+      <td>a literal %</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%a</code></td>
+      <td>locale’s abbreviated weekday name (e.g., Sun)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%A</code></td>
+      <td>locale’s full weekday name (e.g., Sunday)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%b</code></td>
+      <td>locale’s abbreviated month name (e.g., Jan)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%B</code></td>
+      <td>locale’s full month name (e.g., January)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%c</code></td>
+      <td>locale’s date and time (e.g., Thu Mar  3 23:05:25 2005)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%C</code></td>
+      <td>century; like %Y, except omit last two digits (e.g., 20)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%d</code></td>
+      <td>day of month (e.g., 01)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%D</code></td>
+      <td>date; same as %m/%d/%y</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%e</code></td>
+      <td>day of month, space padded; same as %_d</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%F</code></td>
+      <td>full date; like %+4Y-%m-%d</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%g</code></td>
+      <td>last two digits of year of ISO week number (see %G)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%G</code></td>
+      <td>year of ISO week number (see %V); normally useful only with %V</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%h</code></td>
+      <td>same as %b</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%H</code></td>
+      <td>hour (00..23)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%I</code></td>
+      <td>hour (01..12)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%j</code></td>
+      <td>day of year (001..366)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%k</code></td>
+      <td>hour, space padded ( 0..23); same as %_H</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%l</code></td>
+      <td>hour, space padded ( 1..12); same as %_I</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%m</code></td>
+      <td>month (01..12)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%M</code></td>
+      <td>minute (00..59)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%n</code></td>
+      <td>a newline</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%N</code></td>
+      <td>nanoseconds (000000000..999999999)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%p</code></td>
+      <td>locale’s equivalent of either AM or PM; blank if not known</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%P</code></td>
+      <td>like %p, but lower case</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%q</code></td>
+      <td>quarter of year (1..4)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%r</code></td>
+      <td>locale’s 12-hour clock time (e.g., 11:11:04 PM)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%R</code></td>
+      <td>24-hour hour and minute; same as %H:%M</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%s</code></td>
+      <td>seconds since 1970-01-01 00:00:00 UTC</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%S</code></td>
+      <td>second (00..60)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%t</code></td>
+      <td>a tab</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%T</code></td>
+      <td>time; same as %H:%M:%S</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%u</code></td>
+      <td>day of week (1..7); 1 is Monday</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%U</code></td>
+      <td>week number of year, with Sunday as first day of week (00..53)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%V</code></td>
+      <td>ISO week number, with Monday as first day of week (01..53)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%w</code></td>
+      <td>day of week (0..6); 0 is Sunday</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%W</code></td>
+      <td>week number of year, with Monday as first day of week (00..53)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%x</code></td>
+      <td>locale’s date representation (e.g., 12/31/99)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%X</code></td>
+      <td>locale’s time representation (e.g., 23:13:48)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%y</code></td>
+      <td>last two digits of year (00..99)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%Y</code></td>
+      <td>year</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%z</code></td>
+      <td>+hhmm numeric time zone (e.g., -0400)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%:z</code></td>
+      <td>+hh:mm numeric time zone (e.g., -04:00)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%::z</code></td>
+      <td>+hh:mm:ss numeric time zone (e.g., -04:00:00)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%:::z</code></td>
+      <td>numeric time zone with : to necessary precision (e.g., -04, +05:30)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%Z</code></td>
+      <td>alphabetic time zone abbreviation (e.g., EDT)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>By default, date pads numeric fields with zeroes.  The following optional flags may follow <code class="language-plaintext highlighter-rouge">%</code>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Directive</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-</code></td>
+      <td>(hyphen) do not pad the field</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">_</code></td>
+      <td>(underscore) pad with spaces</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>(zero) pad with zeros</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">+</code></td>
+      <td>pad with zeros, and put ‘+’ before future years with &gt;4 digits</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">^</code></td>
+      <td>use upper case if possible</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">#</code></td>
+      <td>use opposite case if possible</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Reference: <a href="https://linux.die.net/man/1/date">GNU Date Man Page</a></p>
+
+<h2 id="python">Python</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Directive</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%a</code></td>
+      <td>Weekday as locale’s abbreviated name.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%A</code></td>
+      <td>Weekday as locale’s full name.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%w</code></td>
+      <td>Weekday as a decimal number, where 0 is Sunday and 6 is Saturday.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%d</code></td>
+      <td>Day of the month as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%b</code></td>
+      <td>Month as locale’s abbreviated name.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%B</code></td>
+      <td>Month as locale’s full name.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%m</code></td>
+      <td>Month as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%y</code></td>
+      <td>Year without century as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%Y</code></td>
+      <td>Year with century as a decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%H</code></td>
+      <td>Hour (24-hour clock) as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%I</code></td>
+      <td>Hour (12-hour clock) as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%p</code></td>
+      <td>Locale’s equivalent of either AM or PM.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%M</code></td>
+      <td>Minute as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%S</code></td>
+      <td>Second as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%f</code></td>
+      <td>Microsecond as a decimal number, zero-padded on the left.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%z</code></td>
+      <td>UTC offset in the form +HHMM or -HHMM (empty string if the the object is naive).</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%Z</code></td>
+      <td>Time zone name (empty string if the object is naive).</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%j</code></td>
+      <td>Day of the year as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%U</code></td>
+      <td>Week number of the year (Sunday as the first day of the week) as a zero padded decimal number. All days in a new year preceding the first Sunday are considered to be in week 0.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%W</code></td>
+      <td>Week number of the year (Monday as the first day of the week) as a decimal number. All days in a new year preceding the first Monday are considered to be in week 0.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%c</code></td>
+      <td>Locale’s appropriate date and time representation.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%x</code></td>
+      <td>Locale’s appropriate date representation.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%X</code></td>
+      <td>Locale’s appropriate time representation.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">%%</code></td>
+      <td>A literal ‘%’ character.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Reference: <a href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior">Python Datetime Docs</a></p>
+
+<h2 id="golang">GoLang</h2>
+
+<p>Specify your desired format using <code class="language-plaintext highlighter-rouge">Mon Jan 2 15:04:05 -0700 MST 2006</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Directive</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Mon</code></td>
+      <td>Weekday as locale’s abbreviated name.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Monday</code></td>
+      <td>Weekday as locale’s full name.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Jan</code></td>
+      <td>Month as locale’s abbreviated name.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">January</code></td>
+      <td>Month as locale’s full name.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td>Month as decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">01</code></td>
+      <td>Month as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2</code></td>
+      <td>Day of the month as decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">02</code></td>
+      <td>Day of the month as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">15</code></td>
+      <td>Hour (24-hour clock) as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">3</code></td>
+      <td>Hour (12-hour clock) as a decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">03</code></td>
+      <td>Hour (12-hour clock) as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">pm</code></td>
+      <td>Locale’s equivalent of either am or pm.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">PM</code></td>
+      <td>Locale’s equivalent of either AM or PM.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">4</code> <code class="language-plaintext highlighter-rouge">04</code></td>
+      <td>Minute as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">5</code> <code class="language-plaintext highlighter-rouge">05</code></td>
+      <td>Second as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">06</code></td>
+      <td>Year without century as a zero-padded decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2006</code></td>
+      <td>Year with century as a decimal number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-07</code></td>
+      <td>UTC offset in the form +HH or -HH (empty string if the the object is naive).</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-0700</code></td>
+      <td>UTC offset in the form +HHMM or -HHMM (empty string if the the object is naive).</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MST</code></td>
+      <td>Time zone name (empty string if the object is naive).</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Reference: <a href="https://godoc.org/time#Time.Format">Time.Format GoDoc</a></p>
+
+  </div><a class="u-url" href="/knowledge/strtime.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

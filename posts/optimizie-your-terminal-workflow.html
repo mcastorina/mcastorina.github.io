@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Optimize Your Terminal Workflow | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Optimize Your Terminal Workflow" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Working in a terminal emulator is great for getting things done fast, and there are so many useful plugins and tools to make that experience faster and easier. In this post I will share the most useful tools and configurations that have improved my workflow significantly. All of these configurations can be found on GitHub." />
+<meta property="og:description" content="Working in a terminal emulator is great for getting things done fast, and there are so many useful plugins and tools to make that experience faster and easier. In this post I will share the most useful tools and configurations that have improved my workflow significantly. All of these configurations can be found on GitHub." />
+<link rel="canonical" href="/posts/optimizie-your-terminal-workflow.html" />
+<meta property="og:url" content="/posts/optimizie-your-terminal-workflow.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-09-17T18:12:15+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Optimize Your Terminal Workflow" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-09-17T18:12:15+00:00","datePublished":"2019-09-17T18:12:15+00:00","description":"Working in a terminal emulator is great for getting things done fast, and there are so many useful plugins and tools to make that experience faster and easier. In this post I will share the most useful tools and configurations that have improved my workflow significantly. All of these configurations can be found on GitHub.","headline":"Optimize Your Terminal Workflow","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/optimizie-your-terminal-workflow.html"},"url":"/posts/optimizie-your-terminal-workflow.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Optimize Your Terminal Workflow</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-09-17T18:12:15+00:00" itemprop="datePublished">Sep 17, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Working in a terminal emulator is great for getting things done
+fast, and there are so many useful plugins and tools to make that
+experience faster and easier. In this post I will share the most
+useful tools and configurations that have improved my workflow
+significantly. All of these configurations can be found on
+<a href="https://github.com/mcastorina/dotfiles">GitHub</a>.</p>
+
+<p>Before I get started, however, note that I am a vim user, so most
+of the following will be vim-related. Actually, while we are on the
+subject, let’s start the list off with vim!</p>
+
+<h2 id="vim">vim</h2>
+<p>My favorite text editor of all time is vim. It is extremely
+customizable and extensible, not to mention extremely precise. Yes,
+it is true that vim has a steep learning curve, but once the
+keystrokes become muscle memory, working in vim is 10x faster than
+any other text editor. For any purpose. Period. Here are some of
+my tweaks that I have accumulated over the years.</p>
+
+<h4 id="faster-mode-switching"><strong>Faster Mode Switching</strong></h4>
+<p>As most know, context switching has a lot of overhead, or time
+consumption. Whether you are switching between making dinner to
+walking the dog or switching the active process in an operating
+system, nothing is instantaneous. Such is the case when switching
+between <code class="language-plaintext highlighter-rouge">NORMAL</code> and <code class="language-plaintext highlighter-rouge">INSERT</code> modes in vim. The escape key is just
+so far away, and you have to lift your hand each time to leave
+<code class="language-plaintext highlighter-rouge">INSERT</code> mode! With this tweak, pushing <code class="language-plaintext highlighter-rouge">j</code> and <code class="language-plaintext highlighter-rouge">k</code> fast enough
+will exit into <code class="language-plaintext highlighter-rouge">NORMAL</code> mode. You can use any two keys, however <code class="language-plaintext highlighter-rouge">j</code>
+and <code class="language-plaintext highlighter-rouge">k</code> are nice because very few English words contain that letter
+combination.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>" Escape key also mapped as pushing j and k
+inoremap jk &lt;Esc&gt;
+inoremap kj &lt;Esc&gt;
+autocmd InsertEnter * set timeoutlen=75
+autocmd InsertLeave * set timeoutlen=1000
+</code></pre></div></div>
+
+<h4 id="faster-commands"><strong>Faster :Commands</strong></h4>
+
+<p>I am constantly saving my work, opening new files to edit, or random
+other colon-commands. All that <code class="language-plaintext highlighter-rouge">Shift</code> work makes my pinkie sore!
+This tweak makes the semicolon do the same thing as colon. In other
+words, I don’t have to keeping <code class="language-plaintext highlighter-rouge">Shift</code>ing when I want to save, quit,
+substitute, or any other command. Normally the semicolon doesn’t
+have a purpose, so it is perfect to make it function the same as
+colon.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>" Semicolon in normal mode is the same as colon
+nnoremap ; :
+</code></pre></div></div>
+
+<h4 id="tab-moving"><strong>Tab Moving</strong></h4>
+
+<p>Okay, I know that I’m supposed to use vim buffers, but I have always
+used splits / tabs, and I haven’t put the time in to learn buffers
+yet. I like tabs because I can visually see what files I have open
+and organize them accordingly. This tweak helps me move between
+both tabs and splits in a vim-like way. <code class="language-plaintext highlighter-rouge">Ctrl</code> plus <code class="language-plaintext highlighter-rouge">j</code> and <code class="language-plaintext highlighter-rouge">k</code>
+switch between tabs, and <code class="language-plaintext highlighter-rouge">Ctrl</code> plus <code class="language-plaintext highlighter-rouge">h</code> and <code class="language-plaintext highlighter-rouge">l</code> cycles between
+splits.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>" Tab moving
+nnoremap &lt;C-J&gt; :tabnext&lt;CR&gt;
+nnoremap &lt;C-K&gt; :tabprev&lt;CR&gt;
+
+" Split moving
+set splitbelow
+set splitright
+nnoremap &lt;C-L&gt; &lt;C-W&gt;w
+nnoremap &lt;C-H&gt; &lt;C-W&gt;W
+</code></pre></div></div>
+
+<hr />
+<p><br /></p>
+
+<h2 id="zsh">zsh</h2>
+<p>My preferred shell is zsh due to the number of plugins, themes, and
+great tab completions. Besides the obvious vi-mode, below are my
+favorite plugins that save me time and keystrokes.</p>
+
+<h4 id="autosuggestions"><strong>Autosuggestions</strong></h4>
+<p>Whenever I do something in the terminal, 95% of the time I have
+done it before or something similar. zsh-autosuggestions lets me
+easily see previous similar commands. All I have to do is remember
+the first few characters! Combined with the below binds, I can
+quickly accept the autosuggestion by pressing <code class="language-plaintext highlighter-rouge">Ctrl+l</code> and run the
+command.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bindkey -v
+bindkey '^f' vi-forward-blank-word
+bindkey '^l' vi-end-of-line
+</code></pre></div></div>
+
+<p>This is the most useful zsh plugin, I cannot stress it enough.</p>
+
+<h4 id="aliases"><strong>Aliases</strong></h4>
+<p>I believe keeping my hands on the keyboard keeps me working
+efficiently, calmly, and happily. Sometimes I just get so frustrated
+when I have to lift my hands to highlight something to copy and
+paste. Especially in Windows where you have to go to the drop-down,
+choose select, and then carefully highlight your selection! Anyway,
+these aliases help keep me sane. I use these to copy (yank) the
+output of commands or paste (put) the clipboard as an input.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># linux
+alias yank="xclip -selection primary"
+alias put="xclip -o -selection primary"
+# osx
+alias yank="pbcopy"
+alias put="pbpaste"
+# windows (cygwin)
+alias yank="cat &gt; /dev/clipboard"
+alias put="cat /dev/clipboard"
+</code></pre></div></div>
+
+<p>Further in my quest to keep my hands on the keyboard, I use the
+rxvt-unicode terminal emulator combined with certain plugins and
+binds to use vim-style selection. I won’t go into the details here,
+but I rarely use a mouse to copy from the terminal. tmux has a
+similar keybind as well.</p>
+
+<hr />
+<p><br /></p>
+
+<h2 id="i3-window-manager">i3 window manager</h2>
+<p>If you have gotten this far, you may have noticed a theme to this
+post: I like the keyboard. Well, the best window manager to keep
+me happy is i3wm. It is a tiling window manager so I’m always using
+the most space on the screen, but the best feature is the navigation.
+Switching desktops is simply <code class="language-plaintext highlighter-rouge">alt</code> plus a number. Switching focus
+on a desktop is <code class="language-plaintext highlighter-rouge">alt</code> plus <code class="language-plaintext highlighter-rouge">h</code>, <code class="language-plaintext highlighter-rouge">j</code>, <code class="language-plaintext highlighter-rouge">k</code>, or <code class="language-plaintext highlighter-rouge">l</code>. Moving windows?
+Just add a <code class="language-plaintext highlighter-rouge">Shift</code>! Isn’t that fantastic?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set $alt Mod1
+
+# change focus
+bindsym $alt+h focus left
+bindsym $alt+j focus down
+bindsym $alt+k focus up
+bindsym $alt+l focus right
+
+# move focused window
+bindsym $alt+Shift+h move left
+bindsym $alt+Shift+j move down
+bindsym $alt+Shift+k move up
+bindsym $alt+Shift+l move right
+</code></pre></div></div>
+
+<p>Here’s something a little extra in case I really am not in the mood
+to use a mouse.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bindsym $alt+Shift+m mode "mouse"
+mode "mouse" {
+    # escape keys
+    bindsym Escape mode "default"
+    bindsym q mode "default"
+
+    # space to left click, shift space to right click
+    bindsym space exec --no-startup-id "xdotool click 1"
+    bindsym Shift+space exec --no-startup-id "xdotool click 3"
+
+    # fine movement
+    bindsym j exec --no-startup-id "xdotool mousemove_relative --  0  5"
+    bindsym k exec --no-startup-id "xdotool mousemove_relative --  0 -5"
+    bindsym h exec --no-startup-id "xdotool mousemove_relative -- -5  0"
+    bindsym l exec --no-startup-id "xdotool mousemove_relative --  5  0"
+
+    # coarse movement
+    bindsym Shift+j exec --no-startup-id "xdotool mousemove_relative --    0  100"
+    bindsym Shift+k exec --no-startup-id "xdotool mousemove_relative --    0 -100"
+    bindsym Shift+h exec --no-startup-id "xdotool mousemove_relative -- -100    0"
+    bindsym Shift+l exec --no-startup-id "xdotool mousemove_relative --  100    0"
+
+    # scroll
+    bindsym Ctrl+j exec --no-startup-id "xdotool click 5"
+    bindsym Ctrl+k exec --no-startup-id "xdotool click 4"
+    bindsym Ctrl+d exec --no-startup-id "xdotool click --repeat 4 5"
+    bindsym Ctrl+u exec --no-startup-id "xdotool click --repeat 4 4"
+    bindsym d exec --no-startup-id "xdotool click --repeat 4 5"
+    bindsym u exec --no-startup-id "xdotool click --repeat 4 4"
+}
+</code></pre></div></div>
+
+<hr />
+<p><br /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>As a devops engineer, I almost exclusively work in the terminal.
+These tweaks and configurations help me focus on the task at hand,
+rather than trying to remember commands and flags. I hope you found
+them useful too! Maybe I should rename this post <em>How to Get Rid
+of Your Mouse.</em></p>
+
+<p>By the way, I used to use Vimperator for Firefox before Quantum.
+Unfortunately, I haven’t found a good replacement, so let me know
+if you have any suggestions!</p>
+
+  </div><a class="u-url" href="/posts/optimizie-your-terminal-workflow.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Linux | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Linux" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Linux is a family of open source operating systems stemming from Unix. Common Linux distributions include: Debian, Ubuntu, and Fedora. Personally, my Linux distribution of choice is Arch Linux." />
+<meta property="og:description" content="Linux is a family of open source operating systems stemming from Unix. Common Linux distributions include: Debian, Ubuntu, and Fedora. Personally, my Linux distribution of choice is Arch Linux." />
+<link rel="canonical" href="/knowledge/linux.html" />
+<meta property="og:url" content="/knowledge/linux.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-11-01T16:30:21+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Linux" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-11-01T16:30:21+00:00","datePublished":"2024-11-01T16:30:21+00:00","description":"Linux is a family of open source operating systems stemming from Unix. Common Linux distributions include: Debian, Ubuntu, and Fedora. Personally, my Linux distribution of choice is Arch Linux.","headline":"Linux","mainEntityOfPage":{"@type":"WebPage","@id":"/knowledge/linux.html"},"url":"/knowledge/linux.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Linux</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2024-11-01T16:30:21+00:00" itemprop="datePublished">Nov 1, 2024
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Linux is a family of open source operating systems stemming from
+Unix. Common Linux distributions include: Debian, Ubuntu, and Fedora.
+Personally, my Linux distribution of choice is Arch Linux.</p>
+
+<h2 id="command-line-interface">Command Line Interface</h2>
+<p>All Linux distributions have a command line interface (CLI) usually
+running <a href="/knowledge/bash.html">bash</a>. It is a way to quickly
+and efficiently perform tasks on the computer using available
+commands.  The CLI is particularly suited for automation of repetitive
+or delayed tasks, and provides very simple inter-process communication.</p>
+
+<p>I usually do 90% of my work on the command line because I have found
+it to be faster and easier to perform tasks (especially if it is
+repetitive). My shell emulator of choice is <a href="https://www.zsh.org/">zsh</a>
+for its many plugins.</p>
+
+<h2 id="file-system">File System</h2>
+<p>In Linux, everything is a file. This means that all connected
+hardware is represented as a file. Files are files. Directories are
+files. Sockets are files. Everything. This concept means the same
+tools can be applied when manipulating or interacting with devices.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Path</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/</code></td>
+      <td>Root of the filesystem</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/root</code></td>
+      <td>Root user’s home directory</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/home</code></td>
+      <td>Normal users’ home directories</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/bin</code></td>
+      <td>Essential user binaries</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/boot</code></td>
+      <td>Static boot files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/dev</code></td>
+      <td>Device files (like hard drives)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/etc</code></td>
+      <td>Configuration files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/lib</code></td>
+      <td>Essential shared libraries</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/opt</code></td>
+      <td>Optional packages</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/proc</code></td>
+      <td>Kernel and process files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/sbin</code></td>
+      <td>System administration binaries</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/tmp</code></td>
+      <td>Temporary files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/usr</code></td>
+      <td>User binaries (and read only data)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/var</code></td>
+      <td>Variable data files (like log files)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="kernel-and-user-space">Kernel and User Space</h2>
+<p>System memory is divided into two distinct spaces: <strong>kernel space</strong>
+and <strong>user space</strong>. Kernel space is the protected memory space that
+runs the operating system. It has full access to the hardware,
+contains kernel code, and most of the memory is directly mapped to
+physical memory.</p>
+
+<p>User space is where the normal application runs.  It has limited
+access to resources and contains process code, data, and memory
+mapped files. User programs can request resources through <strong>system
+calls</strong> to the kernel.</p>
+
+<h2 id="cron">Cron</h2>
+<p>Cron is a time based job scheduler. Each line in a cron table file
+represents a job. Here is a template describing each entry in the
+table.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of the month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12)
+# │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday;
+# │ │ │ │ │                                   7 is also Sunday on some systems)
+# │ │ │ │ │
+# │ │ │ │ │
+# * * * * * command to execute
+</code></pre></div></div>
+
+<h3 id="anacron">Anacron</h3>
+<p>Anacron is similar to cron, except it does not expect the system
+to always be continuously running. In other words, anacron will
+reschedule jobs if the system is off at the time the job was supposed
+to run, unlike cron which will skip the job entirely.</p>
+
+<h2 id="tools">Tools</h2>
+<p>Working in Linux and the CLI, you will invariably learn many tools
+for system administration and development. Below is a list of common
+commands in no particular order.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ls</code></td>
+      <td>List files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cd</code></td>
+      <td>Change directory</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mv</code></td>
+      <td>Rename files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cp</code></td>
+      <td>Copy files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">touch</code></td>
+      <td>Change file timestamps</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mkdir</code></td>
+      <td>Make directories</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">rm</code></td>
+      <td>Unlink files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sed</code></td>
+      <td>Stream editor</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">awk</code></td>
+      <td>Pattern scanning and processing language</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">curl</code></td>
+      <td>Transfer a URL</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">make</code></td>
+      <td>Maintain a group of programs</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">find</code></td>
+      <td>Walk a file hierarchy</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">man</code></td>
+      <td>Display manual pages</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">grep</code></td>
+      <td>File pattern searcher</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">watch</code></td>
+      <td>Execute a program periodically with output</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tmux</code></td>
+      <td>Terminal multiplexer</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">wc</code></td>
+      <td>Word, line, and character counter</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">less</code></td>
+      <td><code class="language-plaintext highlighter-rouge">less</code> is <code class="language-plaintext highlighter-rouge">more</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tar</code></td>
+      <td>Archiving utility</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gzip</code></td>
+      <td>Compression tool</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">date</code></td>
+      <td>Display or set date and time</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ssh</code></td>
+      <td>OpenSSH client</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scp</code></td>
+      <td>Copy files via SSH</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ftp</code></td>
+      <td>File transfer protocol client</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">rsync</code></td>
+      <td>Remote and local file copying tool</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ncat</code></td>
+      <td>Concatenate and redirect sockets</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lsblk</code></td>
+      <td>List block devices</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lsusb</code></td>
+      <td>List USB devices</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lspci</code></td>
+      <td>List all PCI devices</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">df</code></td>
+      <td>Report file system disk space usage</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">du</code></td>
+      <td>Estimate file space usage</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cut</code></td>
+      <td>Remove sections from each line of files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">paste</code></td>
+      <td>Merge lines of files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">diff</code></td>
+      <td>Compare files line by line</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">comm</code></td>
+      <td>Compare two sorted files line by line</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">seq</code></td>
+      <td>Print a sequence of numbers</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">yes</code></td>
+      <td>Output a string repeatedly until killed</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">crontab</code></td>
+      <td>Maintain crontab files for individual users</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">useradd</code></td>
+      <td>Create a new user</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">groupadd</code></td>
+      <td>Create a new group</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">usermod</code></td>
+      <td>Modify a user account</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">groupmod</code></td>
+      <td>Modify a group definition</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cfdisk</code></td>
+      <td>Display or manipulate a disk partition table</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mkfs</code></td>
+      <td>Build a Linux filesystem</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mktemp</code></td>
+      <td>Create a temporary file or directory</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mount</code></td>
+      <td>Mount a filesystem</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">umount</code></td>
+      <td>Unmount a filesystem</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">pianobar</code></td>
+      <td>CLI Pandora client</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div><a class="u-url" href="/knowledge/linux.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>JSON | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="JSON" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="JavaScript Object Notation is a standard file format that uses human readable text to transmit structured data objects. It originated from JavaScript, however, it is a language independent format." />
+<meta property="og:description" content="JavaScript Object Notation is a standard file format that uses human readable text to transmit structured data objects. It originated from JavaScript, however, it is a language independent format." />
+<link rel="canonical" href="/knowledge/json.html" />
+<meta property="og:url" content="/knowledge/json.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-11-01T16:30:21+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="JSON" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-11-01T16:30:21+00:00","datePublished":"2024-11-01T16:30:21+00:00","description":"JavaScript Object Notation is a standard file format that uses human readable text to transmit structured data objects. It originated from JavaScript, however, it is a language independent format.","headline":"JSON","mainEntityOfPage":{"@type":"WebPage","@id":"/knowledge/json.html"},"url":"/knowledge/json.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">JSON</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2024-11-01T16:30:21+00:00" itemprop="datePublished">Nov 1, 2024
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><strong>JavaScript Object Notation</strong> is a standard file format that uses human
+readable text to transmit structured data objects. It originated from
+JavaScript, however, it is a language independent format.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "hello": {
+        "list": [1, 2, 3]
+    },
+    "greetings": [
+        {
+            "language": "English",
+            "greeting": "hello"
+        },
+        {
+            "language": "Spanish",
+            "greeting": "hola"
+        }
+    ]
+}
+</code></pre></div></div>
+
+<p>JSON uses the following data types: <code class="language-plaintext highlighter-rouge">number</code>, <code class="language-plaintext highlighter-rouge">string</code>, <code class="language-plaintext highlighter-rouge">boolean</code>,
+<code class="language-plaintext highlighter-rouge">array</code>, <code class="language-plaintext highlighter-rouge">object</code>, and <code class="language-plaintext highlighter-rouge">null</code>.</p>
+
+<h2 id="jwk-and-jwks">JWK and JWKS</h2>
+<p><strong>JSON Web Key</strong> is a JSON data structure that represents a cryptographic key.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "kty":"EC",
+    "crv":"P-256",
+    "x":"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+    "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0",
+    "kid":"goat"
+}
+</code></pre></div></div>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Key</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">kty</code></td>
+      <td>Key type - cryptographic algorithm family</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">use</code></td>
+      <td>Intended use of the public key (<code class="language-plaintext highlighter-rouge">sig</code> or <code class="language-plaintext highlighter-rouge">enc</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">alg</code></td>
+      <td>Algorithm intended for use with the key</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">kid</code></td>
+      <td>Key ID  - used to match a specific key in a set</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Reference: <a href="https://tools.ietf.org/html/rfc7517">RFC 7517 - JSON Web Key</a></p>
+
+<p><strong>JSON Web Key Set</strong> is a set of JWKs.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "keys": [
+        key1,
+        key2,
+        key3,
+    ]
+}
+</code></pre></div></div>
+
+<p><strong>Note:</strong> <code class="language-plaintext highlighter-rouge">key1</code>, <code class="language-plaintext highlighter-rouge">key2</code>, and <code class="language-plaintext highlighter-rouge">key3</code> are JWK objects.</p>
+
+<h2 id="jwt">JWT</h2>
+<p><strong>JSON Web Token</strong> is an Internet standard for creating JSON-based
+authentication tokens. They are generally used to assert some number
+of claims.  The server will provide the client a JWT in which the
+client will use in subsequent requests. To ensure authenticity and integrity,
+the token is signed by the server’s private key before sending it to the client.
+The client can then verify using the server’s public key (usually hosted in a JWKS).</p>
+
+<h3 id="structure">Structure</h3>
+<p>There are three main parts to a JWT: <strong>header</strong>, <strong>payload</strong>, and
+<strong>signature</strong>. The header identifies which algorithm is used to
+generate the signature. The payload contains the set of claims. The
+signature validates the token using cryptographic technologies. It
+is calculated by base64url encoding the header and payload and
+concatenating the two with a <code class="language-plaintext highlighter-rouge">.</code>, followed by the cryptographic
+algorithm specified in the header.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># header
+{
+ "alg" : "HS256",
+ "typ" : "JWT"
+}
+
+# payload
+{
+ "loggedInAs" : "admin",
+ "iat" : 1573492539
+}
+
+# signature
+HMAC-SHA256(
+ base64urlEncoding(header) + '.' +
+ base64urlEncoding(payload),
+ secret
+)
+</code></pre></div></div>
+
+<p>The entire token is structured as follows:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>base64url(header) + '.' + base64url(payload) + '.' + base64url(signature)
+</code></pre></div></div>
+
+<h3 id="fields">Fields</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">iss</code></td>
+      <td>Issuer</td>
+      <td>The principal that issued the JWT</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sub</code></td>
+      <td>Subject</td>
+      <td>The subject of the JWT</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">aud</code></td>
+      <td>Audience</td>
+      <td>The recipients that the JWT is intended for</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">exp</code></td>
+      <td>Expiration Time</td>
+      <td>The expiration time after which the JWT must not be accepted (must be seconds since epoch)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nbf</code></td>
+      <td>Not Before</td>
+      <td>The time on which the JWT will start to be accepted (must be seconds since epoch)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">iat</code></td>
+      <td>Issued at</td>
+      <td>The time at which the JWT was issued (must be seconds since epoch)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">jti</code></td>
+      <td>JWT ID</td>
+      <td>Case sensitive unique identifier of the token even among different issuers</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div><a class="u-url" href="/knowledge/json.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

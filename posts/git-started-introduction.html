@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Git Started: Introduction | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Git Started: Introduction" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time." />
+<meta property="og:description" content="A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time." />
+<link rel="canonical" href="/posts/git-started-introduction.html" />
+<meta property="og:url" content="/posts/git-started-introduction.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-09-21T05:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Git Started: Introduction" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-09-21T05:00:00+00:00","datePublished":"2019-09-21T05:00:00+00:00","description":"A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.","headline":"Git Started: Introduction","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/git-started-introduction.html"},"url":"/posts/git-started-introduction.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Git Started: Introduction</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-09-21T05:00:00+00:00" itemprop="datePublished">Sep 21, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><img src="/assets/git-started/banner.png" alt="git-started" /></p>
+
+<p>This tutorial aims to explain Git in a way beginners can understand. These
+series of posts, cleverly named <strong><em>Git Started</em></strong>, will begin with the major
+concepts, and we will explore how to use <code class="language-plaintext highlighter-rouge">git</code> later on.</p>
+
+<h2 id="what-even-is-git">What Even is Git?</h2>
+<p>Many people will answer this by saying “Git is a version control
+system for tracking changes in computer files.” If you understand
+this, great! I believe an easier way to think of Git is as a way to
+save your files at different points in time. Like saving your video
+game state in new save locations, so you can go back later and replay
+the different paths. Git does exactly that, just with cheat codes to
+modify the saved states.</p>
+
+<h3 id="branches">Branches</h3>
+<p>Okay, you are playing your favorite RPG video game, and you come to a
+game changing choice. What do you do?</p>
+
+<p>If you are anything like me, you save your game at that point, then
+go and explore every outcome of the choice to find the best one. This
+is exactly what Git branches are. Git allows you to <strong>branch</strong> off of an
+existing save into a new universe where anything is possible. And you
+can do this as many times as you want!</p>
+
+<p>Imagine there are too many choices, though, and it would take too long
+to explore each one. This is where you tag your best friend in and you
+work in parallel. Similarly, Git lets other people create their own
+universes too! That’s right, we’re going to throw more people at
+this problem and let the best universe win.</p>
+
+<h3 id="merges">Merges</h3>
+<p>Great, so now that we explored all the outcomes in our video game, let’s
+choose the best one. In Git, this is synonymous to a <strong>merge</strong>. You can add
+all the changes made in the other universe to your universe by merging it
+with yours. This is possible with any two universes, but sometimes they
+do not agree. In those cases, we need to personally settle the conflicts.</p>
+
+<h3 id="changing-history">Changing History</h3>
+<p>Now we are deep in our video game, and we just find out that this one
+choice at the very beginning of the game caused this huge negative
+outcome! Let’s turn on our cheats and go change that decision.</p>
+
+<p>Congratulations, you just learned what a <strong>rebase</strong> is. Git lets you go
+back through your saves, modify them, and replay your following changes
+afterwards.</p>
+
+<h2 id="github">GitHub</h2>
+<p>As you may know, GitHub is a website that hosts projects and code. To work
+with GitHub, you first need to <strong>clone</strong> a repository. This will download
+all of the files from a project onto your computer. From then on, the
+saves you make only exist on your computer, and you will need to <strong>push</strong>
+them back into the cloud. You can also <strong>pull</strong> new saves to keep your local
+copy up to date, in case your friend made progress.</p>
+
+<p>Not only is GitHub a place to publish your projects, it’s also a
+community for people to collaborate on a single project. They can open
+issues to give feedback, ask for features, or describe bugs. Others
+can also <strong>fork</strong> your project to spawn new universes to experiment in and
+possibly even <strong>request</strong> you to <strong>pull</strong> their changes!</p>
+
+<h3 id="conclusion">Conclusion</h3>
+<p>Git is a fantastic tool that gives you complete control over your
+<del>video game</del> project saves, and GitHub is a great place
+to collaborate and publish your projects. Hopefully the above
+concepts are easy to understand, and the
+<a href="/posts/git-started-basic-usage.html">next post</a>
+in this series will go into the usage details of the Git CLI.</p>
+
+  </div><a class="u-url" href="/posts/git-started-introduction.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

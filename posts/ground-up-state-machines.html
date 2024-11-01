@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Ground Up: State Machines | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Ground Up: State Machines" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time." />
+<meta property="og:description" content="A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time." />
+<link rel="canonical" href="/posts/ground-up-state-machines.html" />
+<meta property="og:url" content="/posts/ground-up-state-machines.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-01-19T05:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Ground Up: State Machines" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-01-19T05:00:00+00:00","datePublished":"2022-01-19T05:00:00+00:00","description":"A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.","headline":"Ground Up: State Machines","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/ground-up-state-machines.html"},"url":"/posts/ground-up-state-machines.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Ground Up: State Machines</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2022-01-19T05:00:00+00:00" itemprop="datePublished">Jan 19, 2022
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js" integrity="sha512-ovjLI1ZcZe6bw+ImQ21r+sv8q/Vwob2kq7tFidK6E1LWfi0T4uobbmpfEU1//a9h9o5Kkt+MnMWf6rWlg0EiMw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+    window.globals = {};
+    function updateState(checkbox, global) {
+        window.globals[global] = checkbox.checked;
+        window.globals.updateLock();
+        updateTables();
+    }
+    function updateTables() {
+        updateLockTable();
+    }
+    function updateLockTable() {
+        var row = document.getElementById("lockTable").children[0].children[1].children;
+        row[0].children[0].innerText = window.globals["lockB0"] ? "1" : "0";
+        row[1].children[0].innerText = window.globals["lockB1"] ? "1" : "0";
+        row[2].children[0].innerText = window.globals["lockB2"] ? "1" : "0";
+        row[3].children[0].innerText = window.globals["lockB3"] ? "1" : "0";
+        row[4].children[0].innerText = window.globals["lockR"] ? "1" : "0";
+        row[5].children[0].innerText = window.globals["lockS"] || "A";
+        row[6].children[0].innerText = window.globals["lockL"] || "1";
+    }
+    window.onload = function() {
+        window.globals.updateLock();
+        updateTables()
+    }
+</script>
+
+<style type="text/css" media="all">
+.gate {
+    vertical-align: middle;
+    width: unset;
+}
+p.gate {
+    vertical-align: unset;
+}
+.table-div {
+    vertical-align: middle;
+}
+.interactive {
+    padding: 20px;
+    margin: 20px auto;
+    border: 1px dashed gray;
+}
+.table-div table {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+table {
+    margin: 30px auto;
+}
+#lock {
+    width: 600px;
+    height: 600px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 40px;
+}
+</style>
+
+<p>Welcome to a series of posts cleverly titled <strong><em>Ground Up</em></strong>,
+where I explain computing concepts from the ground up! We’ll explore
+how computers work starting with transistors and going from there.
+This post specifically covers finite state machines.</p>
+
+<ul>
+  <li><a href="/posts/ground-up-bits.html">Part 1: Bits</a></li>
+  <li><a href="/posts/ground-up-gates.html">Part 2: Gates</a></li>
+  <li><a href="/posts/ground-up-memory.html">Part 3: Memory</a></li>
+  <li><strong><em>Part 4: State Machines</em></strong></li>
+</ul>
+
+<h2 id="state-machines">State Machines</h2>
+<p>Finite state machines (FSMs) are a way to model solutions to problems. It
+describes the system as a machine that changes state in reaction to
+inputs to produce the appropriate outputs. There are two common types of
+finite state machines: <strong>Moore</strong> machines and <strong>Mealy</strong> machines. Moore
+machines define the outputs soley on the current state, while Mealy
+machines define the outputs on the current state <em>and</em> input values.</p>
+
+<p>FSMs are used in a variety of useful products and services, such as
+combination locks, traffic lights, and elevators. Even part of a CPU
+uses a finite state machine for parsing and executing instructions,
+which is why we are learning about them.</p>
+
+<h2 id="multiplexers">Multiplexers</h2>
+<p>There is one important logic gate missing from our tool belt that will
+be very helpful in implementing a FSM: the multiplexer (MUX). I will leave
+the implementation details as an exercise to the reader and simply provide
+the truth table and schematic symbol.</p>
+
+<div class="table-div" style="width: 100%; display: inline-block; margin-bottom: 20px;">
+<table class="gate" style="margin: 0 10% 0 15%; display: inline-block;">
+  <thead>
+    <tr>
+      <th style="text-align: center">A</th>
+      <th style="text-align: center">B</th>
+      <th style="text-align: center">S<sub>0</sub></th>
+      <th style="text-align: center">Z</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">X</code></td>
+      <td style="text-align: center"><code class="highlighter-rouge">X</code></td>
+      <td style="text-align: center"><code class="highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="highlighter-rouge">A</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">X</code></td>
+      <td style="text-align: center"><code class="highlighter-rouge">X</code></td>
+      <td style="text-align: center"><code class="highlighter-rouge">1</code></td>
+      <td style="text-align: center"><code class="highlighter-rouge">B</code></td>
+    </tr>
+  </tbody>
+</table>
+<img src="/assets/kb/gates/MUX.svg" style="display: inline-block; width: 20%; vertical-align: middle" />
+</div>
+
+<p>Essentially, the output <strong>Z</strong> is set to <strong>A</strong> if <strong>S<sub>0</sub></strong> is <code class="language-plaintext highlighter-rouge">0</code> and <strong>B</strong> if <strong>S<sub>0</sub></strong> is <code class="language-plaintext highlighter-rouge">1</code>.</p>
+
+<h2 id="designing-a-fsm">Designing a FSM</h2>
+<p>At this point in our journey, we have enough components to build a state
+machine circuit. We can store the current state in memory and use logic
+gates to determine the outputs.  In this post, we will make a combination
+lock, where the user must input three numbers in the correct order to
+unlock the lock.</p>
+
+<p style="width: fit-content; margin-left: auto; margin-right: auto;"><img src="/assets/ground-up/lock.png" alt="lock-fsm" /></p>
+
+<p>This FSM is a Moore machine with 4 states: <strong>A</strong>, <strong>B</strong>, <strong>C</strong>, and
+<strong>Unlock</strong>. The text on the arrows are known as state transitions.
+The diagram describes what happens when an input is received in each
+state. Notice that the correct combination is <code class="language-plaintext highlighter-rouge">301</code> to reach the
+<strong>Unlock</strong> state. There is also a <em>Reset</em> input that will immediately
+reset the machine to the initial state.</p>
+
+<p><strong>Note:</strong> <code class="language-plaintext highlighter-rouge">!x</code> in the diagram indicates negation. It is a short-hand that
+means any input besides <code class="language-plaintext highlighter-rouge">x</code>.</p>
+
+<p>Because this is a Moore machine, we must define the output as a function
+of the state. We only have one output: <em>Locked</em>.</p>
+
+<table style="width: 30%;">
+  <thead>
+    <tr>
+      <th style="text-align: center">Current State</th>
+      <th style="text-align: center">Locked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>A</strong></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>B</strong></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>C</strong></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>Unlock</strong></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="implementing-a-fsm">Implementing a FSM</h2>
+<p>Now comes the technical nitty-gritty part. We need to build the FSM
+with the building blocks we have. We have four states that we need to
+remember, which can be encoded in two bits (<code class="language-plaintext highlighter-rouge">00</code> <code class="language-plaintext highlighter-rouge">01</code> <code class="language-plaintext highlighter-rouge">10</code> <code class="language-plaintext highlighter-rouge">11</code>). We
+will need a few button inputs as well: <code class="language-plaintext highlighter-rouge">0</code> <code class="language-plaintext highlighter-rouge">1</code> <code class="language-plaintext highlighter-rouge">2</code> <code class="language-plaintext highlighter-rouge">3</code> and <code class="language-plaintext highlighter-rouge">Reset</code>. Let’s
+make a truth table to help visualize the state transitions.</p>
+
+<table style="width: 50%;">
+  <thead>
+    <tr>
+      <th style="text-align: center">S</th>
+      <th style="text-align: center">B<sub>0</sub></th>
+      <th style="text-align: center">B<sub>1</sub></th>
+      <th style="text-align: center">B<sub>2</sub></th>
+      <th style="text-align: center">B<sub>3</sub></th>
+      <th style="text-align: center">R</th>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">S’</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>A</strong></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><strong>B</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>A</strong></td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><strong>A</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>B</strong></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><strong>C</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>B</strong></td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><strong>A</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>C</strong></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><strong>Unlock</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>C</strong></td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><strong>A</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>Unlock</strong></td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><strong>Unlock</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>Unlock</strong></td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center">_</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><strong>A</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Note:</strong> <code class="language-plaintext highlighter-rouge">_</code> indicates “do not care” and was chosen instead of <code class="language-plaintext highlighter-rouge">X</code>
+to reduce clutter.</p>
+
+<p>The last puzzle piece is to think about the timing. How will we determine
+when a button is pressed or not to advance the state? I think the simplest
+solution is to <strong>OR</strong> all the input buttons together to determine when a button
+is pressed, so let’s go with that.</p>
+
+<p>Instructions: toggle the inputs to see how the circuit reacts.</p>
+
+<div class="interactive">
+<div class="table-div">
+<table class="gate" id="lockTable">
+    <tr>
+        <th><input type="checkbox" onclick="updateState(this, 'lockB0');" /><label>B<sub>0</sub></label></th>
+        <th><input type="checkbox" onclick="updateState(this, 'lockB1');" /><label>B<sub>1</sub></label></th>
+        <th><input type="checkbox" onclick="updateState(this, 'lockB2');" /><label>B<sub>2</sub></label></th>
+        <th><input type="checkbox" onclick="updateState(this, 'lockB3');" /><label>B<sub>3</sub></label></th>
+        <th><input type="checkbox" onclick="updateState(this, 'lockR');" /><label>R</label></th>
+        <th>S</th>
+        <th>Locked</th>
+    </tr>
+    <tr>
+        <td><code>0</code></td>
+        <td><code>0</code></td>
+        <td><code>0</code></td>
+        <td><code>0</code></td>
+        <td><code>0</code></td>
+        <td><code>A</code></td>
+        <td><code>1</code></td>
+    </tr>
+</table>
+</div>
+
+<script type="text/paperscript" canvas="lock">
+var scale = 32;
+function gatePath(anchor, kind, negateOut) {
+    var a = new Path();
+    a.strokeColor = 'black';
+    a.strokeWidth = 2;
+    var b = new Path();
+    b.strokeColor = 'black';
+    b.strokeWidth = 2;
+    var out = new Path();
+    out.strokeColor = 'black';
+    out.strokeWidth = 2;
+
+    var raster = new Raster('/assets/ground-up/' + kind + '.svg');
+    raster.position = (anchor + [1.4, 0])*scale;
+    if (negateOut) {
+        var dot = new Path.Circle((anchor + [2.1, 0])*scale, 0.1*scale);
+        dot.strokeWidth = 2;
+        dot.strokeColor = 'black';
+        out.addChild(dot);
+    }
+
+    a.moveTo((anchor + [0, -0.3])*scale);
+    a.lineBy(new Point(0.8, 0)*scale);
+    b.moveTo((anchor + [0, 0.3])*scale);
+    b.lineBy(new Point(0.8, 0)*scale);
+    if (negateOut) {
+        out.moveTo((anchor + [2.2, 0])*scale);
+    } else {
+        out.moveTo((anchor + [2, 0])*scale);
+    }
+    out.lineTo((anchor + [2.8, 0])*scale);
+
+    return {a: a, b: b, out: out};
+}
+function andPath(anchor) {
+    return gatePath(anchor, 'and');
+}
+function nandPath(anchor) {
+    return gatePath(anchor, 'and', negateOut=true);
+}
+function orPath(anchor) {
+    return gatePath(anchor, 'or');
+}
+function dffPath(anchor, kind) {
+    var a = new Path();
+    a.strokeColor = 'black';
+    a.strokeWidth = 2;
+    var b = new Path();
+    b.strokeColor = 'black';
+    b.strokeWidth = 2;
+    var out = new Path();
+    out.strokeColor = 'black';
+    out.strokeWidth = 2;
+
+    var raster = new Raster('/assets/ground-up/dff.svg');
+    raster.position = (anchor + [1.7, 0])*scale;
+
+    a.moveTo((anchor + [0, -0.6])*scale);
+    a.lineBy(new Point(0.8, 0)*scale);
+    b.moveTo((anchor + [0, 0.6])*scale);
+    b.lineBy(new Point(0.6, 0)*scale);
+    var dot = new Path.Circle((anchor + [0.7, 0.6])*scale, 0.1*scale);
+    dot.strokeWidth = 2;
+    dot.strokeColor = 'black';
+    b.addChild(dot);
+    out.moveTo((anchor + [2.6, -0.6])*scale);
+    out.lineBy(new Point(0.6, 0)*scale);
+
+    return {d: a, clk: b, q: out};
+}
+function and5Path(anchor, posIndex) {
+    var a = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var b = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var c = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var d = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var e = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var out = new Path({strokeWidth: 2, strokeColor: 'black'});
+
+    var raster = new Raster('/assets/ground-up/and5.svg');
+    raster.scale(2);
+    raster.position = (anchor + [2, 0])*scale;
+
+    var paths = [a, b, c, d, e];
+    for (var i = 0; i < 5; i += 1) {
+        p = paths[i];
+        p.moveTo((anchor + [0, (i-2)*0.5])*scale);
+        if (i == posIndex) {
+            p.lineBy(new Point(0.8, 0)*scale);
+        } else {
+            p.lineBy(new Point(0.6, 0)*scale);
+            var dot = new Path.Circle((anchor + [0.7, (i-2)*0.5])*scale, 0.1*scale);
+            dot.strokeWidth = 2;
+            dot.strokeColor = 'black';
+            p.addChild(dot);
+        }
+    }
+    out.moveTo((anchor + [3.2, 0])*scale);
+    out.lineBy(new Point(0.8, 0)*scale);
+
+    return {a: a, b: b, c: c, d: d, e: e, out: out};
+}
+function or5Path(anchor) {
+    var a = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var b = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var c = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var d = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var e = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var out = new Path({strokeWidth: 2, strokeColor: 'black'});
+
+    var raster = new Raster('/assets/ground-up/or5.svg');
+    raster.scale(2);
+    raster.position = (anchor + [2, 0])*scale;
+
+    var paths = [a, b, c, d, e];
+    for (var i = 0; i < 5; i += 1) {
+        p = paths[i];
+        p.moveTo((anchor + [0, (i-2)*0.5])*scale);
+        p.lineBy(new Point(0.9 - (i-2)*(i-2)*0.07, 0)*scale);
+    }
+    out.moveTo((anchor + [3.4, 0])*scale);
+    out.lineBy(new Point(0.6, 0)*scale);
+
+    return {a: a, b: b, c: c, d: d, e: e, out: out};
+}
+function muxPath(anchor) {
+    var a = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var b = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var c = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var d = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var s0 = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var s1 = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var out = new Path({strokeWidth: 2, strokeColor: 'black'});
+
+    var raster = new Raster('/assets/ground-up/mux.svg');
+    raster.position = (anchor + [1.8, 0])*scale;
+
+    a.moveTo((anchor + [0, -1.5])*scale);
+    a.lineBy(new Point(0.8, 0)*scale);
+    b.moveTo((anchor + [0, -0.5])*scale);
+    b.lineBy(new Point(0.8, 0)*scale);
+    c.moveTo((anchor + [0, 0.5])*scale);
+    c.lineBy(new Point(0.8, 0)*scale);
+    d.moveTo((anchor + [0, 1.5])*scale);
+    d.lineBy(new Point(0.8, 0)*scale);
+    s1.moveTo((anchor + [1.5, 2.6])*scale);
+    s1.lineBy(new Point(0, 0.8)*scale);
+    s0.moveTo((anchor + [2.3, 2.2])*scale);
+    s0.lineBy(new Point(0, 1.2)*scale);
+    out.moveTo((anchor + [2.8, 0])*scale);
+    out.lineBy(new Point(0.6, 0)*scale);
+
+    return {a: a, b: b, c: c, d: d, s1: s1, s0: s0, out: out};
+}
+function notPath(anchor) {
+    var input = new Path({strokeWidth: 2, strokeColor: 'black'});
+    var out = new Path({strokeWidth: 2, strokeColor: 'black'});
+
+    var raster = new Raster('/assets/ground-up/not.svg');
+    raster.scale(0.2);
+    raster.position = (anchor + [0.7, 0])*scale;
+
+    input.moveTo((anchor + [-0.6, 0])*scale);
+    input.lineBy(new Point(0.8, 0)*scale);
+    out.moveTo((anchor + [1.2, 0])*scale);
+    out.lineBy(new Point(0.6, 0)*scale);
+
+    return {input: input, out: out};
+}
+function drawLabel(anchor, content, fontSize) {
+    if (!fontSize) {
+        fontSize = 20;
+    }
+    new PointText({
+        point: anchor*scale,
+        justification: 'center',
+        fontSize: fontSize,
+        content: content
+    });
+}
+function drawLabels(anchor) {
+    for (var i = 0; i < 3; i += 1) {
+        drawLabel(anchor + [0.5, i*3 + 2.2], 'B₀', fontSize=18);
+        drawLabel(anchor + [0.5, i*3 + 2.7], 'B₁', fontSize=18);
+        drawLabel(anchor + [0.5, i*3 + 3.2], 'B₂', fontSize=18);
+        drawLabel(anchor + [0.5, i*3 + 3.7], 'B₃', fontSize=18);
+        drawLabel(anchor + [0.5, i*3 + 4.2], 'R', fontSize=18);
+    }
+    drawLabel(anchor + [0.5, 13 + 2.2], 'B₀', fontSize=18);
+    drawLabel(anchor + [0.5, 13 + 2.7], 'B₁', fontSize=18);
+    drawLabel(anchor + [0.5, 13 + 3.2], 'B₂', fontSize=18);
+    drawLabel(anchor + [0.5, 13 + 3.7], 'B₃', fontSize=18);
+    drawLabel(anchor + [0.5, 13 + 4.2], 'R', fontSize=18);
+    drawLabel(anchor + [7, 7.7], 'R̅');
+
+    drawLabel(anchor + [8.8, 4.7], '00', fontSize=16);
+    drawLabel(anchor + [8.8, 5.7], '01', fontSize=16);
+    drawLabel(anchor + [8.8, 6.7], '10', fontSize=16);
+    drawLabel(anchor + [8.8, 7.7], '11', fontSize=16);
+    drawLabel(anchor + [9, 8.4], 'S₁', fontSize=16);
+    drawLabel(anchor + [9.8, 7.9], 'S₀', fontSize=16);
+
+    drawLabel(anchor + [14.5, 15.8], 'Locked');
+}
+
+// compound paths
+var b0Path = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var b1Path = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var b2Path = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var b3Path = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var rPath  = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var clkPath = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var andAOut = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var andBOut = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var andCOut = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var muxOut = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var s0Path = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var s0NotPath = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var s1Path = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var orS0Path = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var orS1Path = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var andS0Path = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var andS1Path = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+
+var anchor = new Point(1, -1);
+var lineOffset = new Point(0.25, 0)*scale;
+
+var andA = and5Path(anchor + [1, 3], 3);
+var andB = and5Path(anchor + [1, 6], 0);
+var andC = and5Path(anchor + [1, 9], 1);
+var orButtons = or5Path(anchor + [1, 16]);
+var d1 = dffPath(anchor + [6, 14]);
+var d0 = dffPath(anchor + [6, 17]);
+var mux = muxPath(anchor + [7.5, 6]);
+var orS1 = orPath(anchor + [10, 11]);
+var orS0 = orPath(anchor + [10, 13]);
+var andS1 = andPath(anchor + [13, 5]);
+var andS0 = andPath(anchor + [13, 7]);
+var andLock = nandPath(anchor + [11, 16]);
+
+b0Path.addChild(andA.a);
+b0Path.addChild(andB.a);
+b0Path.addChild(andC.a);
+b0Path.addChild(orButtons.a);
+
+b1Path.addChild(andA.b);
+b1Path.addChild(andB.b);
+b1Path.addChild(andC.b);
+b1Path.addChild(orButtons.b);
+
+b2Path.addChild(andA.c);
+b2Path.addChild(andB.c);
+b2Path.addChild(andC.c);
+b2Path.addChild(orButtons.c);
+
+b3Path.addChild(andA.d);
+b3Path.addChild(andB.d);
+b3Path.addChild(andC.d);
+b3Path.addChild(orButtons.d);
+
+rPath.addChild(andA.e);
+rPath.addChild(andB.e);
+rPath.addChild(andC.e);
+rPath.addChild(orButtons.e);
+
+clkPath.addChild(orButtons.out);
+clkPath.addChild(d1.clk);
+clkPath.addChild(d0.clk);
+clkPath.moveTo(d1.clk.position - lineOffset);
+clkPath.lineBy(new Point(-0.05, 0)*scale);
+clkPath.lineBy(new Point(0, 3.02)*scale);
+clkPath.moveTo(orButtons.out.position + lineOffset);
+clkPath.lineBy(new Point(1.05, 0)*scale);
+
+andAOut.addChild(andA.out);
+andAOut.addChild(mux.a);
+andAOut.moveTo(andA.out.position + lineOffset);
+andAOut.lineBy(new Point(1, 0)*scale);
+andAOut.lineBy(new Point(0, 1.5)*scale);
+andAOut.lineBy(new Point(1.7, 0)*scale);
+
+andBOut.addChild(andB.out);
+andBOut.addChild(mux.b);
+andBOut.moveTo(andB.out.position + lineOffset);
+andBOut.lineBy(new Point(1, 0)*scale);
+andBOut.lineBy(new Point(0, -0.5)*scale);
+andBOut.lineBy(new Point(1.7, 0)*scale);
+
+andCOut.addChild(andC.out);
+andCOut.addChild(mux.c);
+andCOut.moveTo(andC.out.position + lineOffset);
+andCOut.lineBy(new Point(1, 0)*scale);
+andCOut.lineBy(new Point(0, -2.5)*scale);
+andCOut.lineBy(new Point(1.7, 0)*scale);
+
+muxOut.addChild(mux.out);
+muxOut.addChild(andS0.a);
+muxOut.addChild(andS1.b);
+muxOut.moveTo(mux.out.position + lineOffset);
+muxOut.lineBy(new Point(2.15, 0)*scale);
+muxOut.moveBy(new Point(0, -0.7)*scale);
+muxOut.lineBy(new Point(0, 1.4)*scale);
+
+s0Path.addChild(d0.q);
+s0Path.addChild(mux.s0);
+s0Path.addChild(orS1.b);
+s0Path.addChild(andLock.b);
+s0Path.moveTo(d0.q.position + lineOffset);
+s0Path.lineBy(new Point(0.65, 0)*scale);
+s0Path.lineBy(new Point(0, -0.1)*scale);
+s0Path.lineBy(new Point(1.9 - 0.65, 0)*scale);
+s0Path.moveBy(new Point(0.65 - 1.9, 0)*scale);
+s0Path.lineBy(new Point(0, -5)*scale);
+s0Path.lineBy(new Point(0.2, 0)*scale);
+s0Path.moveBy(new Point(-0.2, 0)*scale);
+s0Path.lineBy(new Point(0, -2)*scale);
+
+s0NotPath.addChild(orS0.b);
+s0NotPath.moveTo(orS0.b.position - lineOffset);
+s0NotPath.lineBy(new Point(-0.11, 0)*scale);
+s0NotPath.lineBy(new Point(0, 4.3)*scale);
+s0NotPath.lineBy(new Point(-1.4, 0)*scale);
+
+
+s1Path.addChild(d1.q);
+s1Path.addChild(mux.s1);
+s1Path.addChild(orS1.a);
+s1Path.addChild(orS0.a);
+s1Path.addChild(andLock.a);
+s1Path.moveTo(d1.q.position + lineOffset);
+s1Path.lineBy(new Point(0, -0.7)*scale);
+s1Path.lineBy(new Point(0.85, 0)*scale);
+s1Path.lineBy(new Point(-1, 0)*scale);
+s1Path.lineBy(new Point(0, -2)*scale);
+s1Path.lineBy(new Point(1, 0)*scale);
+s1Path.moveBy(new Point(-1, 0)*scale);
+s1Path.lineBy(new Point(0, -1.3)*scale);
+s1Path.moveTo(d1.q.position + lineOffset);
+s1Path.lineBy(new Point(0, 2.3)*scale);
+s1Path.lineBy(new Point(1.9, 0)*scale);
+
+orS0Path.addChild(orS0.out);
+orS0Path.addChild(andS0.b);
+orS0Path.moveTo(orS0.out.position + lineOffset);
+orS0Path.lineBy(new Point(0.35, 0)*scale);
+orS0Path.lineBy(new Point(0, -5.7)*scale);
+
+orS1Path.addChild(orS1.out);
+orS1Path.addChild(andS1.a);
+orS1Path.moveTo(orS1.out.position + lineOffset);
+orS1Path.lineBy(new Point(0.11, 0)*scale);
+orS1Path.lineBy(new Point(0, -6.3)*scale);
+orS1Path.lineBy(new Point(0.3, 0)*scale);
+
+andS0Path.addChild(andS0.out);
+andS0Path.addChild(d0.d);
+andS0Path.moveTo(andS0.out.position + lineOffset);
+andS0Path.lineBy(new Point(0.11, 0)*scale);
+andS0Path.lineBy(new Point(0, 11.5)*scale);
+andS0Path.lineBy(new Point(-10, 0)*scale);
+andS0Path.lineBy(new Point(0, -2.1)*scale);
+andS0Path.lineBy(new Point(0.3, 0)*scale);
+
+andS1Path.addChild(andS1.out);
+andS1Path.addChild(d1.d);
+andS1Path.moveTo(andS1.out.position + lineOffset);
+andS1Path.lineBy(new Point(0.7, 0)*scale);
+andS1Path.lineBy(new Point(0, 14)*scale);
+andS1Path.lineBy(new Point(-11, 0)*scale);
+andS1Path.lineBy(new Point(0, -5.6)*scale);
+andS1Path.lineBy(new Point(0.7, 0)*scale);
+
+drawLabels(anchor);
+
+var lastClk = false;
+var lastS0 = 'black';
+var lastS1 = 'black';
+window.globals.updateLock = function() {
+    var t = function(p) { return p.strokeColor == 'red' ? true : false; };
+    var f = function(p) { return !t(p); };
+    var b0 = window.globals.lockB0;
+    var b1 = window.globals.lockB1;
+    var b2 = window.globals.lockB2;
+    var b3 = window.globals.lockB3;
+    var reset = window.globals.lockR;
+    s0Path.strokeColor = lastS0;
+    s1Path.strokeColor = lastS1;
+
+    b0Path.strokeColor = b0 ? 'red' : 'black';
+    b1Path.strokeColor = b1 ? 'red' : 'black';
+    b2Path.strokeColor = b2 ? 'red' : 'black';
+    b3Path.strokeColor = b3 ? 'red' : 'black';
+    rPath.strokeColor = reset ? 'red' : 'black';
+    clkPath.strokeColor = (b0 || b1 || b2 || b3 || reset) ? 'red' : 'black';
+    if (lastClk && f(clkPath)) {
+        // falling edge of clk -> update state
+        s0Path.strokeColor = andS0Path.strokeColor;
+        s1Path.strokeColor = andS1Path.strokeColor;
+    }
+    s0NotPath.strokeColor = f(s0Path) ? 'red' : 'black';
+    andAOut.strokeColor = !b0 && !b1 && !b2 && b3 && !reset ? 'red' : 'black';
+    andBOut.strokeColor = b0 && !b1 && !b2 && !b3 && !reset ? 'red' : 'black';
+    andCOut.strokeColor = !b0 && b1 && !b2 && !b3 && !reset ? 'red' : 'black';
+    mux.d.strokeColor = !reset ? 'red' : 'black';
+    var state = String.fromCharCode(65 + (t(s1Path) ? 2 : 0) + (t(s0Path) ? 1 : 0));
+    switch (state) {
+        case 'A': muxOut.strokeColor = t(andAOut) ? 'red' : 'black';
+                  break;
+        case 'B': muxOut.strokeColor = t(andBOut) ? 'red' : 'black';
+                  break;
+        case 'C': muxOut.strokeColor = t(andCOut) ? 'red' : 'black';
+                  break;
+        case 'D': muxOut.strokeColor = t(mux.d) ? 'red' : 'black';
+                  state = 'Unlock';
+                  break;
+    }
+    orS0Path.strokeColor = f(s0Path) || t(s1Path) ? 'red' : 'black';
+    orS1Path.strokeColor = t(s0Path) || t(s1Path) ? 'red' : 'black';
+    andS0Path.strokeColor = t(muxOut) && t(orS0Path) ? 'red' : 'black';
+    andS1Path.strokeColor = t(muxOut) && t(orS1Path) ? 'red' : 'black';
+    andLock.out.strokeColor = !(t(s0Path) && t(s1Path)) ? 'red' : 'black';
+    window.globals.lockL = t(andLock.out).toString();
+    window.globals.lockS = state;
+
+    lastClk = t(clkPath);
+    lastS0 = s0Path.strokeColor;
+    lastS1 = s1Path.strokeColor;
+}
+
+</script>
+<canvas id="lock" resize=""></canvas>
+</div>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Using boolean logic and a bit of memory, we were able to create a simple
+finite state machine. We utilized a multiplexer to switch between the input
+combinations based on the current state in order to determine the next state.
+FSMs deterministically model solutions to problems in a manageable way,
+and are a very useful concept in both hardware and software domains.</p>
+
+<p>As always if any parts were unclear, please feel free to contact me.</p>
+
+  </div><a class="u-url" href="/posts/ground-up-state-machines.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

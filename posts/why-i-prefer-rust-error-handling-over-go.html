@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Why I Prefer Rust Error Handling Over Go | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Why I Prefer Rust Error Handling Over Go" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A large part of software development is handling errors. Generally speaking, we cannot predict and account for everything that is input to the program, but it is important to handle issues gracefully as the algorithm encounters them. Like it or not, as engineers it is our job to provide a good user experience and that includes error handling." />
+<meta property="og:description" content="A large part of software development is handling errors. Generally speaking, we cannot predict and account for everything that is input to the program, but it is important to handle issues gracefully as the algorithm encounters them. Like it or not, as engineers it is our job to provide a good user experience and that includes error handling." />
+<link rel="canonical" href="/posts/why-i-prefer-rust-error-handling-over-go.html" />
+<meta property="og:url" content="/posts/why-i-prefer-rust-error-handling-over-go.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-25T05:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Why I Prefer Rust Error Handling Over Go" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2020-06-25T05:00:00+00:00","datePublished":"2020-06-25T05:00:00+00:00","description":"A large part of software development is handling errors. Generally speaking, we cannot predict and account for everything that is input to the program, but it is important to handle issues gracefully as the algorithm encounters them. Like it or not, as engineers it is our job to provide a good user experience and that includes error handling.","headline":"Why I Prefer Rust Error Handling Over Go","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/why-i-prefer-rust-error-handling-over-go.html"},"url":"/posts/why-i-prefer-rust-error-handling-over-go.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Why I Prefer Rust Error Handling Over Go</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-06-25T05:00:00+00:00" itemprop="datePublished">Jun 25, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>A large part of software development is handling errors. Generally
+speaking, we cannot predict and account for everything that is
+input to the program, but it is important to handle issues
+gracefully as the algorithm encounters them. Like it or not, as
+engineers it is our job to provide a good user experience and that
+includes error handling.</p>
+
+<p>This post describes my experiences with error handling in two
+programming languages: Go and Rust. We compare a simple example
+of reading the contents of a file.</p>
+
+<h2 id="go">Go</h2>
+<p>Let us start by exploring error handling in Go. One of the biggest
+advantages of Go is that it aims to keep everything simple. As such,
+there is not much to error handling. Go provides an <code class="language-plaintext highlighter-rouge">error</code> interface,
+so any type that implements it can be returned as an <code class="language-plaintext highlighter-rouge">error</code>.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">getFileContents</span><span class="p">()</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">file</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s">"file.txt"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="no">nil</span><span class="p">,</span> <span class="n">err</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="n">file</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+
+    <span class="n">b</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">ioutil</span><span class="o">.</span><span class="n">ReadAll</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">b</span><span class="p">,</span> <span class="n">err</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>If you are familiar with Go, you will know that this error checking
+boilerplate is <em>everywhere</em>.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="no">nil</span><span class="p">,</span> <span class="n">err</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>That is because majority of the time, error handling means “pass the
+error back up to the caller.” There is nothing wrong with that, and
+I suspect it is the reason why languages like to use the <code class="language-plaintext highlighter-rouge">try</code> <code class="language-plaintext highlighter-rouge">catch</code>
+paradigm, but that is why it is everywhere in Go.</p>
+
+<p>Another reason it is everywhere is because it <em>works</em> everywhere.
+The power of this error handling model comes from its simplicity.
+You can create your own types that implement the <code class="language-plaintext highlighter-rouge">error</code> interface
+and handle it just like any other error.</p>
+
+<h3 id="errors-are-everywhere">Errors are Everywhere</h3>
+<p>Let’s face it, errors are everywhere. If you imagine any non-trivial
+program, its function call tree will almost always return an error.
+As we established, majority of error handling is passing the error
+to the parent (also known as bubbling up), which means every function
+needs to return an <code class="language-plaintext highlighter-rouge">error</code>. At the root is where all of these errors need
+to be addressed. This is the point that I do not like about Go error handling.</p>
+
+<p>It is at this point that you have an <code class="language-plaintext highlighter-rouge">error</code> interface that can be
+<em>any</em> concrete type.  You could simply print the error using the
+<code class="language-plaintext highlighter-rouge">Error()</code> method as defined by the interface, but I think that hides
+a lot of important information for the parent to properly handle
+the error for different cases. Going back to our file reading
+example, let us consider two reasons for an error: the file does not
+exist, and the file is not readable.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">getFileContents</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">err</span><span class="o">.</span><span class="p">(</span><span class="k">type</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="o">*</span><span class="n">os</span><span class="o">.</span><span class="n">PathError</span><span class="o">:</span>
+            <span class="k">switch</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">err</span><span class="o">.</span><span class="n">Unwrap</span><span class="p">()</span><span class="o">.</span><span class="p">(</span><span class="k">type</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="n">syscall</span><span class="o">.</span><span class="n">Errno</span><span class="o">:</span>
+                <span class="n">syscallNum</span> <span class="o">:=</span> <span class="kt">uintptr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">syscallNum</span> <span class="o">==</span> <span class="m">2</span> <span class="p">{</span>
+                    <span class="c">// file does not exist</span>
+                    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"file does not exist"</span><span class="p">)</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">syscallNum</span> <span class="o">==</span> <span class="m">13</span> <span class="p">{</span>
+                    <span class="c">// permission denied</span>
+                    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"permission denied"</span><span class="p">)</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="c">// unhandled error</span>
+                    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"unhandled error"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Success!"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Before you start writing this example off as bad code, there is
+reason I chose to demonstrate this abomination.  It shows just how
+terrible and messy it is to handle different error types. There
+will almost always be an unknown case that you cannot handle, and
+many times libraries will return an <code class="language-plaintext highlighter-rouge">errors.errorsString</code> type which
+you cannot detect the type of because it is un-exported!</p>
+
+<p>Now, maybe I am doing something wrong here, and if so, please correct me!
+Before I get a flood of emails, let me provide the <em>proper</em> way to
+check for file existence and permission errors.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">getFileContents</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">IsNotExist</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c">// file does not exist</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"file does not exist"</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">IsPermission</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c">// permission denied</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"permission denied"</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c">// unhandled error</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"unhandled error"</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Success!"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Better, but not by much if you ask me. Let’s take a look at the
+Rust side. Spoiler alert: I like it better.</p>
+
+<h2 id="rust">Rust</h2>
+<p>One of the biggest advantages of Rust is its compiler. It is by far
+the best compiler I have ever worked with. It points you to exactly
+the part of the code that is wrong, provides clear explanations of
+the error, and even gives you tips on how to fix it. Most
+importantly for this post, the compiler knows how to do things <em>for</em>
+you (more on this later). Let’s jump into an example.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">get_file_contents</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">u8</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"file.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">contents</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[];</span>
+    <span class="n">file</span><span class="nf">.read_to_end</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">contents</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="nf">Ok</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>On first reading, this looks a lot more complicated than the Go
+version. What is <code class="language-plaintext highlighter-rouge">io::Result&lt;Vec&lt;u8&gt;&gt;</code> and why is there a <code class="language-plaintext highlighter-rouge">?</code> at
+the end of some lines? Those familiar with Rust can probably answer
+these questions better than me (I am a new Rustacean), and it is
+not the focus of this post. However, I will provide a short summary:
+<code class="language-plaintext highlighter-rouge">Result</code> types hold one of two types: an <code class="language-plaintext highlighter-rouge">Ok</code> or an <code class="language-plaintext highlighter-rouge">Err</code> type. The
+<code class="language-plaintext highlighter-rouge">?</code> operator essentially says: “if it is an <code class="language-plaintext highlighter-rouge">Err</code>, return from the
+function, otherwise extract the data from <code class="language-plaintext highlighter-rouge">Ok</code>.”</p>
+
+<p>By comparison to the Go version, there is no error checking boilerplate
+in the Rust version. Instead, it is replaced with <code class="language-plaintext highlighter-rouge">?</code>. As with Go, this
+bubbles up the error to be handled by the parent caller. Let’s see how
+that looks.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nf">get_file_contents</span><span class="p">();</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nf">Err</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="n">result</span> <span class="p">{</span>
+        <span class="k">match</span> <span class="n">x</span><span class="nf">.kind</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nn">ErrorKind</span><span class="p">::</span><span class="n">NotFound</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"not found"</span><span class="p">),</span>
+            <span class="nn">ErrorKind</span><span class="p">::</span><span class="n">PermissionDenied</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"permission denied"</span><span class="p">),</span>
+            <span class="n">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"unhandled error"</span><span class="p">),</span>
+        <span class="p">};</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">};</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"success!"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>I think this is on-par with the non-abominable Go version. One bonus
+that Rust offers is ensuring you handle all enum cases (with <code class="language-plaintext highlighter-rouge">_</code>
+being the catch-all). I will also note that this is handling the
+specific <code class="language-plaintext highlighter-rouge">io::Error</code> type. This is contrasted to <code class="language-plaintext highlighter-rouge">Go</code> by handling
+the generic <code class="language-plaintext highlighter-rouge">error</code> interface.</p>
+
+<h3 id="errors-are-everywhere-especially-in-rust">Errors are Everywhere (especially in Rust)</h3>
+<p>Imagining our function tree again, there are a lot of places where
+we would want to bubble up errors, but they will not always be <code class="language-plaintext highlighter-rouge">io::Error</code>
+types! What is the point of <code class="language-plaintext highlighter-rouge">?</code> if it only works for errors of the same type?
+Well, it turns out <code class="language-plaintext highlighter-rouge">?</code> will automatically convert from one error type to another,
+you just need to tell the compiler how to do that. Let me say that again because
+the first time I learned it, it was a complete revelation. The Rust compiler will
+automatically translate errors if it knows how to!</p>
+
+<p>Alright, let’s do it.</p>
+
+<p>First let’s change the return type to <code class="language-plaintext highlighter-rouge">Result&lt;Vec&lt;u8&gt;, MyError&gt;</code>
+so we can return our custom error type.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">get_file_contents</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">u8</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">MyError</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="c1">// snip</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now let’s define <code class="language-plaintext highlighter-rouge">MyError</code> and how to convert <code class="language-plaintext highlighter-rouge">io::Error</code> to it. Let’s
+just store the IO error in an enum.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">MyError</span> <span class="p">{</span>
+    <span class="nf">IOError</span><span class="p">(</span><span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="k">impl</span> <span class="nb">From</span><span class="o">&lt;</span><span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">MyError</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">from</span><span class="p">(</span><span class="n">err</span><span class="p">:</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">MyError</span> <span class="p">{</span>
+        <span class="nn">MyError</span><span class="p">::</span><span class="nf">IOError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Finally, let’s update the error handling in main.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nf">get_file_contents</span><span class="p">();</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nf">Err</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="n">result</span> <span class="p">{</span>
+        <span class="k">match</span> <span class="n">x</span> <span class="p">{</span>
+            <span class="nn">MyError</span><span class="p">::</span><span class="nf">IOError</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">match</span> <span class="n">x</span><span class="nf">.kind</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="nn">ErrorKind</span><span class="p">::</span><span class="n">NotFound</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"not found"</span><span class="p">),</span>
+                    <span class="nn">ErrorKind</span><span class="p">::</span><span class="n">PermissionDenied</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"permission denied"</span><span class="p">),</span>
+                    <span class="n">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"unknown error"</span><span class="p">),</span>
+                <span class="p">};</span>
+            <span class="p">}</span>
+        <span class="p">};</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">};</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"success!"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Note that we now need to <code class="language-plaintext highlighter-rouge">match x</code> because it is a <code class="language-plaintext highlighter-rouge">MyError</code> enum. Also note that there
+is only one case and no catch-all <code class="language-plaintext highlighter-rouge">_</code> case.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>These two examples are not that different, so why do I like the Rust
+version better? It scales better. No information is lost or hidden
+and it can easily grow to include other types of errors. There is less
+boilerplate, and you can easily chain functions together and abort
+in the middle.</p>
+
+<p>To demonstrate, we can rewrite part of our <code class="language-plaintext highlighter-rouge">get_file_contents</code> from</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"file.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<span class="n">file</span><span class="nf">.read_to_end</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">contents</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>to</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"file.txt"</span><span class="p">)</span><span class="o">?</span><span class="nf">.read_to_end</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">contents</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div></div>
+
+  </div><a class="u-url" href="/posts/why-i-prefer-rust-error-handling-over-go.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

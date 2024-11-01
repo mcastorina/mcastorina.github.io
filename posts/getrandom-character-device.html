@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>getrandom Character Device | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="getrandom Character Device" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Today I read this article titled Myths about /dev/urandom. I stumbled upon it when trying to figure out why writing /dev/random to a hard disk was taking so long, and I learned a few interesting things. The most important being to always use /dev/urandom because it doesn’t block and it is just as secure." />
+<meta property="og:description" content="Today I read this article titled Myths about /dev/urandom. I stumbled upon it when trying to figure out why writing /dev/random to a hard disk was taking so long, and I learned a few interesting things. The most important being to always use /dev/urandom because it doesn’t block and it is just as secure." />
+<link rel="canonical" href="/posts/getrandom-character-device.html" />
+<meta property="og:url" content="/posts/getrandom-character-device.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-11T05:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="getrandom Character Device" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2021-01-11T05:00:00+00:00","datePublished":"2021-01-11T05:00:00+00:00","description":"Today I read this article titled Myths about /dev/urandom. I stumbled upon it when trying to figure out why writing /dev/random to a hard disk was taking so long, and I learned a few interesting things. The most important being to always use /dev/urandom because it doesn’t block and it is just as secure.","headline":"getrandom Character Device","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/getrandom-character-device.html"},"url":"/posts/getrandom-character-device.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">getrandom Character Device</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2021-01-11T05:00:00+00:00" itemprop="datePublished">Jan 11, 2021
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Today I read this article titled <a href="https://www.2uo.de/myths-about-urandom/">Myths about
+/dev/urandom</a>. I stumbled upon
+it when trying to figure out why writing <code class="language-plaintext highlighter-rouge">/dev/random</code> to a hard disk
+was taking so long, and I learned a few interesting things. The most
+important being to always use <code class="language-plaintext highlighter-rouge">/dev/urandom</code> because it doesn’t block
+and it is just as secure.</p>
+
+<p>I also learned about a syscall that behaves similar to <code class="language-plaintext highlighter-rouge">/dev/urandom</code>
+but will block when there isn’t enough initial entropy: <code class="language-plaintext highlighter-rouge">getrandom</code>.
+I took this opportunity to learn how to create my own character device
+that will output <code class="language-plaintext highlighter-rouge">getrandom</code> bytes indefinitely.</p>
+
+<p>The idea is simple: create a character device file and write a kernel
+module for it to return the output of <code class="language-plaintext highlighter-rouge">getrandom</code>. As I found out,
+however, calling a syscall from a kernel module isn’t possible or
+encouraged. Syscalls are, after all, for user space programs to
+execute kernel code.  So after I learned how to create a kernel
+module for a character device, I found a way to get it working using
+<a href="https://github.com/libfuse/libfuse">libfuse</a>.</p>
+
+<h2 id="creating-a-character-device-file">Creating a Character Device File</h2>
+<p>Creating a character device file was pretty easy, in fact the command
+<code class="language-plaintext highlighter-rouge">mknod</code> does just that!  The only thing I needed to do was choose a
+major and minor number, which is basically an ID for the device.  A list
+of major numbers can be found at <code class="language-plaintext highlighter-rouge">/proc/devices</code>. I chose <code class="language-plaintext highlighter-rouge">1</code> to match
+<code class="language-plaintext highlighter-rouge">/dev/urandom</code>. Then the obvious choice for the minor number is <code class="language-plaintext highlighter-rouge">1337</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo mknod </span>xrandom c 1 1337
+</code></pre></div></div>
+
+<h2 id="creating-a-kernel-module">Creating a Kernel Module</h2>
+<p>A kernel module is essentially a way to dynamically load software into
+the kernel. One of its uses is for device drivers, and you can write
+software to handle when a character device is read from or written to.</p>
+
+<p>Below is the full module and how to compile it. Note that I omitted the
+file opening and closing operations.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;linux/kernel.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;linux/init.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;linux/module.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;linux/kdev_t.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;linux/fs.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;linux/cdev.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;linux/device.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;linux/uaccess.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;linux/unistd.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;linux/syscalls.h&gt;</span><span class="cp">
+</span>
+<span class="k">static</span> <span class="k">struct</span> <span class="n">class</span> <span class="o">*</span><span class="n">dev_class</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">struct</span> <span class="n">cdev</span> <span class="n">gr_cdev</span><span class="p">;</span>
+
+<span class="k">static</span> <span class="kt">int</span>      <span class="n">__init</span> <span class="nf">gr_driver_init</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">void</span>     <span class="n">__exit</span> <span class="nf">gr_driver_exit</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">ssize_t</span>  <span class="nf">gr_read</span><span class="p">(</span><span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">filp</span><span class="p">,</span> <span class="kt">char</span> <span class="n">__user</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">,</span> <span class="n">loff_t</span> <span class="o">*</span><span class="n">off</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">ssize_t</span>  <span class="nf">gr_write</span><span class="p">(</span><span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">filp</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">,</span> <span class="n">loff_t</span> <span class="o">*</span><span class="n">off</span><span class="p">);</span>
+
+<span class="k">static</span> <span class="k">struct</span> <span class="n">file_operations</span> <span class="n">fops</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">owner</span>      <span class="o">=</span> <span class="n">THIS_MODULE</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">read</span>       <span class="o">=</span> <span class="n">gr_read</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">write</span>      <span class="o">=</span> <span class="n">gr_write</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="c1">// Major + minor number</span>
+<span class="n">dev_t</span> <span class="n">dev</span> <span class="o">=</span> <span class="n">MKDEV</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1337</span><span class="p">);</span>
+
+<span class="c1">// Initialize kernel module (insmod)</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">__init</span> <span class="nf">gr_driver_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">register_chrdev_region</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"mem"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">printk</span><span class="p">(</span><span class="n">KERN_ERR</span> <span class="s">"[xrandom] could not register character device</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">cdev_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gr_cdev</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fops</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">cdev_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gr_cdev</span><span class="p">,</span> <span class="n">dev</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">"[xrandom] could not add the device to the system</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">r_class</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">dev_class</span> <span class="o">=</span> <span class="n">class_create</span><span class="p">(</span><span class="n">THIS_MODULE</span><span class="p">,</span> <span class="s">"gr_class"</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">"[xrandom] could not create the struct class</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">r_class</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">device_create</span><span class="p">(</span><span class="n">dev_class</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">dev</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="s">"gr_device"</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">"[xrandom] could not create the device</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">r_device</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">"[xrandom] kernel module inserted successfully</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="nl">r_device:</span>
+    <span class="n">class_destroy</span><span class="p">(</span><span class="n">dev_class</span><span class="p">);</span>
+<span class="nl">r_class:</span>
+    <span class="n">unregister_chrdev_region</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Cleanup kernel module (rmmod)</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="n">__exit</span> <span class="nf">gr_driver_exit</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">device_destroy</span><span class="p">(</span><span class="n">dev_class</span><span class="p">,</span> <span class="n">dev</span><span class="p">);</span>
+    <span class="n">class_destroy</span><span class="p">(</span><span class="n">dev_class</span><span class="p">);</span>
+    <span class="n">cdev_del</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gr_cdev</span><span class="p">);</span>
+    <span class="n">unregister_chrdev_region</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">"[xrandom] kernel module removed successfully</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">ssize_t</span> <span class="nf">gr_read</span><span class="p">(</span><span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">filp</span><span class="p">,</span> <span class="kt">char</span> <span class="n">__user</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">,</span> <span class="n">loff_t</span> <span class="o">*</span><span class="n">off</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="cm">/* fair dice roll */</span>
+    <span class="k">return</span> <span class="n">copy_to_user</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="s">"4"</span><span class="p">,</span> <span class="n">len</span><span class="p">)</span> <span class="o">?</span> <span class="o">-</span><span class="n">EFAULT</span> <span class="o">:</span> <span class="n">len</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">ssize_t</span> <span class="nf">gr_write</span><span class="p">(</span><span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">filp</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">,</span> <span class="n">loff_t</span> <span class="o">*</span><span class="n">off</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* do not return 0 */</span>
+    <span class="k">return</span> <span class="n">len</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Link callback functions</span>
+<span class="n">module_init</span><span class="p">(</span><span class="n">gr_driver_init</span><span class="p">);</span>
+<span class="n">module_exit</span><span class="p">(</span><span class="n">gr_driver_exit</span><span class="p">);</span>
+
+<span class="n">MODULE_LICENSE</span><span class="p">(</span><span class="s">"GPL"</span><span class="p">);</span>
+<span class="n">MODULE_DESCRIPTION</span><span class="p">(</span><span class="s">"xrandom driver"</span><span class="p">);</span>
+<span class="n">MODULE_VERSION</span><span class="p">(</span><span class="s">"1.0"</span><span class="p">);</span>
+<span class="n">MODULE_AUTHOR</span><span class="p">(</span><span class="s">"miccah"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<pre><code class="language-Makefile">obj-m += xrandom.o
+KDIR = /lib/modules/$(shell uname -r)/build
+
+all:
+	make -C $(KDIR) M=$(shell pwd) modules
+clean:
+	make -C $(KDIR) M=$(shell pwd) clean
+
+install: all
+	sudo insmod xrandom.ko
+uninstall:
+	sudo rmmod xrandom
+</code></pre>
+
+<h2 id="fuse-and-cuse">Fuse and Cuse</h2>
+<p>As I mentioned earlier, we cannot perform a syscall
+from a kernel module. Instead, I got it working with
+<a href="https://github.com/libfuse/libfuse">libfuse</a>, or more accurately <code class="language-plaintext highlighter-rouge">cuse</code>
+(character device in userspace).</p>
+
+<p>FUSE (Filesystem in Userspace) is an interface for userspace programs
+to export a filesystem to the Linux kernel. We can register callbacks
+in userspace for character device reading and writing. In this way, we
+can call the syscall from userspace and still have it linked to our
+special device character file.</p>
+
+<p>Below is the C program I modified from the <a href="https://github.com/libfuse/libfuse/blob/master/example/cuse.c">cuse
+example</a>.
+It registers a callback with libfuse for our major and minor numbers.
+To unregsiter it, kill the process that was spawned by the program
+(found with <code class="language-plaintext highlighter-rouge">ps aux | grep cuse</code>).</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define FUSE_USE_VERSION 31
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;cuse_lowlevel.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;fuse_opt.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stddef.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;errno.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/random.h&gt;</span><span class="cp">
+</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">gr_read</span><span class="p">(</span><span class="n">fuse_req_t</span> <span class="n">req</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="kt">off_t</span> <span class="n">off</span><span class="p">,</span>
+        <span class="k">struct</span> <span class="n">fuse_file_info</span> <span class="o">*</span><span class="n">fi</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">fi</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    <span class="n">getrandom</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buf</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">fuse_reply_buf</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">gr_write</span><span class="p">(</span><span class="n">fuse_req_t</span> <span class="n">req</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span>
+        <span class="kt">off_t</span> <span class="n">off</span><span class="p">,</span> <span class="k">struct</span> <span class="n">fuse_file_info</span> <span class="o">*</span><span class="n">fi</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">fi</span><span class="p">;</span>
+
+    <span class="n">fuse_reply_write</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="n">cusexmp_param</span> <span class="p">{</span>
+    <span class="kt">unsigned</span>    <span class="n">major</span><span class="p">;</span>
+    <span class="kt">unsigned</span>    <span class="n">minor</span><span class="p">;</span>
+    <span class="kt">char</span>        <span class="o">*</span><span class="n">dev_name</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">cuse_lowlevel_ops</span> <span class="n">gr_clop</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">read</span>   <span class="o">=</span> <span class="n">gr_read</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">write</span>  <span class="o">=</span> <span class="n">gr_write</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="n">cusexmp_param</span> <span class="n">param</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1337</span><span class="p">,</span> <span class="s">"xrandom"</span> <span class="p">};</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">dev_info_argv</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span> <span class="s">"DEVNAME=xrandom"</span> <span class="p">};</span>
+    <span class="k">struct</span> <span class="n">cuse_info</span> <span class="n">ci</span><span class="p">;</span>
+
+    <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ci</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">ci</span><span class="p">));</span>
+    <span class="n">ci</span><span class="p">.</span><span class="n">dev_major</span> <span class="o">=</span> <span class="n">param</span><span class="p">.</span><span class="n">major</span><span class="p">;</span>
+    <span class="n">ci</span><span class="p">.</span><span class="n">dev_minor</span> <span class="o">=</span> <span class="n">param</span><span class="p">.</span><span class="n">minor</span><span class="p">;</span>
+    <span class="n">ci</span><span class="p">.</span><span class="n">dev_info_argc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">ci</span><span class="p">.</span><span class="n">dev_info_argv</span> <span class="o">=</span> <span class="n">dev_info_argv</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">cuse_lowlevel_main</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ci</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">gr_clop</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gcc <span class="nt">-Wall</span> xrandom-cuse.c <span class="si">$(</span>shell pkg-config fuse3 <span class="nt">--cflags</span> <span class="nt">--libs</span><span class="si">)</span> <span class="nt">-o</span> cuse
+<span class="nv">$ </span><span class="nb">sudo</span> ./cuse
+</code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Even though there is a lot of technical knowledge for writing kernel
+modules, the concept is pretty simple. Because everything in Linux is
+a file, we are simply writing handlers for operations on special files.</p>
+
+<p>Also, I think it will be fun to write my own device driver for my
+creations now that I know how!</p>
+
+  </div><a class="u-url" href="/posts/getrandom-character-device.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

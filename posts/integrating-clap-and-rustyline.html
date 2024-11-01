@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Integrating clap and rustyline | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Integrating clap and rustyline" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My latest project is a command line interpreter written in Rust. As such, I wanted to use rustyline for the line reader and clap to parse that line. This post explores how I integrated these two libraries to leverage a single source of data for both command parsing and tab completions." />
+<meta property="og:description" content="My latest project is a command line interpreter written in Rust. As such, I wanted to use rustyline for the line reader and clap to parse that line. This post explores how I integrated these two libraries to leverage a single source of data for both command parsing and tab completions." />
+<link rel="canonical" href="/posts/integrating-clap-and-rustyline.html" />
+<meta property="og:url" content="/posts/integrating-clap-and-rustyline.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-05T05:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Integrating clap and rustyline" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2020-08-05T05:00:00+00:00","datePublished":"2020-08-05T05:00:00+00:00","description":"My latest project is a command line interpreter written in Rust. As such, I wanted to use rustyline for the line reader and clap to parse that line. This post explores how I integrated these two libraries to leverage a single source of data for both command parsing and tab completions.","headline":"Integrating clap and rustyline","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/integrating-clap-and-rustyline.html"},"url":"/posts/integrating-clap-and-rustyline.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Integrating clap and rustyline</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-08-05T05:00:00+00:00" itemprop="datePublished">Aug 5, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>My <a href="https://github.com/mcastorina/repost">latest project</a> is a
+command line interpreter written in Rust.  As such, I wanted to use
+<a href="https://github.com/kkawakam/rustyline">rustyline</a> for the line
+reader and <a href="https://github.com/clap-rs/clap">clap</a> to parse that
+line. This post explores how I integrated these two libraries
+to leverage a single source of data for both command parsing and
+tab completions.</p>
+
+<p>TLDR; <a href="https://gist.github.com/mcastorina/7ad4782f75e3707f9f534c05b72e390c">here is a POC gist</a></p>
+
+<h2 id="why-i-chose-to-do-this">Why I chose to do this</h2>
+<p>One behavior of Rust is informing the compiler of data that is
+related, so I thought it made sense to have my tab completion be
+based off of clap’s argument parsing. In this way, whenever I add,
+remove, or modify the argument parsing code, the tab completion
+will stay in sync.</p>
+
+<h2 id="premise">Premise</h2>
+<p>Once I explored both libraries, I came up with an idea: I can define
+my clap <code class="language-plaintext highlighter-rouge">App</code> using YAML and parse the same YAML to feed into the tab
+completion. This approach has a few drawbacks (no validator support),
+however I believe the convenience is worth it.</p>
+
+<p>In order for this to be viable, however, the YAML has to be part of
+the compiled binary. We cannot do this parsing at runtime, because we
+don’t want to allow the user to modify it. Clap already has a <code class="language-plaintext highlighter-rouge">load_yaml!</code>
+macro that does this, which uses the <code class="language-plaintext highlighter-rouge">include_str!</code> macro underneath to include
+the file at compile time. Perfect.</p>
+
+<h2 id="actually-doing-it">Actually doing it</h2>
+<p>This was a lot more challenging than I make it sound, and it took
+me a couple of days to get it working. I’ll explain the main logic
+here, but if you are looking for a POC to copy and paste, <a href="https://gist.github.com/mcastorina/7ad4782f75e3707f9f534c05b72e390c">here is
+the gist</a>.</p>
+
+<h3 id="summary">Summary</h3>
+<ol>
+  <li>Parse the YAML into a recursive structure (each struct has a list of completions)</li>
+  <li>Split the input string into words</li>
+  <li>Walk the structure using the input tokens</li>
+  <li>Filter candidates by the start of the last word</li>
+</ol>
+
+<p>Example: “set environment l”</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. LUT                       = {"create": ["request", "variable"], "set": [{"request": [], "environment": ["local", "stage"]}]}
+2. "set environment l"       = ["set", "environment", "l"]
+3. LUT["set"]["environment"] = ["local", "stage"]
+4. Filter by "l"             = ["local"]
+</code></pre></div></div>
+
+<p>Now this sounds simple, but almost all of the complexity is in step 1:
+Creating the structure from the clap YAML file. My goal was
+to have the completer work for both subcommands and aliases, but only
+complete the subcommand name. A quick example should clarify what I mean:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">subcommands</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">create</span><span class="pi">:</span>
+      <span class="na">visible_aliases</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">new"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">add"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">c"</span><span class="pi">]</span>
+      <span class="na">subcommands</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">request</span><span class="pi">:</span>
+            <span class="na">visible_aliases</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">req"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">r"</span><span class="pi">]</span>
+        <span class="pi">-</span> <span class="na">variable</span><span class="pi">:</span>
+            <span class="na">visible_aliases</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">var"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">v"</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"c"         should complete to "create "
+"create r"  should complete to "create request "
+"new r"     should complete to "new request "
+"n"         should not complete to anything
+</code></pre></div></div>
+
+<p>At the time of writing, this is how I designed this structure.
+Describing it, however, makes me think I should treat the subcommand name
+and visible aliases the same, and ignore non-visible aliases. Ah
+well, time will tell.</p>
+
+<h3 id="yaml-parsing">YAML Parsing</h3>
+<p>There’s not much to go into here. Once you have your working clap
+YAML file, you can parse it with <code class="language-plaintext highlighter-rouge">serde_yaml</code> and recursively build
+out the relevant information from the tree.</p>
+
+<h3 id="setting-up-rustyline">Setting up rustyline</h3>
+<p>I have to admit, setting up rustyline with custom completions is a
+pain. I believe there is work being done to make it easier, but the
+docs need improvement. Hopefully my POC can help others simplify
+the process a bit.</p>
+
+<p>For rustyline, we need to create a helper type that implements
+<code class="language-plaintext highlighter-rouge">Helper</code>, <code class="language-plaintext highlighter-rouge">Hinter</code>, <code class="language-plaintext highlighter-rouge">Highlighter</code>, <code class="language-plaintext highlighter-rouge">Validator</code>, and <code class="language-plaintext highlighter-rouge">Completer</code>.
+Luckily, there are no mandatory functions for each trait, so most
+of those are just <code class="language-plaintext highlighter-rouge">impl &lt;Trait&gt; for &lt;Struct&gt; {}</code>. We will, however,
+provide an implementation for <code class="language-plaintext highlighter-rouge">Completer</code>. We will make it get the recursive
+struct we generated, then walk the tree to find the list of possible
+completions. The last step is to filter out the candidates by the last word
+being typed, so <code class="language-plaintext highlighter-rouge">cr&lt;TAB&gt;</code> will actually complete instead of giving you a list
+of options.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>There are plenty of ways to extend this to be even better by parsing
+more of the details of the clap YAML file (e.g. <code class="language-plaintext highlighter-rouge">possible_values</code>,
+flag names, etc.), however this provides a very good start that
+covers 90% of my project’s common commands.</p>
+
+  </div><a class="u-url" href="/posts/integrating-clap-and-rustyline.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

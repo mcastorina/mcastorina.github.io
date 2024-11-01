@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Bash | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Bash" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The Bourne Again Shell, bash, is a standard command line interpreter that is POSIX compliant." />
+<meta property="og:description" content="The Bourne Again Shell, bash, is a standard command line interpreter that is POSIX compliant." />
+<link rel="canonical" href="/knowledge/bash.html" />
+<meta property="og:url" content="/knowledge/bash.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-11-01T16:30:21+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Bash" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-11-01T16:30:21+00:00","datePublished":"2024-11-01T16:30:21+00:00","description":"The Bourne Again Shell, bash, is a standard command line interpreter that is POSIX compliant.","headline":"Bash","mainEntityOfPage":{"@type":"WebPage","@id":"/knowledge/bash.html"},"url":"/knowledge/bash.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Bash</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2024-11-01T16:30:21+00:00" itemprop="datePublished">Nov 1, 2024
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>The Bourne Again Shell, bash, is a standard command line interpreter
+that is POSIX compliant.</p>
+
+<h2 id="hello-world">Hello World</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Hello, World!"</span>
+</code></pre></div></div>
+
+<h2 id="redirection-and-substitution">Redirection and Substitution</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">|</code></td>
+      <td>Pipe STDOUT from one command to STDIN of another</td>
+      <td><code class="language-plaintext highlighter-rouge">echo 'hello world' | grep 'hello'</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&gt;</code></td>
+      <td>Redirect STDOUT</td>
+      <td><code class="language-plaintext highlighter-rouge">ls &gt; output.txt</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&gt;&gt;</code></td>
+      <td>Redirect STDOUT and append to file</td>
+      <td><code class="language-plaintext highlighter-rouge">ls / &gt;&gt; output.txt</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2&gt;</code></td>
+      <td>Redirect STDERR</td>
+      <td><code class="language-plaintext highlighter-rouge">ls 2&gt; output-err.txt</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">2&gt;&gt;</code></td>
+      <td>Redirect STDERR and append to file</td>
+      <td><code class="language-plaintext highlighter-rouge">ls / 2&gt;&gt; output-err.txt</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;</code></td>
+      <td>Redirect file as STDIN</td>
+      <td><code class="language-plaintext highlighter-rouge">echo 'hello world' &gt; a; grep 'hello' &lt; a</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;&lt;EOF</code></td>
+      <td>Read in text until <code class="language-plaintext highlighter-rouge">EOF</code> is encountered and send as STDIN</td>
+      <td><code class="language-plaintext highlighter-rouge">grep 'hello' &lt;&lt;EOF\nhello world\nEOF</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;&lt;-EOF</code></td>
+      <td>Same as <code class="language-plaintext highlighter-rouge">&lt;&lt;EOF</code> with leading tabs removed</td>
+      <td><code class="language-plaintext highlighter-rouge">grep 'hello' &lt;&lt;EOF\n\thello world\nEOF</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;&lt;&lt;</code></td>
+      <td>Redirect string as STDIN</td>
+      <td><code class="language-plaintext highlighter-rouge">grep 'hello' &lt;&lt;&lt; 'hello world'</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&gt;()</code></td>
+      <td>Receive STDIN to command as a file</td>
+      <td><code class="language-plaintext highlighter-rouge">echo 'hello world' &gt; &gt;(grep 'hello')</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;()</code></td>
+      <td>Send STDOUT of command as a file</td>
+      <td><code class="language-plaintext highlighter-rouge">grep 'hello' &lt;(echo 'hello world')</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$()</code></td>
+      <td>Use output of command as string</td>
+      <td><code class="language-plaintext highlighter-rouge">echo '/tmp' &gt; a; ls $(cat a)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$(())</code></td>
+      <td>Use output of arithmetic as string</td>
+      <td><code class="language-plaintext highlighter-rouge">echo "1+1 is $((1+1))"</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="control-operators">Control Operators</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[</code> <code class="language-plaintext highlighter-rouge">test</code></td>
+      <td>Condition evaluation utility command</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">if</code> <code class="language-plaintext highlighter-rouge">elif</code> <code class="language-plaintext highlighter-rouge">else</code></td>
+      <td>Evaluate statement if the return code is 0</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[[ ]]</code></td>
+      <td>Shell built-in to enhance <code class="language-plaintext highlighter-rouge">[</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">for</code></td>
+      <td>Iterate over a list of values</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">while</code></td>
+      <td>Do commands while command returns 0</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">case</code></td>
+      <td>Selectively execute commands based on matching pattern</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">select</code></td>
+      <td>Continuously ask for user to select a choice from a list and execute commands</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="single-vs-double-bracket">Single vs Double Bracket</h3>
+<p><code class="language-plaintext highlighter-rouge">[</code> or <code class="language-plaintext highlighter-rouge">test</code> is a command whereas <code class="language-plaintext highlighter-rouge">[[</code> is a shell built-in. I
+prefer <code class="language-plaintext highlighter-rouge">[[</code> over <code class="language-plaintext highlighter-rouge">[</code> because it offers better regex and boolean
+operations.</p>
+
+<p><strong>[ syntax</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">s1 = s2</code>: True if the string <code class="language-plaintext highlighter-rouge">s1</code> and <code class="language-plaintext highlighter-rouge">s2</code> are identical</li>
+  <li><code class="language-plaintext highlighter-rouge">s1 != s2</code>: True if the string <code class="language-plaintext highlighter-rouge">s1</code> and <code class="language-plaintext highlighter-rouge">s2</code> are not identical</li>
+  <li><code class="language-plaintext highlighter-rouge">s1 &lt; s2</code>: True if the string <code class="language-plaintext highlighter-rouge">s1</code> comes before <code class="language-plaintext highlighter-rouge">s2</code> based on the
+           binary value of their characters</li>
+  <li><code class="language-plaintext highlighter-rouge">s1 &gt; s2</code>: True if the string <code class="language-plaintext highlighter-rouge">s1</code> comes after <code class="language-plaintext highlighter-rouge">s2</code> based on the
+           binary value of their characters</li>
+  <li><code class="language-plaintext highlighter-rouge">n1 -eq n2</code>: True if the integers <code class="language-plaintext highlighter-rouge">n1</code> and <code class="language-plaintext highlighter-rouge">n2</code> are algebraically equal</li>
+  <li><code class="language-plaintext highlighter-rouge">n1 -ne n2</code>: True if the integers <code class="language-plaintext highlighter-rouge">n1</code> and <code class="language-plaintext highlighter-rouge">n2</code> are not algebraically equal</li>
+  <li><code class="language-plaintext highlighter-rouge">n1 -gt n2</code>: True if the integer <code class="language-plaintext highlighter-rouge">n1</code> is algebraically greater than the integer <code class="language-plaintext highlighter-rouge">n2</code></li>
+  <li><code class="language-plaintext highlighter-rouge">n1 -ge n2</code>: True if the integer <code class="language-plaintext highlighter-rouge">n1</code> is algebraically greater than or equal the integer <code class="language-plaintext highlighter-rouge">n2</code></li>
+  <li><code class="language-plaintext highlighter-rouge">n1 -lt n2</code>: True if the integer <code class="language-plaintext highlighter-rouge">n1</code> is algebraically less than the integer <code class="language-plaintext highlighter-rouge">n2</code></li>
+  <li><code class="language-plaintext highlighter-rouge">n1 -le n2</code>: True if the integer <code class="language-plaintext highlighter-rouge">n1</code> is algebraically less than or equal the integer <code class="language-plaintext highlighter-rouge">n2</code></li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flag</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-z</code></td>
+      <td>True if the length of the string is zero</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-n</code></td>
+      <td>True if the length of the string is non zero</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-e</code></td>
+      <td>True if the file exists</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-f</code></td>
+      <td>True if the file exists and is a regular file</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-d</code></td>
+      <td>True if the file exists and is a directory</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-r</code></td>
+      <td>True if the file exists and is readable</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-w</code></td>
+      <td>True if the file exists is writeable</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-x</code></td>
+      <td>True if the file exists is executable</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-s</code></td>
+      <td>True if the file exists and has a size greater than zero</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-L</code></td>
+      <td>True if the file exists and is a symbolic link</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-O</code></td>
+      <td>True if the file exists and its owner matches the effective user id of this process</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-t</code></td>
+      <td>True if the file descriptor is opened on a terminal</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-nt</code></td>
+      <td>True if <code class="language-plaintext highlighter-rouge">file1</code> is newer than <code class="language-plaintext highlighter-rouge">file2</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-ot</code></td>
+      <td>True if <code class="language-plaintext highlighter-rouge">file1</code> is older than <code class="language-plaintext highlighter-rouge">file2</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-ef</code></td>
+      <td>True if <code class="language-plaintext highlighter-rouge">file1</code> and <code class="language-plaintext highlighter-rouge">file2</code> refer to the same file</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>[[ syntax</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">[[</code> builds upon <code class="language-plaintext highlighter-rouge">[</code> syntax.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">string1 == string2</code>: True if the strings are equal</li>
+  <li><code class="language-plaintext highlighter-rouge">string1 =~ regex</code>: True if <code class="language-plaintext highlighter-rouge">string1</code> matches <code class="language-plaintext highlighter-rouge">regex</code></li>
+  <li><code class="language-plaintext highlighter-rouge">string1 != string2</code>: True if the strings are not equal</li>
+  <li><code class="language-plaintext highlighter-rouge">string1 &lt; string2</code>: True if <code class="language-plaintext highlighter-rouge">string1</code> sorts before <code class="language-plaintext highlighter-rouge">string2</code>
+                    lexicographically in the current locale</li>
+  <li><code class="language-plaintext highlighter-rouge">string1 &gt; string2</code>: True if <code class="language-plaintext highlighter-rouge">string1</code> sorts after <code class="language-plaintext highlighter-rouge">string2</code>
+                    lexicographically in the current locale</li>
+  <li><code class="language-plaintext highlighter-rouge">expression1 &amp;&amp; expression2</code>: True if both <code class="language-plaintext highlighter-rouge">expression1</code> and <code class="language-plaintext highlighter-rouge">expression2</code> are true</li>
+  <li><code class="language-plaintext highlighter-rouge">expression1 || expression2</code>: True if either <code class="language-plaintext highlighter-rouge">expression1</code> or <code class="language-plaintext highlighter-rouge">expression2</code> is true</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flag</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-N</code></td>
+      <td>True if <code class="language-plaintext highlighter-rouge">file</code> exists and has been modified since it was last read</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-o</code></td>
+      <td>True if shell option is enabled</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Examples</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># if syntax</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$variable</span> <span class="o">==</span> pattern<span class="k">*</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s1">'if'</span>
+<span class="k">elif</span> <span class="o">[[</span> <span class="nv">$variable</span> <span class="o">==</span> <span class="s2">"const"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s1">'elif'</span>
+<span class="k">else
+    </span><span class="nb">echo</span> <span class="s1">'else'</span>
+<span class="k">fi</span>
+
+<span class="c"># iterate over list</span>
+<span class="k">for </span>variable <span class="k">in </span>list of words<span class="p">;</span> <span class="k">do
+    </span><span class="nb">echo</span> <span class="nv">$variable</span>
+<span class="k">done</span>
+
+<span class="c"># standard for loop</span>
+<span class="k">for</span> <span class="o">((</span> <span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i &lt; 10<span class="p">;</span> i++ <span class="o">))</span><span class="p">;</span> <span class="k">do
+    </span><span class="nb">echo</span> <span class="nv">$i</span>
+<span class="k">done</span>
+
+<span class="c"># while</span>
+<span class="k">while </span><span class="nb">true</span><span class="p">;</span> <span class="k">do
+    </span><span class="nb">echo</span> <span class="s1">'infinte loop?'</span>
+    <span class="nb">break
+</span><span class="k">done</span>
+
+<span class="c"># case</span>
+<span class="k">case</span> <span class="nv">$1</span> <span class="k">in</span>
+    <span class="nt">-g</span><span class="p">|</span><span class="nt">--greet</span><span class="p">)</span>
+        <span class="nb">echo</span> <span class="s1">'Hello!'</span>
+    <span class="p">;;</span>
+    <span class="nt">-h</span><span class="p">|</span><span class="nt">--help</span><span class="p">)</span>
+        <span class="nb">echo</span> <span class="s1">'This is a case'</span>
+    <span class="p">;;</span>
+    <span class="k">*</span><span class="p">)</span> <span class="nb">echo</span> <span class="s1">'Invalid argument'</span> <span class="p">;;</span>
+<span class="k">esac</span>
+
+<span class="c"># select</span>
+<span class="k">select </span>var <span class="k">in </span>one two three<span class="p">;</span> <span class="k">do
+    </span><span class="nb">echo</span> <span class="s2">"You selected: </span><span class="nv">$var</span><span class="s2">"</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<h2 id="parameter-substitution">Parameter Substitution</h2>
+<p>Bash has built-in variable substitution and manipulation.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># set default if variable is unset</span>
+<span class="k">${</span><span class="nv">variable</span><span class="p">=default</span><span class="k">}</span>
+
+<span class="c"># set default if variable is empty or unset</span>
+<span class="k">${</span><span class="nv">variable</span>:<span class="p">=default</span><span class="k">}</span>
+<span class="k">${</span><span class="nv">variable</span><span class="k">:-</span><span class="nv">default</span><span class="k">}</span>
+<span class="k">${</span><span class="nv">variable</span><span class="p">-default</span><span class="k">}</span>
+
+<span class="c"># set value if variable is set</span>
+<span class="k">${</span><span class="nv">variable</span><span class="p">+value</span><span class="k">}</span>
+<span class="k">${</span><span class="nv">variable</span>:+value<span class="k">}</span>
+
+<span class="c"># use variable or abort and print err_msg if unset</span>
+<span class="k">${</span><span class="nv">variable</span><span class="p">?err_msg</span><span class="k">}</span>
+<span class="k">${</span><span class="nv">variable</span>:?err_msg<span class="k">}</span>
+
+<span class="c"># non-greedily remove the pattern that matches the prefix</span>
+<span class="k">${</span><span class="nv">var</span><span class="p">#pattern</span><span class="k">}</span>
+<span class="c"># greedily remove the pattern that matches the prefix</span>
+<span class="k">${</span><span class="nv">var</span><span class="p">##pattern</span><span class="k">}</span>
+
+<span class="c"># non-greedily remove the pattern that matches the suffix</span>
+<span class="k">${</span><span class="nv">var</span><span class="p">%pattern</span><span class="k">}</span>
+<span class="c"># greedily remove the pattern that matches the suffix</span>
+<span class="k">${</span><span class="nv">var</span><span class="p">%%pattern</span><span class="k">}</span>
+
+<span class="c"># substring var[pos:pos+len]</span>
+<span class="k">${</span><span class="nv">var</span>:pos:len<span class="k">}</span>
+
+<span class="c"># search and replace pattern with replacement</span>
+<span class="k">${</span><span class="nv">var</span><span class="p">/pattern/replacement</span><span class="k">}</span>
+
+<span class="c"># global search and replace pattern with replacement</span>
+<span class="k">${</span><span class="nv">var</span><span class="p">//pattern/replacement</span><span class="k">}</span>
+
+<span class="c"># search and replace the prefix of var</span>
+<span class="k">${</span><span class="nv">var</span><span class="p">/#pattern/replacement</span><span class="k">}</span>
+
+<span class="c"># search and replace the suffix of var</span>
+<span class="k">${</span><span class="nv">var</span><span class="p">/%pattern/replacement</span><span class="k">}</span>
+</code></pre></div></div>
+
+<p>Reference: <a href="http://www.tldp.org/LDP/abs/html/parameter-substitution.html">Advanced Bash-Scripting Guide: Manipulating Variables</a></p>
+
+<h2 id="arguments">Arguments</h2>
+<p>Functions and scripts have access to arguments through <code class="language-plaintext highlighter-rouge">$1</code>, <code class="language-plaintext highlighter-rouge">$2</code>, <code class="language-plaintext highlighter-rouge">$3</code>
+(and so on) environment variables. There are many other useful ways to
+access the arguments.</p>
+
+<p>The following table will refer to this example:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./test.sh a b c
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Expression</th>
+      <th>Description</th>
+      <th>Example Output</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$0</code></td>
+      <td>The name of the shell script</td>
+      <td><code class="language-plaintext highlighter-rouge">./test.sh</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$1</code></td>
+      <td>The first positional argument</td>
+      <td><code class="language-plaintext highlighter-rouge">a</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$2</code></td>
+      <td>The second positional argument</td>
+      <td><code class="language-plaintext highlighter-rouge">b</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$3</code></td>
+      <td>The third positional argument</td>
+      <td><code class="language-plaintext highlighter-rouge">c</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$@</code></td>
+      <td>All positional arguments starting from 1 as an array</td>
+      <td><code class="language-plaintext highlighter-rouge">a b c</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">${@: -1}</code></td>
+      <td>The last positional argument</td>
+      <td><code class="language-plaintext highlighter-rouge">c</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">${@: -2}</code></td>
+      <td>The last 2 positional arguments</td>
+      <td><code class="language-plaintext highlighter-rouge">b c</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">${@: 2: 1}</code></td>
+      <td>1 positional argument starting at position 2</td>
+      <td><code class="language-plaintext highlighter-rouge">b</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="special-variables">Special Variables</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$#</code></td>
+      <td>Number of positional arguments</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$*</code></td>
+      <td>All positional arguments as a single string</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$?</code></td>
+      <td>Exit status of most recently executed foreground pipeline</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$$</code></td>
+      <td>Process ID of the shell</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$!</code></td>
+      <td>Process ID of the job most recently placed in the background</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$_</code></td>
+      <td>Last argument to the previous simple foreground command</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Reference: <a href="https://www.gnu.org/software/bash/manual/html_node/Special-Parameters.html">GNU Manual: Bash Special Parameters</a></p>
+
+<h2 id="arrays">Arrays</h2>
+<p>There are two types of bash arrays: indexed and associative.</p>
+
+<p>An indexed array is created automatically if any variable is assigned
+to using the syntax <code class="language-plaintext highlighter-rouge">name[subscript]=value</code>. Alternatively, use <code class="language-plaintext highlighter-rouge">declare</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">declare</span> <span class="nt">-a</span> var1 <span class="c"># creates an indexed array</span>
+<span class="nb">declare</span> <span class="nt">-A</span> var2 <span class="c"># creates an associative array</span>
+</code></pre></div></div>
+
+<p>Assigning to an array follows the same pattern for both indexed and
+associative arrays. Negative values in indexed arrays will be the offset
+from the last element.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">var1</span><span class="o">=(</span>val1 val2 val3<span class="o">)</span>
+<span class="nv">var2</span><span class="o">=(</span>key1 val1 key2 val2 key3 val3<span class="o">)</span>
+
+<span class="c"># alternative syntax</span>
+<span class="nv">var1</span><span class="o">=([</span>0]<span class="o">=</span>val1 <span class="o">[</span>1]<span class="o">=</span>val2 <span class="o">[</span>2]<span class="o">=</span>val3<span class="o">)</span>
+<span class="nv">var2</span><span class="o">=([</span>key1]<span class="o">=</span>val1 <span class="o">[</span>key2]<span class="o">=</span>val2 <span class="o">[</span>key3]<span class="o">=</span>val3<span class="o">)</span>
+
+<span class="c"># single assignment</span>
+var1[-1]<span class="o">=</span>val4
+var2[key4]<span class="o">=</span>val4
+</code></pre></div></div>
+
+<p>Arrays may be accessed using their respective index (or key).
+<code class="language-plaintext highlighter-rouge">@</code> or <code class="language-plaintext highlighter-rouge">*</code> may be used to access all values.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># get value</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">var1</span><span class="p">[2]</span><span class="k">}</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">var2</span><span class="p">[key3]</span><span class="k">}</span><span class="s2">"</span>
+
+<span class="c"># get all keys</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="p">!var1[@]</span><span class="k">}</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="p">!var2[@]</span><span class="k">}</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p><strong>Example</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># uncomment to make associative</span>
+<span class="c"># declare -A arr</span>
+<span class="nv">arr</span><span class="o">=(</span><span class="s2">"hello world"</span> foo bar baz<span class="o">)</span>
+
+<span class="k">for </span>k <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="p">!arr[@]</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="k">do
+    </span><span class="nv">v</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">arr</span><span class="p">[</span><span class="nv">$k</span><span class="p">]</span><span class="k">}</span><span class="s2">"</span>
+    <span class="nb">echo</span> <span class="s2">"arr[</span><span class="nv">$k</span><span class="s2">] = </span><span class="nv">$v</span><span class="s2">"</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<p>Reference: <a href="https://www.gnu.org/software/bash/manual/html_node/Arrays.html">GNU Manual: Bash Arrays</a></p>
+
+<h2 id="option-parsing">Option Parsing</h2>
+<p>There are two ways to parse command line options in bash: <code class="language-plaintext highlighter-rouge">getopt</code>
+and <code class="language-plaintext highlighter-rouge">getopts</code>.  <code class="language-plaintext highlighter-rouge">getopts</code> is a bash built-in while <code class="language-plaintext highlighter-rouge">getopt</code> is a
+command. I prefer using the enhanced <code class="language-plaintext highlighter-rouge">getopt</code> as it allows long options,
+however the enhanced version is not on macOS by default. For fun and
+portability, I wrote <a href="https://gist.github.com/mcastorina/682fa0ca0ff9646e283a5ef95e4cb36d">my own version in pure bash</a>.</p>
+
+<h2 id="trap">Trap</h2>
+<p>Bash allows to trap signals and other events using the <code class="language-plaintext highlighter-rouge">trap</code> command.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">trap</span> <span class="s2">"echo INT received"</span> SIGINT
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Signal</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">EXIT</code></td>
+      <td style="text-align: left">Executed on exit from the shell</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">DEBUG</code></td>
+      <td style="text-align: left">Executed before every simple command</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">RETURN</code></td>
+      <td style="text-align: left">Executed each time a shell function or script run by <code class="language-plaintext highlighter-rouge">.</code> or <code class="language-plaintext highlighter-rouge">source</code> builtins finishes executing</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">ERR</code></td>
+      <td style="text-align: left">Executed each time a command’s failure would cause the shell to exit (when <code class="language-plaintext highlighter-rouge">-e</code> option is enabled)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">SIGINT</code></td>
+      <td style="text-align: left">Interrupt signal</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">SIGTERM</code></td>
+      <td style="text-align: left">Terminate signal</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>See <code class="language-plaintext highlighter-rouge">man 7 signal</code> for a complete list of signals to trap.</p>
+
+<h2 id="common-operations">Common Operations</h2>
+<p><strong>Read every line of a file</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while </span><span class="nb">read </span>line<span class="p">;</span> <span class="k">do
+    </span><span class="nb">echo</span> <span class="nv">$line</span>
+<span class="k">done</span> &lt; file.txt
+</code></pre></div></div>
+
+<p><strong>Read input and continue / abort</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">read</span> <span class="nt">-p</span> <span class="s1">'Continue? [y/N]: '</span> i
+<span class="k">if</span> <span class="o">[[</span> <span class="k">${</span><span class="nv">i</span>::1<span class="k">}</span> <span class="o">!=</span> <span class="s1">'y'</span> <span class="o">&amp;&amp;</span> <span class="k">${</span><span class="nv">i</span>::1<span class="k">}</span> <span class="o">!=</span> <span class="s1">'Y'</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s1">'Aborting'</span>
+    <span class="nb">exit </span>1
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<p><strong>Generate tempfile / cleanup</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">tmpfile</span><span class="o">=</span><span class="si">$(</span><span class="nb">mktemp</span><span class="si">)</span>
+<span class="nb">trap</span> <span class="s2">"rm </span><span class="nv">$tmpfile</span><span class="s2">"</span> EXIT
+</code></pre></div></div>
+
+<p><strong>Generate a random string of alphanumeric characters</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /dev/urandom | <span class="nb">tr</span> <span class="nt">-cd</span> <span class="s1">'a-zA-Z0-9'</span> | <span class="nb">head</span> <span class="nt">-c</span> 64
+</code></pre></div></div>
+
+<p><strong>Use vi keybindings in interactive sessions</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set</span> <span class="nt">-o</span> vi
+</code></pre></div></div>
+
+<p><strong>Get the script directory</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">script_dir</span><span class="o">=</span><span class="si">$(</span><span class="nb">cd</span> <span class="nt">--</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">dirname</span> <span class="nt">--</span> <span class="s2">"</span><span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="s2">"</span><span class="si">)</span><span class="s2">"</span> &amp;&gt; /dev/null <span class="o">&amp;&amp;</span> <span class="nb">pwd</span><span class="si">)</span>
+</code></pre></div></div>
+<p><a href="https://stackoverflow.com/a/246128">Source</a></p>
+
+  </div><a class="u-url" href="/knowledge/bash.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

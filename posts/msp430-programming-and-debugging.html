@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>MSP430 Programming and Debugging | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="MSP430 Programming and Debugging" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="(on linux)" />
+<meta property="og:description" content="(on linux)" />
+<link rel="canonical" href="/posts/msp430-programming-and-debugging.html" />
+<meta property="og:url" content="/posts/msp430-programming-and-debugging.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-01-08T05:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="MSP430 Programming and Debugging" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-01-08T05:00:00+00:00","datePublished":"2022-01-08T05:00:00+00:00","description":"(on linux)","headline":"MSP430 Programming and Debugging","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/msp430-programming-and-debugging.html"},"url":"/posts/msp430-programming-and-debugging.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">MSP430 Programming and Debugging</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2022-01-08T05:00:00+00:00" itemprop="datePublished">Jan 8, 2022
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>(on linux)</p>
+
+<p>The <a href="https://en.wikipedia.org/wiki/TI_MSP430">MSP430</a> launchpad is a
+low cost, low power microcontroller that can be used in a variety of
+embedded applications. This post documents how to program and flash
+the device on linux without TI’s IDE.</p>
+
+<p>Note: the specific MSP430 device I’m using is <code class="language-plaintext highlighter-rouge">msp430g2553</code>.</p>
+
+<h2 id="tools-used">Tools used</h2>
+<p>In addition to GNU Make, I installed these packages to cross compile,
+flash, and debug.</p>
+
+<ul>
+  <li><a href="https://aur.archlinux.org/packages/mspgcc-ti/">mspgcc-ti</a></li>
+  <li><a href="https://aur.archlinux.org/packages/msp430-elf-gcc/">msp430-elf-gcc</a></li>
+  <li><a href="https://aur.archlinux.org/packages/mspdebug/">mspdebug</a></li>
+  <li><a href="https://aur.archlinux.org/packages/srecord/">srecord</a></li>
+</ul>
+
+<h2 id="udev">udev</h2>
+<p>This is optional, but if you want to program your microcontroller without
+<code class="language-plaintext highlighter-rouge">sudo</code> permissions, it would be a good idea to add a udev rule that will
+put the device in a group you are apart of. I chose <code class="language-plaintext highlighter-rouge">wheel</code> but you can
+use your own username or create a whole new group.</p>
+
+<p><strong>/etc/udev/rules.d/91-ti-launchpad.rules</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SUBSYSTEMS=="usb", ATTRS{idVendor}=="0451", ATTRS{idProduct}=="f432", \
+GROUP="wheel", MODE="0660"
+</code></pre></div></div>
+
+<p><strong>Note:</strong> the <code class="language-plaintext highlighter-rouge">idVendor</code> and <code class="language-plaintext highlighter-rouge">idProduct</code> values can be found via
+<code class="language-plaintext highlighter-rouge">lsusb</code> (from the <code class="language-plaintext highlighter-rouge">core/usbutils</code> package on Arch) in the form <code class="language-plaintext highlighter-rouge">ID
+idVendor:idProduct</code>, but the values here should match all MSP430 IDs.</p>
+
+<p>To reload your new rule, you can run:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo udevadm control --reload
+</code></pre></div></div>
+
+<h2 id="makefile">Makefile</h2>
+<p>I copied <a href="https://gist.github.com/chanil1218/2632048">this Makefile
+example</a> and made some
+modifications to use the tools we are using. Things to note are
+<code class="language-plaintext highlighter-rouge">MCU</code>, <code class="language-plaintext highlighter-rouge">SOURCES</code>, <code class="language-plaintext highlighter-rouge">INCLUDES</code>.</p>
+
+<div class="language-make highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#
+# Makefile for msp430
+#
+# 'make' builds everything
+# 'make clean' deletes everything except source files and Makefile
+# You need to set TARGET, MCU and SOURCES for your project.
+# TARGET is the name of the executable file to be produced
+# $(TARGET).elf $(TARGET).hex and $(TARGET).txt and $(TARGET).map are all generated.
+# The TXT file is used for BSL loading, the ELF can be used for JTAG use
+#
+</span><span class="nv">TARGET</span>     <span class="o">=</span> blinky
+<span class="nv">MCU</span>        <span class="o">=</span> msp430g2553
+<span class="c"># List all the source files here
+# eg if you have a source file foo.c then list it here
+</span><span class="nv">SOURCES</span> <span class="o">=</span> blinky.c
+<span class="c"># Include are located in the Include directory
+</span><span class="nv">INCLUDES</span> <span class="o">=</span> <span class="nt">-I</span>/opt/ti/mspgcc/include <span class="nt">-L</span>/opt/ti/mspgcc/include
+<span class="c"># Add or subtract whatever MSPGCC flags you want. There are plenty more
+#######################################################################################
+</span><span class="nv">DEBUG</span>    <span class="o">=</span> <span class="nt">-g3</span> <span class="nt">-ggdb</span> <span class="nt">-gdwarf-2</span>
+<span class="nv">CFLAGS</span>   <span class="o">=</span> <span class="nt">-mmcu</span><span class="o">=</span><span class="p">$(</span>MCU<span class="p">)</span> <span class="nt">-Os</span> <span class="nt">-Wall</span> <span class="nt">-Wunused</span> <span class="p">$(</span>INCLUDES<span class="p">)</span> <span class="p">$(</span>DEBUG<span class="p">)</span>
+<span class="nv">ASFLAGS</span>  <span class="o">=</span> <span class="nt">-mmcu</span><span class="o">=</span><span class="p">$(</span>MCU<span class="p">)</span> <span class="nt">-x</span> assembler-with-cpp <span class="nt">-Wa</span>,-gstabs
+<span class="nv">LDFLAGS</span>  <span class="o">=</span> <span class="nt">-mmcu</span><span class="o">=</span><span class="p">$(</span>MCU<span class="p">)</span> <span class="nt">-Wl</span>,-Map<span class="o">=</span><span class="p">$(</span>TARGET<span class="p">)</span>.map
+<span class="c">########################################################################################
+</span><span class="nv">CC</span>       <span class="o">=</span> msp430-elf-gcc
+<span class="nv">LD</span>       <span class="o">=</span> msp430-elf-ld
+<span class="nv">AR</span>       <span class="o">=</span> msp430-elf-ar
+<span class="nv">AS</span>       <span class="o">=</span> msp430-elf-gcc
+<span class="nv">GASP</span>     <span class="o">=</span> msp430-elf-gasp
+<span class="nv">NM</span>       <span class="o">=</span> msp430-elf-nm
+<span class="nv">OBJCOPY</span>  <span class="o">=</span> msp430-elf-objcopy
+<span class="nv">RANLIB</span>   <span class="o">=</span> msp430-elf-ranlib
+<span class="nv">STRIP</span>    <span class="o">=</span> msp430-elf-strip
+<span class="nv">SIZE</span>     <span class="o">=</span> msp430-elf-size
+<span class="nv">READELF</span>  <span class="o">=</span> msp430-elf-readelf
+<span class="nv">MAKETXT</span>  <span class="o">=</span> srec_cat
+<span class="nv">CP</span>       <span class="o">=</span> <span class="nb">cp</span> <span class="nt">-p</span>
+<span class="nv">RM</span>       <span class="o">=</span> <span class="nb">rm</span> <span class="nt">-f</span>
+<span class="nv">MV</span>       <span class="o">=</span> <span class="nb">mv</span>
+<span class="c">########################################################################################
+# the file which will include dependencies
+</span><span class="nv">DEPEND</span> <span class="o">=</span> <span class="p">$(</span>SOURCES:.c<span class="o">=</span>.d<span class="p">)</span>
+<span class="c"># all the object files
+</span><span class="nv">OBJECTS</span> <span class="o">=</span> <span class="p">$(</span>SOURCES:.c<span class="o">=</span>.o<span class="p">)</span>
+<span class="nl">all</span><span class="o">:</span> <span class="nf">$(TARGET).elf $(TARGET).hex $(TARGET).txt</span>
+<span class="nl">$(TARGET).elf</span><span class="o">:</span> <span class="nf">$(OBJECTS)</span>
+	<span class="nb">echo</span> <span class="s2">"Linking </span><span class="nv">$@</span><span class="s2">"</span>
+	<span class="p">$(</span>CC<span class="p">)</span> <span class="p">$(</span>OBJECTS<span class="p">)</span> <span class="p">$(</span>LDFLAGS<span class="p">)</span> <span class="p">$(</span>LIBS<span class="p">)</span> <span class="nt">-o</span> <span class="nv">$@</span>
+	<span class="nb">echo</span>
+	<span class="nb">echo</span> <span class="s2">"&gt;&gt;&gt;&gt; Size of Firmware &lt;&lt;&lt;&lt;"</span>
+	<span class="p">$(</span>SIZE<span class="p">)</span> <span class="p">$(</span>TARGET<span class="p">)</span>.elf
+	<span class="nb">echo</span>
+<span class="nl">%.hex</span><span class="o">:</span> <span class="nf">%.elf</span>
+	<span class="p">$(</span>OBJCOPY<span class="p">)</span> <span class="nt">-O</span> ihex <span class="nv">$&lt;</span> <span class="nv">$@</span>
+<span class="nl">%.txt</span><span class="o">:</span> <span class="nf">%.hex</span>
+	<span class="p">$(</span>MAKETXT<span class="p">)</span> <span class="nt">-O</span> <span class="nv">$@</span> <span class="nt">-TITXT</span> <span class="nv">$&lt;</span> <span class="nt">-I</span>
+<span class="nl">%.o</span><span class="o">:</span> <span class="nf">%.c</span>
+	<span class="nb">echo</span> <span class="s2">"Compiling </span><span class="nv">$&lt;</span><span class="s2">"</span>
+	<span class="p">$(</span>CC<span class="p">)</span> <span class="nt">-c</span> <span class="p">$(</span>CFLAGS<span class="p">)</span> <span class="nt">-o</span> <span class="nv">$@</span> <span class="nv">$&lt;</span>
+<span class="c"># rule for making assembler source listing, to see the code
+</span><span class="nl">%.lst</span><span class="o">:</span> <span class="nf">%.c</span>
+	<span class="p">$(</span>CC<span class="p">)</span> <span class="nt">-c</span> <span class="p">$(</span>CFLAGS<span class="p">)</span> <span class="nt">-Wa</span>,-anlhd <span class="nv">$&lt;</span> <span class="o">&gt;</span> <span class="nv">$@</span>
+<span class="c"># include the dependencies unless we're going to clean, then forget about them.
+</span><span class="k">ifneq</span> <span class="nv">($(MAKECMDGOALS), clean)</span>
+<span class="k">-include</span><span class="sx"> $(DEPEND)</span>
+<span class="k">endif</span>
+<span class="c"># dependencies file
+# includes also considered, since some of these are our own
+# (otherwise use -MM instead of -M)
+</span><span class="nl">%.d</span><span class="o">:</span> <span class="nf">%.c</span>
+	<span class="nb">echo</span> <span class="s2">"Generating dependencies </span><span class="nv">$@</span><span class="s2"> from </span><span class="nv">$&lt;</span><span class="s2">"</span>
+	<span class="p">$(</span>CC<span class="p">)</span> <span class="nt">-M</span> <span class="p">${</span>CFLAGS<span class="p">}</span> <span class="nv">$&lt;</span> <span class="o">&gt;</span><span class="nv">$@</span>
+<span class="nl">.SILENT</span><span class="o">:</span>
+<span class="nl">.PHONY</span><span class="o">:</span>	<span class="nf">clean</span>
+<span class="nl">clean</span><span class="o">:</span>
+	<span class="p">-$(</span>RM<span class="p">)</span> <span class="p">$(</span>OBJECTS<span class="p">)</span>
+	<span class="p">-$(</span>RM<span class="p">)</span> <span class="p">$(</span>TARGET<span class="p">)</span>.map
+	<span class="p">-$(</span>RM<span class="p">)</span> <span class="p">$(</span>TARGET<span class="p">)</span>.elf <span class="p">$(</span>TARGET<span class="p">)</span>.hex <span class="p">$(</span>TARGET<span class="p">)</span>.txt
+	<span class="p">-$(</span>RM<span class="p">)</span> <span class="p">$(</span>TARGET<span class="p">)</span>.lst
+	<span class="p">-$(</span>RM<span class="p">)</span> <span class="p">$(</span>SOURCES:.c<span class="o">=</span>.lst<span class="p">)</span>
+	<span class="p">-$(</span>RM<span class="p">)</span> <span class="p">$(</span>DEPEND<span class="p">)</span>
+
+<span class="nl">.PHONY</span><span class="o">:</span> <span class="nf">flash</span>
+<span class="nl">flash</span><span class="o">:</span> <span class="nf">$(TARGET).hex</span>
+	mspdebug rf2500 <span class="s1">'prog $&lt;'</span>
+
+<span class="nl">.PHONY</span><span class="o">:</span> <span class="nf">debug</span>
+<span class="nl">debug</span><span class="o">:</span> <span class="nf">$(TARGET).elf</span>
+	mspdebug rf2500 <span class="s1">'gdb'</span> <span class="o">&gt;</span>/dev/null 2&gt;&amp;1 &amp;
+	msp430-gdb <span class="nv">$&lt;</span> <span class="nt">-ex</span> <span class="s1">'target remote :2000'</span>
+</code></pre></div></div>
+
+<h2 id="c-sources">C sources</h2>
+<p>Here’s my “hello world” blinky program. The first step to embedded
+development is to usually disable the watchdog timer, which is essentially
+a timer that will reset the board after a fairly short time. We then need
+to configure the GPIO port and pin to be an output, and finally we can
+control the state of the LED by writing to <code class="language-plaintext highlighter-rouge">P1OUT</code>.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"msp430.h"</span><span class="cp">
+</span><span class="cm">/* #include "msp430g2553.h" */</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// disable watchdog timer</span>
+    <span class="n">WDTCTL</span> <span class="o">=</span> <span class="n">WDTPW</span> <span class="o">|</span> <span class="n">WDTHOLD</span><span class="p">;</span>
+    <span class="c1">// set P1.0 to be an output</span>
+    <span class="n">P1DIR</span> <span class="o">|=</span> <span class="mh">0x1</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// toggle P1.0</span>
+        <span class="n">P1OUT</span> <span class="o">^=</span> <span class="mh">0x1</span><span class="p">;</span>
+
+        <span class="c1">// software delay</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">volatile</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20000</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Note:</strong> I develop in vim with
+<a href="https://github.com/dense-analysis/ale">ALE</a>, so to tell ALE where to
+find the includes I added the following to my <code class="language-plaintext highlighter-rouge">.vimrc</code> (matching the
+Makefile). This is just for the linter; compiling works regardless.</p>
+
+<pre><code class="language-vimrc">let g:ale_c_cc_options="-I/opt/ti/mspgcc/include"
+</code></pre>
+
+<h2 id="gdb">GDB</h2>
+<p>The above Makefile includes a <code class="language-plaintext highlighter-rouge">debug</code> recipe which spawns <code class="language-plaintext highlighter-rouge">mspedubg</code>
+in GDB mode, then starts GDB and automatically connects to the default
+listen port of 2000. It’s important to compile our program with debug
+symbols (<code class="language-plaintext highlighter-rouge">-g3</code>, <code class="language-plaintext highlighter-rouge">-ggdb</code>, <code class="language-plaintext highlighter-rouge">-gdwarf-2</code>) to get a rich debug environment.</p>
+
+<p>It should be noted that the debugger (included in the MSP430 launchpad)
+is running on the actual hardware, which means we can examine and
+modify registers directly through GDB interactively! For example the
+following commands will configure the second LED pin (which is on P1.6)
+and toggle it.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) set P1DIR |= (1 &lt;&lt; 6)
+(gdb) set P1OUT ^= (1 &lt;&lt; 6)
+</code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>These steps document how to build and flash an MSP430 board using
+available open source tools. Future posts will cover more in depth
+features of the MSP430.</p>
+
+  </div><a class="u-url" href="/posts/msp430-programming-and-debugging.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

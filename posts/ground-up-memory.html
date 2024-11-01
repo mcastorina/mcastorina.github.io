@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Ground Up: Memory | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Ground Up: Memory" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time." />
+<meta property="og:description" content="A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time." />
+<link rel="canonical" href="/posts/ground-up-memory.html" />
+<meta property="og:url" content="/posts/ground-up-memory.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-14T05:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Ground Up: Memory" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2021-09-14T05:00:00+00:00","datePublished":"2021-09-14T05:00:00+00:00","description":"A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.","headline":"Ground Up: Memory","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/ground-up-memory.html"},"url":"/posts/ground-up-memory.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Ground Up: Memory</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2021-09-14T05:00:00+00:00" itemprop="datePublished">Sep 14, 2021
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js" integrity="sha512-ovjLI1ZcZe6bw+ImQ21r+sv8q/Vwob2kq7tFidK6E1LWfi0T4uobbmpfEU1//a9h9o5Kkt+MnMWf6rWlg0EiMw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+    window.globals = {};
+    function updateState(checkbox, global) {
+        window.globals[global] = checkbox.checked;
+        window.globals.updateSRLatch();
+        window.globals.updateGatedSRLatch();
+        window.globals.updateDFlipFlop();
+        updateTables();
+    }
+    function updateTables() {
+        updateSRLatchTable();
+        updateGatedSRLatchTable();
+        updateDFlipFlopTable();
+    }
+    function updateSRLatchTable() {
+        var table = document.getElementById("srLatchTable").children[0].children;
+        var index = (window.globals["srLatchS"] ? 2 : 0) + (window.globals["srLatchR"] ? 1 : 0) + 1;
+        for (var i = 1; i < table.length; i++) {
+            table[i].style.backgroundColor = i == index ? 'yellow' : 'white';
+        }
+    }
+    function updateGatedSRLatchTable() {
+        var table = document.getElementById("gatedSRLatchTable").children[0].children;
+        var index = (!window.globals["gatedSRLatchG"] ? 0 : ((window.globals["gatedSRLatchS"] ? 2 : 0) + (window.globals["gatedSRLatchR"] ? 1 : 0) + 1)) + 1;
+        for (var i = 1; i < table.length; i++) {
+            table[i].style.backgroundColor = i == index ? 'yellow' : 'white';
+        }
+    }
+    function updateDFlipFlopTable() {
+        var table = document.getElementById("dFlipFlopTable").children[0].children;
+        var index = (window.globals["dFlipFlopClk"] ? 2 : 0) + (window.globals["dFlipFlopD"] ? 1 : 0) + 1;
+        for (var i = 1; i < table.length; i++) {
+            table[i].style.backgroundColor = i == index ? 'yellow' : 'white';
+        }
+    }
+    window.onload = function() {
+        window.globals.updateSRLatch();
+        window.globals.updateGatedSRLatch();
+        window.globals.updateDFlipFlop();
+        updateTables()
+    }
+</script>
+
+<style type="text/css" media="all">
+.gate {
+    display: inline-block;
+    vertical-align: middle;
+    width: unset;
+}
+p.gate {
+    vertical-align: unset;
+}
+table {
+    margin: 30px auto;
+}
+.table-div {
+    display: inline-block;
+    vertical-align: middle;
+}
+.interactive {
+    padding: 20px;
+    margin: 20px auto;
+    border: 1px dashed gray;
+}
+.table-div table {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+#srLatchCircuit {
+    width: 200px;
+    height: 190px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 40px;
+}
+#gatedSRLatchCircuit {
+    width: 300px;
+    height: 190px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 40px;
+}
+#dFlipFlop {
+    width: 320px;
+    height: 190px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 40px;
+}
+</style>
+
+<p>Welcome to a series of posts cleverly titled <strong><em>Ground Up</em></strong>,
+where I explain computing concepts from the ground up! We’ll explore
+how computers work starting with transistors and going from there.
+This post specifically covers how to create memory from gates.</p>
+
+<ul>
+  <li><a href="/posts/ground-up-bits.html">Part 1: Bits</a></li>
+  <li><a href="/posts/ground-up-gates.html">Part 2: Gates</a></li>
+  <li><strong><em>Part 3: Memory</em></strong></li>
+  <li><a href="/posts/ground-up-state-machines.html">Part 4: State Machines</a></li>
+</ul>
+
+<h2 id="memory">Memory</h2>
+<p>Memory is a way for a system to persist state. So far, everything we have
+built has been purely functional and independent of state. In terms of
+circuits, we want to build something whose output is a function of the
+inputs <em>and</em> output. One way to achieve this is quite literally to use
+the output of the circuit as one of the inputs.</p>
+
+<h3 id="sr-latch">SR-Latch</h3>
+<p>We are going to design a circuit called <strong>SR-Latch</strong> which can <strong>s</strong>et
+and <strong>r</strong>eset its state. It will have two inputs: (<em>S</em> and <em>R</em>) and one
+output (<em>Q</em>). Also remember we will use the output as an input as well,
+so the third input is <em>Q</em> too. When creating the transition table,
+we will denote the new output as <em>Q’</em>.</p>
+
+<table style="width: 30%;">
+  <thead>
+    <tr>
+      <th style="text-align: center">S</th>
+      <th style="text-align: center">R</th>
+      <th style="text-align: center">Q</th>
+      <th style="text-align: center">Q’</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">X</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">X</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Note:</strong> <code class="language-plaintext highlighter-rouge">X</code> indicates “do not care”</p>
+
+<p>You’ll notice that we did not define what would happen if both <em>S</em>
+and <em>R</em> are <code class="language-plaintext highlighter-rouge">1</code> because there is no logical result. Let’s call this
+situation undefined behavior.</p>
+
+<p>Taking a step back and thinking about what we are trying to achieve,
+it seems like the properties of an <strong>OR</strong> gate will be useful. In fact,
+we will use <strong>NOR</strong> gates.</p>
+
+\[Q' = \overline{(R + \overline{(S + Q)})}\]
+
+<p>Instructions: toggle the inputs to see how the circuit reacts.</p>
+
+<div class="interactive" style="width: 65%;">
+<div class="table-div">
+<table class="gate" id="srLatchTable">
+    <tr>
+        <th><input type="checkbox" onclick="updateState(this, 'srLatchS');" /><label>S</label></th>
+        <th><input type="checkbox" onclick="updateState(this, 'srLatchR');" /><label>R</label></th>
+        <th>Q</th>
+        <th>Q'</th>
+    </tr>
+    <tr><td><code>0</code></td><td><code>0</code></td><td><code>X</code></td><td><code>Q</code></td></tr>
+    <tr><td><code>0</code></td><td><code>1</code></td><td><code>X</code></td><td><code>0</code></td></tr>
+    <tr><td><code>1</code></td><td><code>0</code></td><td><code>X</code></td><td><code>1</code></td></tr>
+    <tr><td><code>1</code></td><td><code>1</code></td><td><code>X</code></td><td><code>?</code></td></tr>
+</table>
+</div>
+
+<script type="text/paperscript" canvas="srLatchCircuit">
+var scale = 32;
+function gatePath(anchor, kind) {
+    var a = new Path();
+    a.strokeColor = 'black';
+    a.strokeWidth = 2;
+    var b = new Path();
+    b.strokeColor = 'black';
+    b.strokeWidth = 2;
+    var out = new Path();
+    out.strokeColor = 'black';
+    out.strokeWidth = 2;
+
+    var raster = new Raster('/assets/ground-up/' + kind + '.svg');
+    raster.position = (anchor + [1.4, 0])*scale;
+
+    a.moveTo((anchor + [0, -0.3])*scale);
+    a.lineBy(new Point(0.8, 0)*scale);
+    b.moveTo((anchor + [0, 0.3])*scale);
+    b.lineBy(new Point(0.8, 0)*scale);
+    out.moveTo((anchor + [2, 0])*scale);
+    if (kind == 'nor') {
+        out.moveTo((anchor + [2.3, 0])*scale);
+    }
+    out.lineTo((anchor + [2.8, 0])*scale);
+
+    return {a: a, b: b, out: out};
+}
+function norPath(anchor) {
+    return gatePath(anchor, 'nor');
+}
+function drawLabel(anchor, content, fontSize) {
+    if (!fontSize) {
+        fontSize = 20;
+    }
+    new PointText({
+        point: anchor*scale,
+        justification: 'center',
+        fontSize: fontSize,
+        content: content
+    });
+}
+function drawLabels(anchor) {
+    drawLabel(anchor + [2, 2], 'R');
+    drawLabel(anchor + [2, 6.5], 'S');
+    drawLabel(anchor + [7, 2.2], 'Q');
+
+    drawLabel(anchor + [4.4, 2.1], 'NOR', fontSize=10);
+    drawLabel(anchor + [4.4, 6.1], 'NOR', fontSize=10);
+}
+
+// compound paths
+var nor1Out = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var nor2Out = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var sInput = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var rInput = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+
+var anchor = new Point(-1.5, -1);
+var lineOffset = new Point(0.25, 0)*scale;
+
+var nor1 = norPath(anchor + [3, 2]);
+var nor2 = norPath(anchor + [3, 6]);
+
+nor1Out.addChild(nor1.out);
+nor1Out.addChild(nor2.a);
+nor1Out.moveTo(nor1.out.position + lineOffset);
+nor1Out.lineBy(new Point(0, 1.3)*scale);
+nor1Out.lineBy(new Point(-2.8, 1.4)*scale);
+nor1Out.lineBy(new Point(0, 1)*scale);
+nor1Out.moveTo(nor1.out.position + lineOffset);
+nor1Out.lineBy(new Point(0.7, 0)*scale);
+
+nor2Out.addChild(nor2.out);
+nor2Out.addChild(nor1.b);
+nor2Out.moveTo(nor2.out.position + lineOffset);
+nor2Out.lineBy(new Point(0, -1.3)*scale);
+nor2Out.lineBy(new Point(-2.8, -1.4)*scale);
+nor2Out.lineBy(new Point(0, -1)*scale);
+
+rInput.addChild(nor1.a);
+rInput.moveTo(nor1.a.position - lineOffset);
+rInput.lineBy(new Point(-0.7, 0)*scale);
+
+sInput.addChild(nor2.b);
+sInput.moveTo(nor2.b.position - lineOffset);
+sInput.lineBy(new Point(-0.7, 0)*scale);
+
+drawLabels(anchor);
+
+var q = false;
+window.globals.updateSRLatch = function() {
+    var s = window.globals.srLatchS;
+    var r = window.globals.srLatchR;
+    q = !(r || !(s || q))
+
+    rInput.strokeColor = r ? 'red' : 'black';
+    sInput.strokeColor = s ? 'red' : 'black';
+    nor1Out.strokeColor = q ? 'red' : 'black';
+    nor2Out.strokeColor = !(q || s) ? 'red' : 'black';
+}
+
+</script>
+<canvas id="srLatchCircuit" resize=""></canvas>
+</div>
+
+<p>This circuit is a <strong><em>transparent</em></strong> latch, which means changes in the
+input are immediately reflected in the output. One way to add more
+control is to add a <strong><em>gate</em></strong> which will prevent any changes to the
+circuit until it is enabled by a signal.</p>
+
+<h3 id="gated-sr-latch">Gated SR-Latch</h3>
+<p>This circuit simply uses <strong>AND</strong> gates to allow the <em>S</em> or <em>R</em>
+signal through to the rest of the circuit.</p>
+
+<div class="interactive" style="width: 90%;">
+<div class="table-div">
+<table class="gate" id="gatedSRLatchTable">
+    <tr>
+        <th><input type="checkbox" onclick="updateState(this, 'gatedSRLatchG');" /><label>G</label></th>
+        <th><input type="checkbox" onclick="updateState(this, 'gatedSRLatchS');" /><label>S</label></th>
+        <th><input type="checkbox" onclick="updateState(this, 'gatedSRLatchR');" /><label>R</label></th>
+        <th>Q</th>
+        <th>Q'</th>
+    </tr>
+    <tr><td><code>0</code></td><td><code>X</code></td><td><code>X</code></td><td><code>X</code></td><td><code>Q</code></td></tr>
+    <tr><td><code>1</code></td><td><code>0</code></td><td><code>0</code></td><td><code>X</code></td><td><code>Q</code></td></tr>
+    <tr><td><code>1</code></td><td><code>0</code></td><td><code>1</code></td><td><code>X</code></td><td><code>0</code></td></tr>
+    <tr><td><code>1</code></td><td><code>1</code></td><td><code>0</code></td><td><code>X</code></td><td><code>1</code></td></tr>
+    <tr><td><code>1</code></td><td><code>1</code></td><td><code>1</code></td><td><code>X</code></td><td><code>?</code></td></tr>
+</table>
+</div>
+
+<script type="text/paperscript" canvas="gatedSRLatchCircuit">
+var scale = 32;
+function gatePath(anchor, kind) {
+    var a = new Path();
+    a.strokeColor = 'black';
+    a.strokeWidth = 2;
+    var b = new Path();
+    b.strokeColor = 'black';
+    b.strokeWidth = 2;
+    var out = new Path();
+    out.strokeColor = 'black';
+    out.strokeWidth = 2;
+
+    var raster = new Raster('/assets/ground-up/' + kind + '.svg');
+    raster.position = (anchor + [1.4, 0])*scale;
+
+    a.moveTo((anchor + [0, -0.3])*scale);
+    a.lineBy(new Point(0.8, 0)*scale);
+    b.moveTo((anchor + [0, 0.3])*scale);
+    b.lineBy(new Point(0.8, 0)*scale);
+    out.moveTo((anchor + [2, 0])*scale);
+    if (kind == 'nor') {
+        out.moveTo((anchor + [2.3, 0])*scale);
+    }
+    out.lineTo((anchor + [2.8, 0])*scale);
+
+    return {a: a, b: b, out: out};
+}
+function norPath(anchor) {
+    return gatePath(anchor, 'nor');
+}
+function andPath(anchor) {
+    return gatePath(anchor, 'and');
+}
+function drawLabel(anchor, content, fontSize) {
+    if (!fontSize) {
+        fontSize = 20;
+    }
+    new PointText({
+        point: anchor*scale,
+        justification: 'center',
+        fontSize: fontSize,
+        content: content
+    });
+}
+function drawLabels(anchor) {
+    drawLabel(anchor + [-1, 1.7], 'R');
+    drawLabel(anchor + [-1, 6.8], 'S');
+    drawLabel(anchor + [-1.2, 4.25], 'G');
+    drawLabel(anchor + [7, 2.2], 'Q');
+
+    drawLabel(anchor + [4.4, 2.1], 'NOR', fontSize=10);
+    drawLabel(anchor + [4.4, 6.1], 'NOR', fontSize=10);
+
+    drawLabel(anchor + [1.4, 1.8], 'AND', fontSize=10);
+    drawLabel(anchor + [1.4, 6.4], 'AND', fontSize=10);
+}
+
+// compound paths
+var nor1Out = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var nor2Out = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var sInput = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var rInput = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var gInput = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var gsInput = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var grInput = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+
+var anchor = new Point(2, -1);
+var lineOffset = new Point(0.25, 0)*scale;
+
+var nor1 = norPath(anchor + [3, 2]);
+var nor2 = norPath(anchor + [3, 6]);
+var and1 = andPath(anchor + [0, 1.7]);
+var and2 = andPath(anchor + [0, 6.3]);
+
+nor1Out.addChild(nor1.out);
+nor1Out.addChild(nor2.a);
+nor1Out.moveTo(nor1.out.position + lineOffset);
+nor1Out.lineBy(new Point(0, 1.3)*scale);
+nor1Out.lineBy(new Point(-2.8, 1.4)*scale);
+nor1Out.lineBy(new Point(0, 1)*scale);
+nor1Out.moveTo(nor1.out.position + lineOffset);
+nor1Out.lineBy(new Point(0.7, 0)*scale);
+
+nor2Out.addChild(nor2.out);
+nor2Out.addChild(nor1.b);
+nor2Out.moveTo(nor2.out.position + lineOffset);
+nor2Out.lineBy(new Point(0, -1.3)*scale);
+nor2Out.lineBy(new Point(-2.8, -1.4)*scale);
+nor2Out.lineBy(new Point(0, -1)*scale);
+
+rInput.addChild(and1.out);
+rInput.addChild(nor1.a);
+rInput.moveTo(nor1.a.position - lineOffset);
+rInput.lineBy(new Point(-0.7, 0)*scale);
+
+grInput.addChild(and1.a);
+grInput.moveTo(and1.a.position - lineOffset);
+grInput.lineBy(new Point(-0.7, 0)*scale);
+
+sInput.addChild(and2.out);
+sInput.addChild(nor2.b);
+sInput.moveTo(nor2.b.position - lineOffset);
+sInput.lineBy(new Point(-0.7, 0)*scale);
+
+gsInput.addChild(and2.b);
+gsInput.moveTo(and2.b.position - lineOffset);
+gsInput.lineBy(new Point(-0.7, 0)*scale);
+
+gInput.addChild(and1.b);
+gInput.addChild(and2.a);
+gInput.moveTo(and1.b.position - lineOffset*1.5);
+gInput.lineTo(and2.a.position - lineOffset*1.5);
+gInput.moveTo((and1.b.position + and2.a.position)/2 + new Point(-1.1, 0)*scale);
+gInput.lineBy(new Point(0.7, 0)*scale);
+
+drawLabels(anchor);
+
+var q = false;
+window.globals.updateGatedSRLatch = function() {
+    var g = window.globals.gatedSRLatchG;
+    var s = window.globals.gatedSRLatchS;
+    var r = window.globals.gatedSRLatchR;
+    q = !(r || !(s || q));
+
+    grInput.strokeColor = r ? 'red' : 'black';
+    gsInput.strokeColor = s ? 'red' : 'black';
+    gInput.strokeColor = g ? 'red' : 'black';
+    rInput.strokeColor = g && r ? 'red' : 'black';
+    sInput.strokeColor = g && s ? 'red' : 'black';
+    if (!g) { return; }
+    nor1Out.strokeColor = q ? 'red' : 'black';
+    nor2Out.strokeColor = !(q || s) ? 'red' : 'black';
+}
+
+</script>
+<canvas id="gatedSRLatchCircuit" resize=""></canvas>
+</div>
+
+<p><strong>Note:</strong> a common variant of this latch is a <em>D-Latch</em> in which a single
+<em>data</em> bit is saved when the <em>gate</em> is enabled. This is easily achieved
+by wiring <em>R</em> to <em>not S</em>, so the latch is reset when the data is <code class="language-plaintext highlighter-rouge">0</code>
+and set when it is <code class="language-plaintext highlighter-rouge">1</code>.</p>
+
+<h3 id="flip-flops">Flip Flops</h3>
+<p>Flip flops are edge-triggered memory units usually built with two
+underlying gated latches. They are useful for precisely synchronizing
+changes to a clock signal.</p>
+
+<div class="interactive" style="width: 80%;">
+<div class="table-div">
+<table class="gate" id="dFlipFlopTable">
+    <tr>
+        <th><input type="checkbox" onclick="updateState(this, 'dFlipFlopClk');" /><label>Clk</label></th>
+        <th><input type="checkbox" onclick="updateState(this, 'dFlipFlopD');" /><label>D</label></th>
+        <th>Q</th>
+    </tr>
+    <tr><td><code>0</code></td><td><code>X</code></td><td><code>Q</code></td></tr>
+    <tr><td><code>0</code></td><td><code>X</code></td><td><code>Q</code></td></tr>
+    <tr><td><code>1-&gt;0</code></td><td><code>0</code></td><td><code>0</code></td></tr>
+    <tr><td><code>1-&gt;0</code></td><td><code>1</code></td><td><code>1</code></td></tr>
+</table>
+</div>
+<script type="text/paperscript" canvas="dFlipFlop">
+var scale = 32;
+function latchPath(anchor, kind) {
+    var a = new Path();
+    a.strokeColor = 'black';
+    a.strokeWidth = 2;
+    var b = new Path();
+    b.strokeColor = 'black';
+    b.strokeWidth = 2;
+    var out = new Path();
+    out.strokeColor = 'black';
+    out.strokeWidth = 2;
+
+    var raster = new Raster('/assets/ground-up/' + kind + '.svg');
+    raster.position = (anchor + [1.7, 0])*scale;
+
+    a.moveTo((anchor + [0, -0.6])*scale);
+    a.lineBy(new Point(0.8, 0)*scale);
+    b.moveTo((anchor + [0, 0.6])*scale);
+    b.lineBy(new Point(0.8, 0)*scale);
+    out.moveTo((anchor + [2.6, -0.6])*scale);
+    out.lineBy(new Point(0.6, 0)*scale);
+
+    return {d: a, e: b, out: out};
+}
+function notPath(anchor) {
+    var input = new Path();
+    input.strokeColor = 'black';
+    input.strokeWidth = 2;
+    var out = new Path();
+    out.strokeColor = 'black';
+    out.strokeWidth = 2;
+
+    var raster = new Raster('/assets/ground-up/not.svg');
+    raster.scale(0.2);
+    raster.position = (anchor + [0.7, 0])*scale;
+
+    input.moveTo((anchor + [-0.6, 0])*scale);
+    input.lineBy(new Point(0.8, 0)*scale);
+    out.moveTo((anchor + [1.2, 0])*scale);
+    out.lineBy(new Point(0.6, 0)*scale);
+
+    return {input: input, out: out};
+}
+function dlatchPath(anchor) {
+    return latchPath(anchor, 'dlatch');
+}
+function drawLabel(anchor, content, fontSize) {
+    if (!fontSize) {
+        fontSize = 20;
+    }
+    new PointText({
+        point: anchor*scale,
+        justification: 'center',
+        fontSize: fontSize,
+        content: content
+    });
+}
+function drawLabels(anchor) {
+    drawLabel(anchor + [-0.4, 2.6], 'D');
+    drawLabel(anchor + [-1.2, 3.8], 'Clk');
+    drawLabel(anchor + [7.6, 2.6], 'Q');
+    drawLabel(anchor + [2.52, 5.1], 'NOT', fontsize=8);
+}
+
+// compound paths
+var d1Out = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var notOut = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+var clkInput = new CompoundPath({strokeWidth: 2, strokeColor: 'black'});
+
+var anchor = new Point(2, -1);
+var lineOffset = new Point(0.25, 0)*scale;
+
+var d1 = dlatchPath(anchor + [0, 3]);
+var d2 = dlatchPath(anchor + [4, 3]);
+var not = notPath(anchor + [2, 5]);
+
+d1Out.addChild(d1.out);
+d1Out.addChild(d2.d);
+d1Out.moveTo(d1.out.position + lineOffset);
+d1Out.lineBy(new Point(0.9, 0)*scale);
+
+notOut.addChild(not.out);
+notOut.addChild(d2.e);
+notOut.moveTo(not.out.position + lineOffset);
+notOut.lineBy(new Point(0.28, 0)*scale);
+notOut.lineBy(new Point(0, -1.4)*scale);
+
+clkInput.addChild(d1.e);
+clkInput.addChild(not.input);
+clkInput.moveTo(d1.e.position - new Point(1, 0)*scale);
+clkInput.lineBy(new Point(0.6, 0)*scale);
+clkInput.lineBy(new Point(0, 1.4)*scale);
+clkInput.lineBy(new Point(1.42, 0)*scale);
+
+drawLabels(anchor);
+
+window.globals.updateDFlipFlop = function() {
+    var d = window.globals.dFlipFlopD;
+    var clk = window.globals.dFlipFlopClk;
+
+    d1.d.strokeColor = d ? 'red' : 'black';
+    clkInput.strokeColor = clk ? 'red' : 'black';
+    notOut.strokeColor = !clk ? 'red' : 'black';
+    if (clk) {
+        d1Out.strokeColor = d ? 'red' : 'black';
+    } else {
+        d2.out.strokeColor = d1Out.strokeColor;
+    }
+}
+
+</script>
+<canvas id="dFlipFlop" resize=""></canvas>
+</div>
+
+<p><strong>Note:</strong> the above uses two D-Latches, where the value of <em>D</em> gets saved
+when <em>E</em> is <code class="language-plaintext highlighter-rouge">1</code>. Notice how the final output <em>Q</em> only gets updated on
+the falling edge (<code class="language-plaintext highlighter-rouge">1 -&gt; 0</code>) of the <em>Clk</em> signal.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>We successfully created a way to persist state, which will be very useful
+in building things like registers and state machines. Note that this
+is <em>volatile memory</em>, meaning the memory is lost when power is turned
+off. This is just one way to create in-circuit memory, but it’s a great
+building block to have in our toolset.</p>
+
+<p>As always if any parts were unclear, please feel free to contact me.</p>
+
+<p><a href="/posts/ground-up-state-machines.html">Take me to the next part!</a></p>
+
+  </div><a class="u-url" href="/posts/ground-up-memory.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

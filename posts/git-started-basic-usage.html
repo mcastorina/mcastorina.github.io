@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Git Started: Basic Usage | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Git Started: Basic Usage" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time." />
+<meta property="og:description" content="A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time." />
+<link rel="canonical" href="/posts/git-started-basic-usage.html" />
+<meta property="og:url" content="/posts/git-started-basic-usage.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-10-10T05:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Git Started: Basic Usage" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-10-10T05:00:00+00:00","datePublished":"2019-10-10T05:00:00+00:00","description":"A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.","headline":"Git Started: Basic Usage","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/git-started-basic-usage.html"},"url":"/posts/git-started-basic-usage.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Git Started: Basic Usage</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-10-10T05:00:00+00:00" itemprop="datePublished">Oct 10, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><img src="/assets/git-started/banner.png" alt="git-started" /></p>
+
+<p>This tutorial aims to explain Git in a way beginners can understand.
+This is the second post of the cleverly named series <strong><em>Git Started</em></strong>.
+In this post, we explore how to use <code class="language-plaintext highlighter-rouge">git</code> on the command line. To get
+a conceptual understanding of Git, please refer to the first post:
+<a href="/posts/git-started-introduction.html">Git Started: Introduction</a>.</p>
+
+<p>Let’s begin by exploring the general project workflow, so we can
+understand what we need to use Git for.</p>
+
+<h2 id="general-workflow">General Workflow</h2>
+<p>To understand why we use Git, let’s think about the workflow of a
+project. Generally there’s a start to a project but no end, and
+there are many iterations of edits and saves. There may be a time
+where we want to make experimental changes and then add or discard
+those changes to the main project as well.</p>
+
+<p>The common flow that arises in a project is shown below.</p>
+
+<figure><div style="text-align:center">
+<img src="/assets/git-started/basic-project-workflow.png" />
+<figcaption><i>Basic project workflow</i></figcaption>
+</div></figure>
+
+<p>Some things we only do once: start a Git repository.  Some things
+we do a lot: editing and saving.  Some things we only do sometimes:
+experimenting and publishing.</p>
+
+<p>Of course there are many other actions, but let’s start with this
+small set to keep it simple.</p>
+
+<h2 id="lets-git-to-the-usage">Let’s Git to the Usage</h2>
+<p>Now that we have an idea of what a workflow looks like, let’s outline
+how to actually do those things.</p>
+
+<h3 id="start">Start</h3>
+<p>This part is easy.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir new-super-awesome-git-project
+cd new-super-awesome-git-project
+git init
+</code></pre></div></div>
+
+<p>We just created a new Git repository to save all our files in!</p>
+
+<h3 id="edit-and-save">Edit and Save</h3>
+<p>Editing isn’t necessarily a Git action, so I am including it in the
+Save section. These are the two most common things you will do on
+a project: make changes and save those changes.</p>
+
+<p>Let’s begin by making a change.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo '# new-super-awesome-git-project' &gt; README.md
+</code></pre></div></div>
+
+<p>Great, we have a new file to save in our Git repository. Saving in
+Git is a two step process. First, you <strong>stage</strong> your changes, then you
+<strong>commit</strong> the staged changes. This allows you to fine tune what you
+<strong>add</strong> to your repository.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add README.md                 # stage
+git commit -m "Initial commit"    # commit
+</code></pre></div></div>
+
+<p>Each commit requires a message to be saved with it. Think of it as
+writing a note to whomever wants to understand what changes were
+made in that commit. Sure, they can just look at the files, but
+it’s a lot easier and nicer if someone (you) just summarizes it for
+them.</p>
+
+<p>To review your beautiful saves, you look at the <strong>log</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log
+
+commit 9a88b31877c556ecca235be28d7188113ca4d44e (HEAD -&gt; master)
+Author: Miccah Castorina &lt;contact@miccah.io&gt;
+Date:   Wed Nov 28 20:17:46 2018 -0600
+
+    Initial commit
+
+</code></pre></div></div>
+
+<p>This will show you all of the commits and their summaries. To load
+a previous save, you simply use the following command (where
+<code class="language-plaintext highlighter-rouge">COMMIT_HASH</code> is the long string of hex characters after “commit”).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout COMMIT_HASH
+</code></pre></div></div>
+
+<p>Think of it as saying “Let’s <strong>check out</strong> what the project looks like
+at this point.”</p>
+
+<h3 id="experiment-and-publish">Experiment and Publish</h3>
+<p>To work on a feature, we will create a separate branch for all of
+our new saves and experiments. When we complete the feature, we can
+merge it back into the original branch (the default is master).
+Remember from our previous post, a branch is like a whole universe
+where we can make any changes without affecting the other universes.
+This means we can keep our branch without merging it; we don’t have
+to actually discard any changes.</p>
+
+<p>Let’s create a branch and switch to it. Good thing I already showed
+you how to load saves, because switching branches is done exactly
+the same way.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch universe-42      # spawn universe
+git checkout universe-42    # switch to that universe
+</code></pre></div></div>
+
+<p>Good job! Now let’s make some commits in our new universe to get
+ready to merge it back into our master branch.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo '## universe-42 is the best universe' &gt;&gt; README.md
+git add README.md
+git commit -m "State the obvious"
+
+echo 'Hello' &gt; world
+git add world
+git commit -m "Greet the world"
+</code></pre></div></div>
+
+<p>Let’s merge! The first thing to do is to switch back to the master
+branch, because merging is a one-way operation. You merge another
+branch (universe) into your current branch (universe).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout master
+git merge universe-42
+git log
+
+commit 91002a422db453e0b5b181045f8a4b8676b960b9
+Author: Miccah Castorina &lt;contact@miccah.io&gt;
+Date: Wed Nov 28 20:46:05 2018 -0600
+
+Greet the world
+
+commit 91bf95d338e15c0746804ea683512c20c1c736d1
+Author: Miccah Castorina &lt;contact@miccah.io&gt;
+Date: Wed Nov 28 20:45:56 2018 -0600
+
+State the obvious
+
+commit 9a88b31877c556ecca235be28d7188113ca4d44e
+Author: Miccah Castorina &lt;contact@miccah.io&gt;
+Date: Wed Nov 28 20:17:46 2018 -0600
+
+Initial commit
+
+</code></pre></div></div>
+
+<p>That was easy. Now we publish our changes for the world to see! In
+this example, we haven’t set up a remote, so we are just going to
+pretend. Normally, you will setup your project to sync with GitHub
+(which has awesome
+<a href="https://help.github.com/articles/creating-a-new-repository/">documentation</a>
+on how to get started) or any other Git server.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push
+</code></pre></div></div>
+
+<p>Yay!</p>
+
+<h2 id="git-workflow">Git Workflow</h2>
+<p>Now that we understand the high level workflow and how Git works,
+let’s revise it to better capture the Git workflow.</p>
+
+<figure><div style="text-align:center">
+<img src="/assets/git-started/project-workflow.png" />
+<figcaption><i>Git project workflow</i></figcaption>
+</div></figure>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>In this post we learned the basic usage for working with the Git
+CLI. You should have gained enough knowledge to use Git competently,
+and the next section will go into even more usage detail. For those
+wanting to refine your Git-Fu and learn some <em>Pro Tips!!!</em>, see you
+there!</p>
+
+  </div><a class="u-url" href="/posts/git-started-basic-usage.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

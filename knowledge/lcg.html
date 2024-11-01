@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Linear Congruential Generator | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Linear Congruential Generator" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time." />
+<meta property="og:description" content="A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time." />
+<link rel="canonical" href="/knowledge/lcg.html" />
+<meta property="og:url" content="/knowledge/lcg.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-11-01T16:30:21+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Linear Congruential Generator" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-11-01T16:30:21+00:00","datePublished":"2024-11-01T16:30:21+00:00","description":"A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.","headline":"Linear Congruential Generator","mainEntityOfPage":{"@type":"WebPage","@id":"/knowledge/lcg.html"},"url":"/knowledge/lcg.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Linear Congruential Generator</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2024-11-01T16:30:21+00:00" itemprop="datePublished">Nov 1, 2024
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<p>Linear Congruential Generator is an algorithm to produce a sequence of
+pseudorandom numbers.</p>
+
+\[X_{n+1} = (aX_n + c) \bmod{m}\]
+
+<p>Reference: <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">Linear Congruential Generator</a></p>
+
+<h2 id="non-repeating-prng">Non-repeating PRNG</h2>
+<p>When \(c \neq 0\), correctly chosen parameters allow a period equal to \(m\),
+for all seed values. This will occur if and only if:</p>
+
+<ol>
+  <li>\(m\) and \(c\) are relatively prime (coprime)</li>
+  <li>\(a-1\) is divisible by all prime factors of \(m\)</li>
+  <li>\(a-1\) is divisible by \(4\) if \(m\) is divisible by \(4\)</li>
+</ol>
+
+<p>These three requirements are referred to as the Hull-Dobell Theorem.</p>
+
+<h3 id="example">Example</h3>
+<p>Suppose we want a PRNG that outputs integers \([0, 10)\). We will choose our values according to the Hull-Dobell Theorem above: \(m = 10\), \(c = 7\), \(a = 11\).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>\(n\)</th>
+      <th>\(X_n\)</th>
+      <th>\(X_{n+1} = (11X_n + 7) \bmod{10}\)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>7</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>8</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>2</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>9</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>6</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Note that despite the period being equal to \(m\), it doesn’t make a
+particularly good PRNG. See <a href="https://en.wikipedia.org/wiki/Spectral_test">spectral test</a> for checking the quality of LCGs.</p>
+
+  </div><a class="u-url" href="/knowledge/lcg.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

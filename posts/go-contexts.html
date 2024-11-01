@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Go Contexts | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Go Contexts" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Go is a simple language, but I was pretty confused by the context package when I first learned about it. I had trouble understanding how it could be used to set a deadline or to cancel functions or how it even worked. Since then, I’ve gotten a firmer grasp on how to use it both as a user and as a library author." />
+<meta property="og:description" content="Go is a simple language, but I was pretty confused by the context package when I first learned about it. I had trouble understanding how it could be used to set a deadline or to cancel functions or how it even worked. Since then, I’ve gotten a firmer grasp on how to use it both as a user and as a library author." />
+<link rel="canonical" href="/posts/go-contexts.html" />
+<meta property="og:url" content="/posts/go-contexts.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-09-06T05:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Go Contexts" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-09-06T05:00:00+00:00","datePublished":"2022-09-06T05:00:00+00:00","description":"Go is a simple language, but I was pretty confused by the context package when I first learned about it. I had trouble understanding how it could be used to set a deadline or to cancel functions or how it even worked. Since then, I’ve gotten a firmer grasp on how to use it both as a user and as a library author.","headline":"Go Contexts","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/go-contexts.html"},"url":"/posts/go-contexts.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Go Contexts</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2022-09-06T05:00:00+00:00" itemprop="datePublished">Sep 6, 2022
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Go is a simple language, but I was pretty confused by the <code class="language-plaintext highlighter-rouge">context</code> package
+when I first learned about it. I had trouble understanding how it could be used
+to set a deadline or to cancel functions or how it even worked. Since then,
+I’ve gotten a firmer grasp on how to use it both as a user and as a library
+author.</p>
+
+<p>Let’s start by defining what a <code class="language-plaintext highlighter-rouge">Context</code> is and its purpose. A <code class="language-plaintext highlighter-rouge">Context</code> is a
+construct used to signal a function to stop its work and return. The key is
+that a function needs to be <em>context aware</em> in order for this to have any
+affect; there’s no magic.</p>
+
+<p>Here is an example of a context aware function. Notice that we check
+<code class="language-plaintext highlighter-rouge">ctx.Done()</code> to see if the context has been canceled in the function
+doing the work.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">(</span>
+	<span class="s">"context"</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"time"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">doWork</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">select</span> <span class="p">{</span>
+	<span class="k">case</span> <span class="o">&lt;-</span><span class="n">time</span><span class="o">.</span><span class="n">After</span><span class="p">(</span><span class="m">2</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span><span class="o">:</span>
+		<span class="k">return</span> <span class="m">1337</span><span class="p">,</span> <span class="no">nil</span>
+	<span class="k">case</span> <span class="o">&lt;-</span><span class="n">ctx</span><span class="o">.</span><span class="n">Done</span><span class="p">()</span><span class="o">:</span>
+		<span class="k">return</span> <span class="m">0</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">Err</span><span class="p">()</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">ctx</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">()</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">doWork</span><span class="p">(</span><span class="n">ctx</span><span class="p">))</span>
+
+	<span class="n">ctx</span><span class="p">,</span> <span class="n">cancel</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">WithTimeout</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="m">1</span><span class="o">*</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="n">cancel</span><span class="p">()</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">doWork</span><span class="p">(</span><span class="n">ctx</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1337 &lt;nil&gt;
+0 context deadline exceeded
+</code></pre></div></div>
+
+<p>In this example, we use a <code class="language-plaintext highlighter-rouge">select</code> statement to return immediately when the
+context is finished, which is generally good practice. By doing so, we respect
+the callers’ wish to cancel and return early.</p>
+
+<p>Ultimately, contexts are a pretty simple and powerful concept, but requires
+cooperation with child functions to work well. That is the part that previously
+confused me. I had incorrectly believed contexts had some magic that would
+ensure a deadline wasn’t exceeded, but as with most things in Go, there is no
+magic and the idea is quite simple.</p>
+
+  </div><a class="u-url" href="/posts/go-contexts.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

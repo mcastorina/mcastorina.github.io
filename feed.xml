@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2024-11-01T16:30:21+00:00</updated><id>/feed.xml</id><title type="html">miccah.io</title><subtitle>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</subtitle><entry><title type="html">2023 Reflections and 2024 Goals</title><link href="/posts/2023-reflections.html" rel="alternate" type="text/html" title="2023 Reflections and 2024 Goals" /><published>2024-11-01T16:00:00+00:00</published><updated>2024-11-01T16:00:00+00:00</updated><id>/posts/2023-reflections</id><content type="html" xml:base="/posts/2023-reflections.html"><![CDATA[<p>Okay, I know I’m <em>finally</em> finishing this post in NOVEMBER when 2024 is almost
+over, and it was mainly postponed because I lacked 2024 goals. So I’ve
+reflected on why and shared my thoughts below.</p>
+
+<p>But first, 2023 reflections! I made a <em>huge</em> life change that made it a great
+year for me.</p>
+
+<details><summary><strong>I moved to Seattle!</strong></summary><div>
+<p>It took me awhile to get everything ready and find a place to rent, but I
+finally did it! I chose Seattle for a few reasons. The nature in the Pacific
+Northwest really calls to me, and I want to go on hikes and enjoy it. I also
+have a few friends in Seattle, so it was an easier transition socially.
+Finally, Seattle has a pretty good tech scene, so I’ll have more opportunities
+to make friends. So far, I really love it here and am grateful I made the jump!</p>
+
+<p><img src="/assets/rainer.jpg" alt="Rainer" /></p>
+
+</div></details>
+
+<details><summary><strong>Went on some hikes</strong></summary><div>
+<p>My friend and I took a great road trip to Sequoia and Yosemite. It was such an
+amazing trip, and while I would enjoy the beauty of these parks alone, I had so
+much more fun sharing the memories with my friend.</p>
+
+<p style="width: 30%; margin: auto;"><img src="/assets/yosemite.jpg" alt="Yosemite" /></p>
+
+<p><br /></p>
+
+<p>I also went on a hike in the Seattle area! Similarly, the views were
+beautiful, but the friends really made it a great experience.</p>
+
+<p><img src="/assets/maple-pass.jpg" alt="Maple Pass" /></p>
+
+</div></details>
+
+<details><summary><strong>Joined a parkour community</strong></summary><div>
+<p>I started attending parkour classes in Seattle and found the community to be
+really lovely and welcoming. I’m happy to say I’ve made friends there and I
+regularly train twice a week.</p>
+
+</div></details>
+
+<p><br /></p>
+
+<p>So now for 2024 goals, or, lack of goals. At first, I thought I was
+procrastinating on this blog post because of laziness or low blogging
+motivation (I mean, it <em>has</em> been over a year since my last post) or some other
+excuse. But I realized it’s an indication that I couldn’t think of any goals
+for 2024. And that’s okay! I made a huge change in my life near the end of 2023
+and I just felt like I needed time to settle. I didn’t <em>need</em> to have goals for 2024.
+I was at a time in my life where I just wanted to experience and enjoy it. And I did.</p>]]></content><author><name></name></author><category term="misc" /><summary type="html"><![CDATA[Okay, I know I’m finally finishing this post in NOVEMBER when 2024 is almost over, and it was mainly postponed because I lacked 2024 goals. So I’ve reflected on why and shared my thoughts below.]]></summary></entry><entry><title type="html">Scripting a Zoho catch-all filter</title><link href="/posts/scripting-a-zoho-catch-all-filter.html" rel="alternate" type="text/html" title="Scripting a Zoho catch-all filter" /><published>2023-10-18T14:00:00+00:00</published><updated>2023-10-18T14:00:00+00:00</updated><id>/posts/scripting-a-zoho-catch-all-filter</id><content type="html" xml:base="/posts/scripting-a-zoho-catch-all-filter.html"><![CDATA[<p>I use <a href="https://www.zoho.com/mail/">Zoho</a> as my email provider, and I recently
+learned that <a href="https://www.zoho.com/mail/help/adminconsole/catch-all-setup.html">you can setup a catch-all forwarding address</a>. This is pretty great,
+because that means I can receive any email sent to my domain! Go ahead, <a href="mailto:lol@miccah.io">try it</a>.</p>
+
+<p>I want to sort the emails I receive into their own folder, though, depending on
+the delivery address (for example, <code class="language-plaintext highlighter-rouge">lol@miccah.io</code> will go to
+<code class="language-plaintext highlighter-rouge">/catch-all/lol</code>). It turns out, Zoho supports custom mail filters using a
+scripting DSL called <a href="https://www.zoho.com/deluge/">deluge</a>, so I wrote one!</p>
+
+<p>At a high level, the filter parses the <code class="language-plaintext highlighter-rouge">To</code> address of the email, creates the
+folder if it does not exist, then moves the email into that folder. In order to
+work properly, I needed to create a “connection” with the properly scoped
+permissions: <code class="language-plaintext highlighter-rouge">ZohoMail.messages.READ</code>, <code class="language-plaintext highlighter-rouge">ZohoMail.messages.UPDATE</code>, and
+<code class="language-plaintext highlighter-rouge">ZohoMail.folders.ALL</code>. This will be clear if you’re going through the process
+yourself, otherwise don’t worry about it.</p>
+
+<p>Here’s the script in all it’s glory. I had fun hacking on this and was
+pleasantly surprised that it was a feature available to me!</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">info</span> <span class="dl">"</span><span class="s2">Use the 'To' address to create a subfolder in catch-all and move the message there</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">conn</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">catchallfilter</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">messageID</span> <span class="o">=</span> <span class="nx">mail_messageId</span><span class="p">;</span>
+<span class="nx">messageDetails</span> <span class="o">=</span> <span class="nx">zoho</span><span class="p">.</span><span class="nx">mail</span><span class="p">.</span><span class="nf">getMessage</span><span class="p">(</span><span class="nx">messageID</span><span class="p">,</span> <span class="nx">conn</span><span class="p">);</span>
+
+<span class="c1">// Parse address for the folder name.</span>
+<span class="c1">// toAddress is of the form "&amp;lt;ADDR@domain.com&amp;gt;"</span>
+<span class="nx">toAddress</span> <span class="o">=</span> <span class="nx">messageDetails</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">TO</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">newName</span> <span class="o">=</span> <span class="nx">toAddress</span><span class="p">.</span><span class="nf">subString</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nx">toAddress</span><span class="p">.</span><span class="nf">indexOf</span><span class="p">(</span><span class="dl">"</span><span class="s2">@</span><span class="dl">"</span><span class="p">));</span>
+<span class="nx">info</span> <span class="dl">"</span><span class="s2">routing to </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">newName</span><span class="p">;</span>
+
+<span class="c1">// Search top-level folders for "catch-all", then search its children for</span>
+<span class="c1">// newName. If it's not found, create it.</span>
+<span class="k">for</span> <span class="nx">each</span> <span class="nx">folder</span> <span class="k">in</span> <span class="nx">zoho</span><span class="p">.</span><span class="nx">mail</span><span class="p">.</span><span class="nf">getFolders</span><span class="p">(</span><span class="nx">conn</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">folderName</span> <span class="o">=</span> <span class="nx">folder</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">NAME</span><span class="dl">"</span><span class="p">);</span>
+	<span class="k">if </span><span class="p">(</span><span class="nx">folderName</span> <span class="o">!=</span> <span class="dl">"</span><span class="s2">catch-all</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">continue</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="nx">catchallSubFolders</span> <span class="o">=</span> <span class="nx">folder</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">CHILDREN</span><span class="dl">"</span><span class="p">);</span>
+	<span class="nx">subFolderExists</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+	<span class="k">for</span> <span class="nx">each</span> <span class="nx">subFolder</span> <span class="k">in</span> <span class="nx">catchallSubFolders</span> <span class="p">{</span>
+		<span class="k">if </span><span class="p">(</span><span class="nx">subFolder</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">NAME</span><span class="dl">"</span><span class="p">)</span> <span class="o">!=</span> <span class="nx">newName</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">continue</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="nx">subFolderExists</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+		<span class="nx">info</span> <span class="dl">"</span><span class="s2">subfolder exists</span><span class="dl">"</span><span class="p">;</span>
+		<span class="k">break</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">subFolderExists</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">info</span> <span class="dl">"</span><span class="s2">creating subfolder</span><span class="dl">"</span><span class="p">;</span>
+		<span class="nx">zoho</span><span class="p">.</span><span class="nx">mail</span><span class="p">.</span><span class="nf">createFolder</span><span class="p">(</span><span class="nx">newName</span><span class="p">,</span> <span class="nx">folder</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">ID</span><span class="dl">"</span><span class="p">),</span> <span class="nx">conn</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">info</span> <span class="dl">"</span><span class="s2">moving to subfolder</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">zoho</span><span class="p">.</span><span class="nx">mail</span><span class="p">.</span><span class="nf">moveToFolder</span><span class="p">(</span><span class="nx">messageID</span><span class="p">,</span> <span class="dl">"</span><span class="s2">/catch-all/</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">newName</span><span class="p">,</span> <span class="nx">conn</span><span class="p">);</span>
+</code></pre></div></div>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[I use Zoho as my email provider, and I recently learned that you can setup a catch-all forwarding address. This is pretty great, because that means I can receive any email sent to my domain! Go ahead, try it.]]></summary></entry><entry><title type="html">Not leetcode</title><link href="/posts/not-leetcode.html" rel="alternate" type="text/html" title="Not leetcode" /><published>2023-05-13T14:00:00+00:00</published><updated>2023-05-13T14:00:00+00:00</updated><id>/posts/not-leetcode</id><content type="html" xml:base="/posts/not-leetcode.html"><![CDATA[<p>Leetcode, for those who don’t know, is a collection of data structures and
+algorithms programming challenges. More often than not, I find it difficult to
+maintain interest in the problems because they all seem so contrived and it’s
+not that rewarding to solve.</p>
+
+<p>There are plenty of articles about what’s wrong with leetcode, so instead, I’m
+going to share some alternatives that I have found much more engaging and
+actually useful. For what it’s worth, these challenges tend to be more involved
+than ones you would find on leetcode.</p>
+
+<h2 id="advent-of-code">Advent of code</h2>
+
+<p>Every December since 2015, <a href="https://adventofcode.com/">advent of code</a> hosts 25
+themed programming challenges to save Christmas. The challenges are released
+each day of the advent calendar and usually grow in complexity. They also have
+some aspect of data structure / algorithms, but the overarching story makes it
+feel more purposeful.</p>
+
+<h2 id="protohackers">Protohackers</h2>
+
+<p><a href="https://protohackers.com/">Protohackers</a> is a set of (at the time of writing)
+12 problems that challenge you to create servers for various network protocols.
+The problems get more challenging as you progress, but you can work out of
+order. You also need to publicly host your solutions, which is a good motivator
+to actually learn how to do that.</p>
+
+<h2 id="gossip-glomers">Gossip glomers</h2>
+
+<p><a href="https://fly.io/dist-sys/">Gossip glomers</a> is a set of challenges to teach
+distributed systems. Everything runs locally, including the test suite, and
+there’s no leader board or logins.</p>
+
+<h2 id="hackattic">Hackattic</h2>
+
+<p><a href="https://hackattic.com/">Hackattic</a> is an unordered collection of challenges
+that delve into real world protocols and systems. It has (at the time of
+writing) 18 challenges and 9 kata (small challenges).</p>
+
+<h2 id="cryptopals">Cryptopals</h2>
+
+<p><a href="https://www.cryptopals.com/">Cryptopals</a> focuses on exercises that demonstrate
+attacks on real-world crypto. The goal is to build up knowledge of
+cryptosystems and how to attack them in order to instill defensive programming
+practices.</p>
+
+<h2 id="cs-primer">CS Primer</h2>
+
+<p><a href="https://csprimer.com/">CS Primer</a> is a subscription platform for learning
+computer science by writing code. It is self paced and covers a wide range of
+advanced topics. Being a paid service, it mostly resembles university courses
+with access to video explanations, a community of other enrolled students, and
+office hours with the creator.</p>
+
+<p>Each topic has one free explanation video and programming challenge for you to
+try out as well.</p>
+
+<h2 id="more">More?</h2>
+
+<p>These are just the ones I’ve encountered, if you know of others I’d love to
+hear about them!</p>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[Leetcode, for those who don’t know, is a collection of data structures and algorithms programming challenges. More often than not, I find it difficult to maintain interest in the problems because they all seem so contrived and it’s not that rewarding to solve.]]></summary></entry><entry><title type="html">Practical git usage</title><link href="/posts/practical-git.html" rel="alternate" type="text/html" title="Practical git usage" /><published>2023-04-09T14:00:00+00:00</published><updated>2023-04-09T14:00:00+00:00</updated><id>/posts/practical-git</id><content type="html" xml:base="/posts/practical-git.html"><![CDATA[<p>I use <code class="language-plaintext highlighter-rouge">git</code> almost daily both personally and professionally, and my usage
+follows a pretty regular pattern. By sticking to this pattern, I rarely get
+into a sticky situation or unexpected state. As many can attest, <code class="language-plaintext highlighter-rouge">git</code> is a
+beast of a CLI tool, but these workflows have been enough to keep my projects
+organized.</p>
+
+<h3 id="personal-usage">Personal usage</h3>
+
+<p>Repositories where you’re the sole contributor are a lot easier to manage than a
+group project, so let’s start with that. Here’s my workflow:</p>
+
+<ol>
+  <li>Add a feature / modify the code</li>
+  <li>Add the changes to the staging area with <code class="language-plaintext highlighter-rouge">git add -p</code></li>
+  <li>Commit the staged changes with <code class="language-plaintext highlighter-rouge">git commit -v</code></li>
+</ol>
+
+<p>That’s pretty much it. If I want to experiment with a new feature or
+alternative approach, I’ll checkout a new branch with <code class="language-plaintext highlighter-rouge">git checkout -b
+feature-branch</code>. When the branch is good enough, I’ll merge it back into <code class="language-plaintext highlighter-rouge">main</code>
+with <code class="language-plaintext highlighter-rouge">git merge feature-branch</code>.</p>
+
+<h3 id="team-usage">Team usage</h3>
+
+<p>Using <code class="language-plaintext highlighter-rouge">git</code> on a team is a different story. It’s not uncommon to encounter
+conflicts, which can be frustrating but manageable. There’s also usually a code
+review process, so working directly on <code class="language-plaintext highlighter-rouge">main</code> is restricted. Here’s how I
+handle those situations:</p>
+
+<ol>
+  <li>Make sure <code class="language-plaintext highlighter-rouge">main</code> is up to date with <code class="language-plaintext highlighter-rouge">git pull</code></li>
+  <li>Create a feature branch with an appropriate name with <code class="language-plaintext highlighter-rouge">git checkout -b feature-branch</code></li>
+  <li>Add a feature / modify the code</li>
+  <li>Add the changes to the staging area with <code class="language-plaintext highlighter-rouge">git add -p</code></li>
+  <li>Commit the staged changes with <code class="language-plaintext highlighter-rouge">git commit -v</code></li>
+  <li>Push the changes to origin with <code class="language-plaintext highlighter-rouge">git push -u origin feature-branch</code></li>
+  <li>Create a pull request in GitHub UI (the link is usually printed when pushing
+in the previous step)</li>
+</ol>
+
+<p>At this point, I’ll wait for a review and address any comments that arise. If
+another change gets merged and causes a conflict, I’ll fix it by taking the
+following steps:</p>
+
+<ol>
+  <li>Make sure I’m on <code class="language-plaintext highlighter-rouge">feature-branch</code></li>
+  <li>Fetch origin changes with <code class="language-plaintext highlighter-rouge">git fetch origin main</code></li>
+  <li>Rebase my changes onto main with <code class="language-plaintext highlighter-rouge">git rebase origin/main</code></li>
+  <li>When the rebase stops due to conflicts, fix them
+    <ol>
+      <li>Identify the conflicts by doing a <code class="language-plaintext highlighter-rouge">git status</code></li>
+      <li>Edit the files to remove the conflicts</li>
+      <li>Tell <code class="language-plaintext highlighter-rouge">git</code> the conflicts have been resolved with <code class="language-plaintext highlighter-rouge">git add path/to/conflicting/files</code></li>
+    </ol>
+  </li>
+  <li>Continue rebasing with <code class="language-plaintext highlighter-rouge">git rebase --continue</code></li>
+  <li>Repeat step 4 until the rebase finishes</li>
+  <li>Force push to update my PR with <code class="language-plaintext highlighter-rouge">git push --force-with-lease</code></li>
+</ol>
+
+<p>Those are the two big flows that get me through pretty much everything when
+working on a team. On rare occasions I may have a feature branch off of another
+one of my feature branches (to keep pull requests a manageable size). For
+example <code class="language-plaintext highlighter-rouge">feature-part1</code> and <code class="language-plaintext highlighter-rouge">feature-part2</code>. When the <code class="language-plaintext highlighter-rouge">feature-part1</code> gets
+merged, I’ll rebase <code class="language-plaintext highlighter-rouge">feature-part2</code> to branch off of <code class="language-plaintext highlighter-rouge">main</code> with <code class="language-plaintext highlighter-rouge">git rebase
+--onto main feature-part1 feature-part2</code>.</p>
+
+<p>To visualize what that looks like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Before    o---o---o---o---o  main
+               \
+                o---o---o---o---o  feature-part1
+                                 \
+                                  o---o---o  feature-part2
+
+After    o---o---o---o---o  main
+             |            \
+             |             o'--o'--o'  feature-part2
+              \
+               o---o---o---o---o  feature-part1
+</code></pre></div></div>
+
+<h2 id="notes-on-commands">Notes on commands</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">git add -p</code> will interactively add each <strong>patch</strong>. I like to use it as a
+self review to help catch bugs early and scope commits to a single logical
+change. My one complaint is that it won’t add newly created files.</li>
+  <li><code class="language-plaintext highlighter-rouge">git commit -v</code> shows all the changes that will be committed. While I don’t
+read through them, I tend to use it as a reference when constructing the commit
+message.</li>
+  <li><code class="language-plaintext highlighter-rouge">git push --force-with-lease</code> force pushes only if no one has added commits
+to the remote branch (which prevents accidentally erasing those commits)</li>
+  <li><code class="language-plaintext highlighter-rouge">git log --graph --decorate --all</code> shows the entire git history as a
+graph and can be useful to situate where everything is.</li>
+</ul>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[I use git almost daily both personally and professionally, and my usage follows a pretty regular pattern. By sticking to this pattern, I rarely get into a sticky situation or unexpected state. As many can attest, git is a beast of a CLI tool, but these workflows have been enough to keep my projects organized.]]></summary></entry><entry><title type="html">What are Go interfaces?</title><link href="/posts/go-interfaces.html" rel="alternate" type="text/html" title="What are Go interfaces?" /><published>2023-02-25T14:00:00+00:00</published><updated>2023-02-25T14:00:00+00:00</updated><id>/posts/go-interfaces</id><content type="html" xml:base="/posts/go-interfaces.html"><![CDATA[<p>I was talking to my coworker about interfaces when the question arose about why
+a concrete slice has to manually be converted into an interface slice. I’ll
+demonstrate this as a simple example.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ints</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">7</span><span class="p">}</span>
+
+<span class="k">var</span> <span class="n">anys</span> <span class="p">[]</span><span class="n">any</span> <span class="o">=</span> <span class="n">ints</span> <span class="c">// Error!</span>
+<span class="c">// cannot use ints (variable of type []int) as type []any in variable declaration</span>
+</code></pre></div></div>
+
+<p>This is perhaps surprising because semantically every <code class="language-plaintext highlighter-rouge">int</code> is an <code class="language-plaintext highlighter-rouge">any</code>, so why
+doesn’t it work? I told my coworker it was because elements in a slice must all
+have the same size, and interfaces are wide pointers. It was a good enough
+explanation at the time, but it got me wondering.. are interfaces really wide
+pointers? How are they actually represented at runtime?</p>
+
+<h2 id="iface-and-eface">iface and eface</h2>
+
+<p>Well fortunately for us, Go is <a href="https://github.com/golang/go">open source</a>! Poking around we can find a few
+promising struct definitions: <a href="https://github.com/golang/go/blob/169203f3ee022abf66647abc99fd483fd10f9a54/src/runtime/runtime2.go#L202-L210">iface and eface</a>.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">type</span> <span class="n">iface</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">tab</span>  <span class="o">*</span><span class="n">itab</span>
+	<span class="n">data</span> <span class="n">unsafe</span><span class="o">.</span><span class="n">Pointer</span>
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">eface</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">_type</span> <span class="o">*</span><span class="n">_type</span>
+	<span class="n">data</span>  <span class="n">unsafe</span><span class="o">.</span><span class="n">Pointer</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We can see here that both <code class="language-plaintext highlighter-rouge">iface</code> and <code class="language-plaintext highlighter-rouge">eface</code> are, indeed, double wide
+pointers. The first pointer contains some sort of information about the type
+and the second is a pointer to the actual data.</p>
+
+<p>If these are the actual runtime types, we should be able to write a program to
+inspect them. Let’s start by copying <code class="language-plaintext highlighter-rouge">eface</code> and its child structs.</p>
+
+<h2 id="inspecting-eface">Inspecting eface</h2>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"unsafe"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">var</span> <span class="n">a</span> <span class="n">any</span> <span class="o">=</span> <span class="kt">int64</span><span class="p">(</span><span class="m">0x41414141</span><span class="p">)</span>
+	<span class="n">e</span> <span class="o">:=</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">eface</span><span class="p">)(</span><span class="n">unsafe</span><span class="o">.</span><span class="n">Pointer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">))</span>
+
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%+v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%+v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">_type</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"0x%x</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="kt">int64</span><span class="p">)(</span><span class="n">e</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">eface</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">_type</span> <span class="o">*</span><span class="n">_type</span>
+	<span class="n">data</span>  <span class="n">unsafe</span><span class="o">.</span><span class="n">Pointer</span>
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">_type</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">size</span>       <span class="kt">uintptr</span>
+	<span class="n">ptrdata</span>    <span class="kt">uintptr</span> <span class="c">// size of memory prefix holding all pointers</span>
+	<span class="n">hash</span>       <span class="kt">uint32</span>
+	<span class="n">tflag</span>      <span class="kt">uint8</span>
+	<span class="n">align</span>      <span class="kt">uint8</span>
+	<span class="n">fieldAlign</span> <span class="kt">uint8</span>
+	<span class="n">kind</span>       <span class="kt">uint8</span>
+	<span class="c">// function for comparing objects of this type</span>
+	<span class="c">// (ptr to object A, ptr to object B) -&gt; ==?</span>
+	<span class="n">equal</span> <span class="k">func</span><span class="p">(</span><span class="n">unsafe</span><span class="o">.</span><span class="n">Pointer</span><span class="p">,</span> <span class="n">unsafe</span><span class="o">.</span><span class="n">Pointer</span><span class="p">)</span> <span class="kt">bool</span>
+	<span class="c">// gcdata stores the GC type data for the garbage collector.</span>
+	<span class="c">// If the KindGCProg bit is set in kind, gcdata is a GC program.</span>
+	<span class="c">// Otherwise it is a ptrmask bitmap. See mbitmap.go for details.</span>
+	<span class="n">gcdata</span> <span class="o">*</span><span class="kt">byte</span>
+	<span class="c">// The original types for these two were `nameOff` and `typeOff` which are</span>
+	<span class="c">// just int32. They represent an offset into.. something? for these values.</span>
+	<span class="n">str</span>       <span class="kt">int32</span>
+	<span class="n">ptrToThis</span> <span class="kt">int32</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Running this on my machine I get:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{_type:0x489c00 data:0x4b9048}
+&amp;{size:8 ptrdata:0 hash:2580995395 tflag:15 align:8 fieldAlign:8 kind:6 equal:0x402fa0 gcdata:0x4b8f7d str:2320 ptrToThis:17664}
+0x41414141
+</code></pre></div></div>
+
+<p>Here we can see all of the information looks reasonably accurate. The size and
+align is 8 bytes, the pointer types look like addresses, and of course the data
+matches. <code class="language-plaintext highlighter-rouge">eface</code> appears to only be for the <code class="language-plaintext highlighter-rouge">any</code> type, or as it was previously
+known, the <em>empty</em> interface <code class="language-plaintext highlighter-rouge">interface{}</code>. Empty interfaces, unlike other
+interfaces, don’t have any methods associated with them.</p>
+
+<h2 id="inspecting-iface">Inspecting iface</h2>
+
+<p>Now let’s take a look at <code class="language-plaintext highlighter-rouge">iface</code>.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"unsafe"</span>
+<span class="p">)</span>
+
+<span class="k">type</span> <span class="n">I</span> <span class="k">interface</span> <span class="p">{</span>
+	<span class="n">I1</span><span class="p">()</span>
+	<span class="n">I2</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="k">type</span> <span class="n">S</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">foo</span> <span class="kt">int32</span>
+	<span class="n">bar</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">s</span> <span class="n">S</span><span class="p">)</span> <span class="n">I1</span><span class="p">()</span> <span class="p">{</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"I1"</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">func</span> <span class="p">(</span><span class="n">s</span> <span class="n">S</span><span class="p">)</span> <span class="n">I2</span><span class="p">()</span> <span class="p">{</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"I2"</span><span class="p">)</span> <span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">var</span> <span class="n">s</span> <span class="n">I</span> <span class="o">=</span> <span class="n">S</span><span class="p">{</span><span class="m">0x41414141</span><span class="p">,</span> <span class="s">"BBBB"</span><span class="p">}</span>
+
+	<span class="n">i</span> <span class="o">:=</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">iface</span><span class="p">)(</span><span class="n">unsafe</span><span class="o">.</span><span class="n">Pointer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">))</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%+v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%+v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">tab</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%+v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">S</span><span class="p">)(</span><span class="n">i</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"struct addr:    %+v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">I1</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"fun table:      %+v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="p">(</span><span class="o">*</span><span class="k">func</span><span class="p">())(</span><span class="n">unsafe</span><span class="o">.</span><span class="n">Pointer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">i</span><span class="o">.</span><span class="n">tab</span><span class="o">.</span><span class="n">fun</span><span class="p">[</span><span class="m">0</span><span class="p">])))</span>
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">iface</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">tab</span>  <span class="o">*</span><span class="n">itab</span>
+	<span class="n">data</span> <span class="n">unsafe</span><span class="o">.</span><span class="n">Pointer</span>
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">itab</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">inter</span> <span class="o">*</span><span class="n">interfacetype</span>
+	<span class="n">_type</span> <span class="o">*</span><span class="n">_type</span>
+	<span class="n">hash</span>  <span class="kt">uint32</span> <span class="c">// copy of _type.hash. Used for type switches.</span>
+	<span class="n">_</span>     <span class="p">[</span><span class="m">4</span><span class="p">]</span><span class="kt">byte</span>
+	<span class="n">fun</span>   <span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="kt">uintptr</span> <span class="c">// variable sized. fun[0]==0 means _type does not implement inter.</span>
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">interfacetype</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">typ</span>     <span class="n">_type</span>
+	<span class="n">pkgpath</span> <span class="o">*</span><span class="kt">byte</span>
+	<span class="n">mhdr</span>    <span class="p">[]</span><span class="n">imethod</span>
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">imethod</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="c">// The original types for these two were `nameOff` and `typeOff` which are</span>
+	<span class="c">// just int32. They represent an offset into.. something? for these values.</span>
+	<span class="n">name</span> <span class="kt">int32</span>
+	<span class="n">ityp</span> <span class="kt">int32</span>
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">_type</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="c">/* Removed for brevity */</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Again, running this on my machine we get:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{tab:0x4b9e28 data:0xc000010030}
+&amp;{inter:0x48e060 _type:0x492140 hash:837923000 _:[0 0 0 0] fun:[4729568]}
+{foo:1094795585 bar:BBBB}
+struct addr:    0x482be0
+fun table:      0x4b9e40
+</code></pre></div></div>
+
+<p>And again, most of this data looks reasonable. One thing I couldn’t figure out
+though, is how to get the function address from the <code class="language-plaintext highlighter-rouge">fun</code> table. I printed them
+out above and they are clearly different, off by about <code class="language-plaintext highlighter-rouge">0x37260</code> bytes. If
+anyone knows how this is done, please let me know!</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>So overall, interfaces <em>are</em> wide pointers with a special case for the empty
+interface. One pointer always points to the actual data, and the other points
+to type information, of which there’s a table of function pointers to call the
+methods of the interface. There’s certainly more to explore here, but that’s a
+good enough mental model for now.</p>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[I was talking to my coworker about interfaces when the question arose about why a concrete slice has to manually be converted into an interface slice. I’ll demonstrate this as a simple example.]]></summary></entry><entry><title type="html">I am not interested in AI tools</title><link href="/posts/ai-tools.html" rel="alternate" type="text/html" title="I am not interested in AI tools" /><published>2023-02-18T14:00:00+00:00</published><updated>2023-02-18T14:00:00+00:00</updated><id>/posts/ai-tools</id><content type="html" xml:base="/posts/ai-tools.html"><![CDATA[<p>There’s certainly good arguments for using AI tools like <em>GitHub Copilot</em> or
+<em>ChatGPT</em>, and there are certainly good arguments against them. This post isn’t
+about either. Instead, here’s my anecdote as to why I haven’t felt drawn to
+even try them out.</p>
+
+<p>I was talking to a friend about <em>DALL-E</em> and how it is affecting the art
+community. The whole AI art gave me this odd dystopian feeling that I couldn’t
+quite articulate until this conversation. She told me that art isn’t about the
+end result. Artists make art because they love the process of making art.</p>
+
+<p>And that’s why I’m not drawn to using AI tools for programming. I love the
+process of programming. I love the clean solutions, the bugs, the tests, the
+frustrations. I love thinking about trade-offs, the refactors and rewrites, the
+investigations and root causes, and the boundless minutia at every level.</p>
+
+<p>Maybe it’s just me, but I think a lot of programmers enjoy the process of
+programming. It is, after all, a somewhat frustrating endeavor, especially
+starting out. The process of writing a program involves failing over and over
+again, and even when you succeed, there’s never a point where a program is
+“finished.” It can be exhausting, but maybe the end result is worth it for some
+people. I can certainly understand wanting to make the process more enjoyable,
+and maybe AI tools provide that.</p>
+
+<p>Maybe AI will transform what it means to program, and maybe it won’t. Maybe
+I’ll be drawn to AI in the future, and maybe nothing more will come of it. For
+now though, I’m content using my dumb fingers to write my own dumb programs.</p>]]></content><author><name></name></author><category term="programming" /><category term="misc" /><summary type="html"><![CDATA[There’s certainly good arguments for using AI tools like GitHub Copilot or ChatGPT, and there are certainly good arguments against them. This post isn’t about either. Instead, here’s my anecdote as to why I haven’t felt drawn to even try them out.]]></summary></entry><entry><title type="html">2022 Reflections and 2023 Goals</title><link href="/posts/2022-reflections.html" rel="alternate" type="text/html" title="2022 Reflections and 2023 Goals" /><published>2023-01-04T14:00:00+00:00</published><updated>2023-01-04T14:00:00+00:00</updated><id>/posts/2022-reflections</id><content type="html" xml:base="/posts/2022-reflections.html"><![CDATA[<p>2022 was a good year for me. I grew, gained more confidence, made new friends
+and reconnected with old ones.</p>
+
+<p>Here’s a laundry list of what happened in 2022 and my thoughts on them.</p>
+
+<details><summary><strong>Started keeping a diary</strong></summary><div>
+<p>For some reason, I like recording things. At the beginning of the year I
+started using <a href="https://vimwiki.github.io/">vimwiki</a> and was able to tweak it to my liking. In the past
+I had used <a href="https://zim-wiki.org/">zim</a> which I loved for its hierarchical structure and image
+embedding, but I eventually stopped using it. I’ve been able to stick with
+<code class="language-plaintext highlighter-rouge">viwiki</code> this year, and I quite like having each diary entry be for the week
+(Monday - Sunday). The best part is that I started adding summaries for each
+week and month on the index, so I can glance through my past highlights.</p>
+
+</div></details>
+
+<details><summary><strong>Never-graduated from Recurse</strong></summary><div>
+<p>At the end of 2021 I decided to join the <a href="https://www.recurse.com/scout/click?t=bd78c8b557bd3fa6fb1a1e026cb63ddd">Recurse Center</a>.
+I was in a 12 week batch (W1’21) that ended in February of 2022, and I
+absolutely loved my time there. I made many friends and joined a community that
+connects me with amazingly kind people that are as interested in programming as
+I am! I’m so grateful that I can’t ever graduate, and it has been a constant
+source of positive engagement and discourse throughout 2022.</p>
+
+</div></details>
+
+<details><summary><strong>Started working at a security company</strong></summary><div>
+<p>Thanks to the <a href="https://www.recurse.com/scout/click?t=bd78c8b557bd3fa6fb1a1e026cb63ddd">Recurse Center</a> career services, I <a href="https://miccah.io/posts/interviewing.html">interviewed a ton</a> and was able
+to land an amazing job. I was specifically looking for a place with good culture
+that is fully remote, in the security industry, and mainly writing <a href="https://miccah.io/knowledge/golang.html">Go</a>. Looking
+back at the 8 months I’ve spent at <a href="https://trufflesecurity.com/">Truffle Security</a>, I can confidently say
+that I found all of that and more. This is my first time working at a startup, and
+I’m certain my perspective of startups is now skewed with how good it has been.</p>
+
+</div></details>
+
+<details><summary><strong>Traveled!</strong></summary><div>
+<p>I really wanted to travel more in 2022. Since I moved back in with my parents
+during the pandemic, I knew I needed to find a place I would like to live. Part
+of that process was traveling and getting comfortable traveling on my own.</p>
+
+<p>I’m happy to say that the baby steps I took led to greater and greater
+experiences, and I ultimately spent a month in the Netherlands. This was huge
+for me for a few reasons: I had never visited another country on my own, I had
+never been to Europe before, and I had never spent so much time on a trip.
+It was an amazing experience and one I’ll never forget!</p>
+
+<p><img src="/assets/nl.jpg" alt="Netherlands" /></p>
+
+</div></details>
+
+<details><summary><strong>Made new friends and reconnected with old ones</strong></summary><div>
+<p>There’s a special place in my heart for my friends. I’m someone who craves deep
+connections and would rather have a few really good friends than countless
+acquaintances. If you’re reading this, thanks for being my friend!</p>
+
+</div></details>
+
+<details><summary><strong>Practiced self love</strong></summary><div>
+<p>Not everything was rainbows and sunshine in 2022. There were many days and
+weeks where I felt down, lost, or received bad news. Practicing self love,
+giving myself the space and time to feel the feelings, and being my own
+cheerleader has been great for my mental health.</p>
+
+</div></details>
+
+<p><br /></p>
+
+<p>And with that, we’re already in 2023! I have a few goals in mind for this year.</p>
+
+<details><summary><strong>Find and move to a place I like</strong></summary><div>
+<p>This is actually a carry-over from 2022. The challenge will be in finding the
+place, so I’m setting a deadline to hold myself accountable.</p>
+
+</div></details>
+
+<details><summary><strong>Dig into more hobbies</strong></summary><div>
+<p>I have certainly scratched the surface or have otherwise identified hobbies
+that I would like to pursue. This includes woodworking, pottery, parkour,
+hiking, playing guitar, making chiptune music, and playing video games.</p>
+
+</div></details>
+
+<details><summary><strong>Continue blogging</strong></summary><div>
+<p>It has been a great record of my thoughts and ideas, and I enjoy writing at my
+own pace.</p>
+
+</div></details>
+
+<details><summary><strong>Learn more about architectural design</strong></summary><div>
+<p>It is something that has piqued my interest as I have enjoyed creating
+buildings in the past, but it’s something I know next to nothing about. I think
+it would be fun to learn more about the design process from a hobbyist
+perspective. I would like to be able to sketch my ideas, model them, or even
+build replicas. Before all that, though, I need to learn about design.</p>
+
+</div></details>
+
+<details><summary><strong>More embedded systems projects</strong></summary><div>
+<p>Usually I’ll tend to do at least one embedded project a year, but 2022 saw no
+such project. It’s always fun to design, build, and program a physical thing,
+and it would be really nice to hone those skills.</p>
+
+</div></details>
+
+<details><summary><strong>Read more</strong></summary><div>
+<p>Probably a common “new year’s resolution,” but I have so many cool books that I
+would like to dedicate time to reading. Instead of reaching for my phone when
+I’m bored, I want to reach for a book.</p>
+
+</div></details>
+
+<p><br /></p>
+
+<p>Last but not least, I just wanted to leave a note here regarding my perpetual
+journey in technology. It’s one of the constants in my life that I will build
+software, which is why I didn’t mention it anywhere in my reflections. I’m
+certain I will continue to grow and learn my craft this year, wherever that
+takes me.</p>
+
+<p>So yeah, a pretty good 2022, and I’m looking forward to what’s to come in 2023.</p>]]></content><author><name></name></author><category term="misc" /><summary type="html"><![CDATA[2022 was a good year for me. I grew, gained more confidence, made new friends and reconnected with old ones.]]></summary></entry><entry><title type="html">Interests as Orbits</title><link href="/posts/interests-as-orbits.html" rel="alternate" type="text/html" title="Interests as Orbits" /><published>2022-11-19T05:00:00+00:00</published><updated>2022-11-19T05:00:00+00:00</updated><id>/posts/interests-as-orbits</id><content type="html" xml:base="/posts/interests-as-orbits.html"><![CDATA[<p>I watched <a href="https://www.youtube.com/watch?v=A2sS00egAzg">a video</a> recently about
+(mislabeled) laziness and how some people aren’t built for the “consistent and
+organized” lifestyle. I find this subject really interesting because I have
+noticed the <a href="/posts/effectiveness-of-deadlines.html">effects of consistency</a>
+and know how powerful they can be. But at the same time, I have also noticed my
+motivations and interests ebb and flow. It’s one of those situations where I
+know I <em>should</em> do something, but I’ll let it stew in the back of my mind until
+it bubbles to the front. I never thought this approach was inherently bad. It
+could be better, but it always worked itself out eventually.</p>
+
+<p>Anyway, the narrator in the video explains a very similar concept in which she
+doesn’t do something because it doesn’t interest her, then she becomes (very)
+interested and hyper-focuses on the subject, advancing very quickly. This made
+me reflect on my own project habits, and I think I follow a similar but less
+intense style. For me, I’m always absorbing meta-information about things that
+exist and pique my interest. I’ve gradually built up a collection of subjects I
+know interest me, but instead of pursuing consistently or intensely, I find my
+progression to be orbital.</p>
+
+<p>Let me explain.</p>
+
+<p>It’s sort of like planets orbiting a star. I’m the star (of course) and my
+interests are the planets. The closer the planet is in its orbit of the star,
+the more interested I am in it. What I mean is that my immediate focus on a
+particular interest is periodic. Sometimes I will work on a project for a few
+months, shelf it for a year, then pick it up again. “Planets” in this analogy
+can have different orbital periods, elliptic shapes, and can even fall out of
+orbit as well.</p>
+
+<p>In this weird analogy I made up, “consistent and organized” people would have
+perfectly circular orbital interests, “short burst of high intensity” people
+would have highly elliptic orbits (slingshots?), and I think I fall somewhere
+in between. It’s not a perfect analogy, but it visualizes the experience of ebb
+and flow I have witnessed in my own life. It also does a decent job of
+capturing the feeling of security that even if I’m not focusing on something
+right now, I eventually will.</p>]]></content><author><name></name></author><category term="misc" /><summary type="html"><![CDATA[I watched a video recently about (mislabeled) laziness and how some people aren’t built for the “consistent and organized” lifestyle. I find this subject really interesting because I have noticed the effects of consistency and know how powerful they can be. But at the same time, I have also noticed my motivations and interests ebb and flow. It’s one of those situations where I know I should do something, but I’ll let it stew in the back of my mind until it bubbles to the front. I never thought this approach was inherently bad. It could be better, but it always worked itself out eventually.]]></summary></entry><entry><title type="html">Ones and Zeros</title><link href="/posts/ones-and-zeros.html" rel="alternate" type="text/html" title="Ones and Zeros" /><published>2022-10-23T05:00:00+00:00</published><updated>2022-10-23T05:00:00+00:00</updated><id>/posts/ones-and-zeros</id><content type="html" xml:base="/posts/ones-and-zeros.html"><![CDATA[<p>The root of digital logic is being able to differentiate between <em>something</em>
+and <em>not something</em>. This little seed has basically built the entirety of the
+information age. You’ve probably heard it before: a computer is just ones and
+zeros, but let’s explore this a bit (ha) in the context of programming and
+data.</p>
+
+<h3 id="bits-of-data">Bits of Data</h3>
+
+<p>Data ultimately comprises of ones and zeros (called bits) stored in memory, and
+we can manipulate how it is represented using different types in a programming
+language. Let’s look at an example in C.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int8_t</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// Print data as a signed 8-bit decimal number.</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"int8_t:  %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+
+    <span class="c1">// Print data as an unsigned 8-bit decimal number.</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"uint8_t: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">data</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int8_t:  -1
+uint8_t: 255
+</code></pre></div></div>
+
+<p>Let’s break down what’s happening here.</p>
+
+<p>First we create a variable <code class="language-plaintext highlighter-rouge">data</code> that is 1 byte (8 bits) large and
+store <code class="language-plaintext highlighter-rouge">-1</code> into it.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int8_t</span> <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>But what is <code class="language-plaintext highlighter-rouge">-1</code>? Well, most computers represent <code class="language-plaintext highlighter-rouge">-1</code> in ones and zeros as all
+1s in a thing called <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two’s compliment</a>. That’s sort of out of scope for this
+post, but the gist is that representing negative numbers this way makes binary
+addition and subtraction all make sense.</p>
+
+<p>Anyway, since the variable is 1 byte large, the bits will be 8 ones: <code class="language-plaintext highlighter-rouge">11111111</code>.</p>
+
+<p>We then tell <code class="language-plaintext highlighter-rouge">printf</code> to print this data in two different ways: as a signed
+integer and as an unsigned integer.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">printf</span><span class="p">(</span><span class="s">"int8_t:  %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">"uint8_t: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">data</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The whole <code class="language-plaintext highlighter-rouge">*(uint8_t*)&amp;data</code> is a bit strange if you’re unfamiliar with C, but
+here’s what it’s doing (from right to left).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;data       : Take the address of data (this is a pointer)
+(uint8_t*)  : Ignore whatever type that pointer was pointing to, you're
+              now pointing to a uint8_t type
+*           : Get the actual data that we are pointing at as a uint8_t
+</code></pre></div></div>
+
+<p>So that’s cool and all, but like, why not just make a new variable and assign
+it the value of <code class="language-plaintext highlighter-rouge">data</code>? Well, the point I’m trying to make is the underlying
+data is the same. There’s no hidden conversions happening. We are only changing
+how the program interprets the ones and zeros.</p>
+
+<h3 id="floating-around">Floating Around</h3>
+
+<p>Let’s take this a step further. Did you know <code class="language-plaintext highlighter-rouge">float</code> in C is 32 bits?</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">data</span> <span class="o">=</span> <span class="mi">1337</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"float:    %f</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"uint32_t: 0x%x</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">data</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>float:    1337.000000
+uint32_t: 0x44a72000
+</code></pre></div></div>
+
+<p>The keen reader will notice that <code class="language-plaintext highlighter-rouge">0x44a72000</code> is not equal to <code class="language-plaintext highlighter-rouge">1337</code> at all.
+Or, it is, but in a different interpretation? You see, <code class="language-plaintext highlighter-rouge">0x44a72000</code> is the
+<a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE floating point</a> representation for <code class="language-plaintext highlighter-rouge">1337.0</code>. Those are the underlying
+ones and zeros for that number, so while those specific underlying ones and
+zeros are unequal to <code class="language-plaintext highlighter-rouge">1337</code>, taking those ones and zeros as an IEEE floating
+point number means it <em>is</em> equal to <code class="language-plaintext highlighter-rouge">1337.0</code>.</p>
+
+<p>Wow that made no sense at all. Here, just stare at this until you become one
+with the universe.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint32_t</span> <span class="n">data</span> <span class="o">=</span> <span class="mh">0x44a72000</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mi">1337</span><span class="p">.</span><span class="mi">0</span> <span class="o">==</span> <span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">data</span> <span class="o">?</span> <span class="s">"true"</span> <span class="o">:</span> <span class="s">"false"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>true
+</code></pre></div></div>
+
+<p>This manipulation of floating points by its underlying bits is
+probably most famous from the <a href="https://en.wikipedia.org/wiki/Fast_inverse_square_root">fast inverse square root</a> function in
+<em>Quake</em>.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span>  <span class="o">=</span> <span class="o">*</span> <span class="p">(</span> <span class="kt">long</span> <span class="o">*</span> <span class="p">)</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">;</span>           <span class="c1">// evil floating point bit level hacking</span>
+<span class="n">i</span>  <span class="o">=</span> <span class="mh">0x5f3759df</span> <span class="o">-</span> <span class="p">(</span> <span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span> <span class="p">);</span>   <span class="c1">// what the fuck?</span>
+</code></pre></div></div>
+
+<p>All this to say, how we interpret data is kind of arbitrary. Standards
+were made to facilitate interoperability and communications. <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a> is one
+such standard developed by Bell Labs in the 1960s.</p>
+
+<p>Actually, this “interpretation is in the eye of the beholder” is the idea
+behind <a href="https://en.wikipedia.org/wiki/Deniable_encryption">deniable encryption</a>.</p>
+
+<blockquote>
+  <p>Deniable encryption makes it impossible to prove
+the existence of the plaintext message without the proper decryption key. This
+may be done by allowing an encrypted message to be decrypted to different
+sensible plaintexts, depending on the key used. This allows the sender to have
+plausible deniability if compelled to give up their encryption key.</p>
+</blockquote>
+
+<p>Okay, it’s not <em>exactly</em> the same, but the gist is that a collection of bits
+can be interpreted in more than one way. Speaking of which, I’m just going to
+leave these floats here..</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0x1.dcde86p+79
+0x1.e8c2e4p+107
+0x1.e8c2d8p+83
+0x1.e6dcdep-61
+0x1.e8d04p+105
+0x1.74e6ep-33
+0x1.d2da5ep+71
+0x1.d0c2c6p-35
+0x1.5eded2p+67
+0x1.cae6e6p+105
+0x1.da5ee6p+115
+0x1.cae8e6p+101
+0x1.e65af2p+95
+0x1.caecd8p+73
+0x1.dce05cp+79
+</code></pre></div></div>
+
+<details>
+<summary>Hint</summary>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">msg</span> <span class="o">=</span> <span class="s">"Wouldn't you like to know, weather boy?</span><span class="se">\0\0\0</span><span class="s">"</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">c</span> <span class="o">=</span> <span class="n">msg</span><span class="p">;</span> <span class="o">*</span><span class="n">c</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">c</span> <span class="o">+=</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%a</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">c</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+</details>
+<p></p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>Understanding the underlying ones and zeros of data in your program isn’t
+always important, but it is certainly nice to know for high performance or
+memory-constrained systems. Manipulating the interpretation of data like this
+is weirdly one of my favorite stupid things to do in C. I love that you can
+peel back the veil and see through the matrix at what the data really is,
+however pointless that might be.</p>
+
+<p><strong>P.S.</strong> After writing this post, I realized a C <code class="language-plaintext highlighter-rouge">union</code> might’ve been a better
+choice for demonstrating “the data is the same and the interpretation is
+different” because that’s literally the whole point of <code class="language-plaintext highlighter-rouge">union</code>!</p>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[The root of digital logic is being able to differentiate between something and not something. This little seed has basically built the entirety of the information age. You’ve probably heard it before: a computer is just ones and zeros, but let’s explore this a bit (ha) in the context of programming and data.]]></summary></entry><entry><title type="html">Rust’s Display Trait</title><link href="/posts/rust-display-trait.html" rel="alternate" type="text/html" title="Rust’s Display Trait" /><published>2022-10-12T05:00:00+00:00</published><updated>2022-10-12T05:00:00+00:00</updated><id>/posts/rust-display-trait</id><content type="html" xml:base="/posts/rust-display-trait.html"><![CDATA[<p>Rust’s trait system is pretty cool, and one of the common traits is
+<a href="https://doc.rust-lang.org/std/fmt/trait.Display.html">Display</a>. Defining an
+implementation for this trait will allow you to use the standard formatter <code class="language-plaintext highlighter-rouge">{}</code>
+with your type, but the official example is a bit misleading.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fmt</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+    <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">Point</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="o">&lt;</span><span class="nv">'_</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+        <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"({}, {})"</span><span class="p">,</span> <span class="k">self</span><span class="py">.x</span><span class="p">,</span> <span class="k">self</span><span class="py">.y</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">origin</span> <span class="o">=</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">0</span> <span class="p">};</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"The origin is: {origin}"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The origin is: (0, 0)
+</code></pre></div></div>
+
+<p>Well, that output is expected, but what if we add some padding?
+This should right align, using <code class="language-plaintext highlighter-rouge">-</code> as padding, and a width of 10
+(<a href="https://doc.rust-lang.org/std/fmt/index.html">reference</a>).</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">origin</span> <span class="o">=</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">0</span> <span class="p">};</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"The origin is: |{origin:-&gt;10}|"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The origin is: |(0, 0)|
+</code></pre></div></div>
+
+<p>Hm.. so format specifiers just get thrown away? It actually depends on how
+<code class="language-plaintext highlighter-rouge">Display</code> is implemented, which is why I say the example is misleading. Let’s
+fix it to respect formatting.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">Point</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="o">&lt;</span><span class="nv">'_</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+        <span class="nd">format!</span><span class="p">(</span><span class="s">"({}, {})"</span><span class="p">,</span> <span class="k">self</span><span class="py">.x</span><span class="p">,</span> <span class="k">self</span><span class="py">.y</span><span class="p">)</span><span class="nf">.fmt</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The origin is: |----(0, 0)|
+</code></pre></div></div>
+
+<p>Yay!</p>
+
+<p>What we’re doing here is generating a <code class="language-plaintext highlighter-rouge">String</code> and using its <code class="language-plaintext highlighter-rouge">Display</code>
+implementation to format it as expected. Note that we can also use any of the
+methods provided by
+<a href="https://doc.rust-lang.org/std/fmt/struct.Formatter.html">Formatter</a>
+if we want to pass formatting to our <code class="language-plaintext highlighter-rouge">Point</code> attributes too.</p>
+
+<p>P.S. implementing <code class="language-plaintext highlighter-rouge">Display</code> allows you to call <code class="language-plaintext highlighter-rouge">to_string()</code> as well, which is
+pretty neat.</p>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[Rust’s trait system is pretty cool, and one of the common traits is Display. Defining an implementation for this trait will allow you to use the standard formatter {} with your type, but the official example is a bit misleading.]]></summary></entry></feed>

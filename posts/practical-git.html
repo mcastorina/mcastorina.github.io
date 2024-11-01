@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Practical git usage | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Practical git usage" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I use git almost daily both personally and professionally, and my usage follows a pretty regular pattern. By sticking to this pattern, I rarely get into a sticky situation or unexpected state. As many can attest, git is a beast of a CLI tool, but these workflows have been enough to keep my projects organized." />
+<meta property="og:description" content="I use git almost daily both personally and professionally, and my usage follows a pretty regular pattern. By sticking to this pattern, I rarely get into a sticky situation or unexpected state. As many can attest, git is a beast of a CLI tool, but these workflows have been enough to keep my projects organized." />
+<link rel="canonical" href="/posts/practical-git.html" />
+<meta property="og:url" content="/posts/practical-git.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-04-09T14:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Practical git usage" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-04-09T14:00:00+00:00","datePublished":"2023-04-09T14:00:00+00:00","description":"I use git almost daily both personally and professionally, and my usage follows a pretty regular pattern. By sticking to this pattern, I rarely get into a sticky situation or unexpected state. As many can attest, git is a beast of a CLI tool, but these workflows have been enough to keep my projects organized.","headline":"Practical git usage","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/practical-git.html"},"url":"/posts/practical-git.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Practical git usage</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2023-04-09T14:00:00+00:00" itemprop="datePublished">Apr 9, 2023
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I use <code class="language-plaintext highlighter-rouge">git</code> almost daily both personally and professionally, and my usage
+follows a pretty regular pattern. By sticking to this pattern, I rarely get
+into a sticky situation or unexpected state. As many can attest, <code class="language-plaintext highlighter-rouge">git</code> is a
+beast of a CLI tool, but these workflows have been enough to keep my projects
+organized.</p>
+
+<h3 id="personal-usage">Personal usage</h3>
+
+<p>Repositories where you’re the sole contributor are a lot easier to manage than a
+group project, so let’s start with that. Here’s my workflow:</p>
+
+<ol>
+  <li>Add a feature / modify the code</li>
+  <li>Add the changes to the staging area with <code class="language-plaintext highlighter-rouge">git add -p</code></li>
+  <li>Commit the staged changes with <code class="language-plaintext highlighter-rouge">git commit -v</code></li>
+</ol>
+
+<p>That’s pretty much it. If I want to experiment with a new feature or
+alternative approach, I’ll checkout a new branch with <code class="language-plaintext highlighter-rouge">git checkout -b
+feature-branch</code>. When the branch is good enough, I’ll merge it back into <code class="language-plaintext highlighter-rouge">main</code>
+with <code class="language-plaintext highlighter-rouge">git merge feature-branch</code>.</p>
+
+<h3 id="team-usage">Team usage</h3>
+
+<p>Using <code class="language-plaintext highlighter-rouge">git</code> on a team is a different story. It’s not uncommon to encounter
+conflicts, which can be frustrating but manageable. There’s also usually a code
+review process, so working directly on <code class="language-plaintext highlighter-rouge">main</code> is restricted. Here’s how I
+handle those situations:</p>
+
+<ol>
+  <li>Make sure <code class="language-plaintext highlighter-rouge">main</code> is up to date with <code class="language-plaintext highlighter-rouge">git pull</code></li>
+  <li>Create a feature branch with an appropriate name with <code class="language-plaintext highlighter-rouge">git checkout -b feature-branch</code></li>
+  <li>Add a feature / modify the code</li>
+  <li>Add the changes to the staging area with <code class="language-plaintext highlighter-rouge">git add -p</code></li>
+  <li>Commit the staged changes with <code class="language-plaintext highlighter-rouge">git commit -v</code></li>
+  <li>Push the changes to origin with <code class="language-plaintext highlighter-rouge">git push -u origin feature-branch</code></li>
+  <li>Create a pull request in GitHub UI (the link is usually printed when pushing
+in the previous step)</li>
+</ol>
+
+<p>At this point, I’ll wait for a review and address any comments that arise. If
+another change gets merged and causes a conflict, I’ll fix it by taking the
+following steps:</p>
+
+<ol>
+  <li>Make sure I’m on <code class="language-plaintext highlighter-rouge">feature-branch</code></li>
+  <li>Fetch origin changes with <code class="language-plaintext highlighter-rouge">git fetch origin main</code></li>
+  <li>Rebase my changes onto main with <code class="language-plaintext highlighter-rouge">git rebase origin/main</code></li>
+  <li>When the rebase stops due to conflicts, fix them
+    <ol>
+      <li>Identify the conflicts by doing a <code class="language-plaintext highlighter-rouge">git status</code></li>
+      <li>Edit the files to remove the conflicts</li>
+      <li>Tell <code class="language-plaintext highlighter-rouge">git</code> the conflicts have been resolved with <code class="language-plaintext highlighter-rouge">git add path/to/conflicting/files</code></li>
+    </ol>
+  </li>
+  <li>Continue rebasing with <code class="language-plaintext highlighter-rouge">git rebase --continue</code></li>
+  <li>Repeat step 4 until the rebase finishes</li>
+  <li>Force push to update my PR with <code class="language-plaintext highlighter-rouge">git push --force-with-lease</code></li>
+</ol>
+
+<p>Those are the two big flows that get me through pretty much everything when
+working on a team. On rare occasions I may have a feature branch off of another
+one of my feature branches (to keep pull requests a manageable size). For
+example <code class="language-plaintext highlighter-rouge">feature-part1</code> and <code class="language-plaintext highlighter-rouge">feature-part2</code>. When the <code class="language-plaintext highlighter-rouge">feature-part1</code> gets
+merged, I’ll rebase <code class="language-plaintext highlighter-rouge">feature-part2</code> to branch off of <code class="language-plaintext highlighter-rouge">main</code> with <code class="language-plaintext highlighter-rouge">git rebase
+--onto main feature-part1 feature-part2</code>.</p>
+
+<p>To visualize what that looks like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Before    o---o---o---o---o  main
+               \
+                o---o---o---o---o  feature-part1
+                                 \
+                                  o---o---o  feature-part2
+
+After    o---o---o---o---o  main
+             |            \
+             |             o'--o'--o'  feature-part2
+              \
+               o---o---o---o---o  feature-part1
+</code></pre></div></div>
+
+<h2 id="notes-on-commands">Notes on commands</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">git add -p</code> will interactively add each <strong>patch</strong>. I like to use it as a
+self review to help catch bugs early and scope commits to a single logical
+change. My one complaint is that it won’t add newly created files.</li>
+  <li><code class="language-plaintext highlighter-rouge">git commit -v</code> shows all the changes that will be committed. While I don’t
+read through them, I tend to use it as a reference when constructing the commit
+message.</li>
+  <li><code class="language-plaintext highlighter-rouge">git push --force-with-lease</code> force pushes only if no one has added commits
+to the remote branch (which prevents accidentally erasing those commits)</li>
+  <li><code class="language-plaintext highlighter-rouge">git log --graph --decorate --all</code> shows the entire git history as a
+graph and can be useful to situate where everything is.</li>
+</ul>
+
+  </div><a class="u-url" href="/posts/practical-git.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

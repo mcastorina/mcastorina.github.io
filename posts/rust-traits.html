@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Rust traits are more powerful than I thought | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Rust traits are more powerful than I thought" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I have been learning the Rust programming language in my spare time for a little over 2 years now. My first mental model of traits consisted of a contract for types that would implement the trait, similar to Go’s interfaces. It wasn’t until recently when I decided to explore traits during Advent of Code that I started to realize how integrated these contracts are into the language and standard library. Using traits really helped clean up the code I was writing." />
+<meta property="og:description" content="I have been learning the Rust programming language in my spare time for a little over 2 years now. My first mental model of traits consisted of a contract for types that would implement the trait, similar to Go’s interfaces. It wasn’t until recently when I decided to explore traits during Advent of Code that I started to realize how integrated these contracts are into the language and standard library. Using traits really helped clean up the code I was writing." />
+<link rel="canonical" href="/posts/rust-traits.html" />
+<meta property="og:url" content="/posts/rust-traits.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-12-11T05:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Rust traits are more powerful than I thought" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2021-12-11T05:00:00+00:00","datePublished":"2021-12-11T05:00:00+00:00","description":"I have been learning the Rust programming language in my spare time for a little over 2 years now. My first mental model of traits consisted of a contract for types that would implement the trait, similar to Go’s interfaces. It wasn’t until recently when I decided to explore traits during Advent of Code that I started to realize how integrated these contracts are into the language and standard library. Using traits really helped clean up the code I was writing.","headline":"Rust traits are more powerful than I thought","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/rust-traits.html"},"url":"/posts/rust-traits.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Rust traits are more powerful than I thought</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2021-12-11T05:00:00+00:00" itemprop="datePublished">Dec 11, 2021
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I have been learning the Rust programming language in my spare time for
+a little over 2 years now. My first mental model of traits consisted of
+a contract for types that would implement the trait, similar to Go’s
+interfaces. It wasn’t until recently when I decided to explore traits
+during <a href="https://adventofcode.com/2021/">Advent of Code</a> that I started
+to realize how integrated these contracts are into the language and
+standard library. Using traits really helped clean up the code I was
+writing.</p>
+
+<h2 id="hammers-and-nails">Hammers and nails</h2>
+<p><a href="/posts/hammer.html">If all you have is a hammer, everything looks like a nail</a>,
+or, you can’t really use traits unless you know about them. For example,
+the <a href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html">FromStr</a>
+trait is used for <a href="https://doc.rust-lang.org/stable/std/primitive.str.html#method.parse">str::parse</a>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">str</span><span class="p">::</span><span class="n">FromStr</span><span class="p">;</span>
+
+<span class="nd">#[derive(Debug,</span> <span class="nd">PartialEq)]</span>
+<span class="k">enum</span> <span class="n">Foo</span> <span class="p">{</span>
+    <span class="n">Bar</span><span class="p">,</span>
+    <span class="n">Baz</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">FromStr</span> <span class="k">for</span> <span class="n">Foo</span> <span class="p">{</span>
+    <span class="k">type</span> <span class="nb">Err</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">'static</span> <span class="nb">str</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">from_str</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="k">Self</span><span class="p">,</span> <span class="k">Self</span><span class="p">::</span><span class="nb">Err</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">match</span> <span class="n">s</span> <span class="p">{</span>
+            <span class="s">"bar"</span> <span class="k">=&gt;</span> <span class="nf">Ok</span><span class="p">(</span><span class="nn">Foo</span><span class="p">::</span><span class="n">Bar</span><span class="p">),</span>
+            <span class="s">"baz"</span> <span class="k">=&gt;</span> <span class="nf">Ok</span><span class="p">(</span><span class="nn">Foo</span><span class="p">::</span><span class="n">Baz</span><span class="p">),</span>
+            <span class="n">_</span> <span class="k">=&gt;</span> <span class="nf">Err</span><span class="p">(</span><span class="s">"not bar or baz"</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">f</span><span class="p">:</span> <span class="n">Foo</span> <span class="o">=</span> <span class="s">"bar"</span><span class="nf">.parse</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nn">Foo</span><span class="p">::</span><span class="n">Bar</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>As such, here’s a laundry list of traits that I’m currently finding
+useful:</p>
+
+<ul>
+  <li><a href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html">FromStr</a></li>
+  <li><a href="https://doc.rust-lang.org/std/convert/trait.From.html">From</a> (and <a href="https://doc.rust-lang.org/std/convert/trait.Into.html">Into</a>, which we get for free if implementing <code class="language-plaintext highlighter-rouge">From</code>)</li>
+  <li><a href="https://doc.rust-lang.org/std/convert/trait.TryFrom.html">TryFrom</a> (and <a href="https://doc.rust-lang.org/std/convert/trait.TryInto.html">TryInto</a>, which we similarly get for free from <code class="language-plaintext highlighter-rouge">TryFrom</code>)</li>
+  <li>Everything in <a href="https://doc.rust-lang.org/std/ops/index.html#traits">ops</a> like <code class="language-plaintext highlighter-rouge">Index</code> and <code class="language-plaintext highlighter-rouge">IndexMut</code></li>
+  <li><a href="https://doc.rust-lang.org/std/hash/trait.Hash.html">Hash</a></li>
+  <li><a href="https://doc.rust-lang.org/std/convert/trait.AsRef.html">AsRef</a></li>
+  <li><a href="https://doc.rust-lang.org/std/default/trait.Default.html">Default</a></li>
+  <li><a href="https://doc.rust-lang.org/std/fmt/trait.Display.html">Display</a></li>
+  <li><a href="https://doc.rust-lang.org/std/fmt/trait.Debug.html">Debug</a></li>
+  <li><a href="https://doc.rust-lang.org/std/error/trait.Error.html">Error</a></li>
+  <li><a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html">Iterator</a></li>
+  <li><a href="https://doc.rust-lang.org/std/iter/trait.IntoIterator.html">IntoIterator</a> and <a href="https://doc.rust-lang.org/std/iter/trait.FromIterator.html">FromIterator</a></li>
+</ul>
+
+<p>Some of these are derivable, which makes it very easy to get functionality
+for free.</p>
+
+<h2 id="traits-and-generics">Traits and generics</h2>
+<p>Traits are tightly integrated with generic code via <a href="https://doc.rust-lang.org/rust-by-example/generics/bounds.html">trait
+bounds</a>.
+In the example above, <code class="language-plaintext highlighter-rouge">str::parse</code> is generic over any type that
+implements the <code class="language-plaintext highlighter-rouge">FromStr</code> trait. Similarly, types that implement
+<code class="language-plaintext highlighter-rouge">IntoIterator</code> work with Rust’s <code class="language-plaintext highlighter-rouge">for loop</code> syntax.</p>
+
+<p>Something that clicked recently for me is using trait bounds to make
+my library API friendlier to more types. For example, I might define a
+function with an <code class="language-plaintext highlighter-rouge">AsRef&lt;str&gt;</code> trait boundary to allow any type that can
+return a <code class="language-plaintext highlighter-rouge">&amp;str</code> to be used.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">print_it</span><span class="o">&lt;</span><span class="n">S</span><span class="p">:</span> <span class="nb">AsRef</span><span class="o">&lt;</span><span class="nb">str</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="n">S</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">s</span><span class="nf">.as_ref</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="c1">// usage can be..</span>
+<span class="nf">print_it</span><span class="p">(</span><span class="s">"foo"</span><span class="p">);</span>
+<span class="nf">print_it</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"foo"</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Perhaps the <code class="language-plaintext highlighter-rouge">Display</code> trait would have been more suitable here, but this
+simple example demonstrates the flexibility in function definitions. This
+aspect of trait boundaries is very similar to Go interfaces.</p>
+
+<p>I think a very useful trait bound is <code class="language-plaintext highlighter-rouge">Into&lt;T&gt;</code>, which allows a function
+to take any type so long as it can be converted into <code class="language-plaintext highlighter-rouge">T</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Foo</span> <span class="p">{</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">Foo</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="n">new</span><span class="o">&lt;</span><span class="n">S</span><span class="p">:</span> <span class="nb">Into</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="n">S</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="k">Self</span> <span class="p">{</span> <span class="n">data</span><span class="p">:</span> <span class="n">s</span><span class="nf">.into</span><span class="p">()</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nn">Foo</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="s">"bar"</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="nn">Foo</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"baz"</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Learning more about the trait ecosystem has helped me write cleaner and
+more idiomatic Rust code. I have found it’s more than just a tool of
+the language, but its deep integration in the standard library helps
+tremendously with code composability and integration.</p>
+
+  </div><a class="u-url" href="/posts/rust-traits.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

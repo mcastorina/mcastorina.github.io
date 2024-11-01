@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>GDB | miccah.io</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="GDB" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The GNU Debugger is a tool used for debugging another program while it executes. You may set breakpoints, examine memory and registers, and step through the code line by line or instruction by instruction." />
+<meta property="og:description" content="The GNU Debugger is a tool used for debugging another program while it executes. You may set breakpoints, examine memory and registers, and step through the code line by line or instruction by instruction." />
+<link rel="canonical" href="/knowledge/gdb.html" />
+<meta property="og:url" content="/knowledge/gdb.html" />
+<meta property="og:site_name" content="miccah.io" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-11-01T16:30:21+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="GDB" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-11-01T16:30:21+00:00","datePublished":"2024-11-01T16:30:21+00:00","description":"The GNU Debugger is a tool used for debugging another program while it executes. You may set breakpoints, examine memory and registers, and step through the code line by line or instruction by instruction.","headline":"GDB","mainEntityOfPage":{"@type":"WebPage","@id":"/knowledge/gdb.html"},"url":"/knowledge/gdb.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="miccah.io" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">miccah.io</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/knowledge/">Knowledge Base</a><a class="page-link" href="/posts/">Posts</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">GDB</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2024-11-01T16:30:21+00:00" itemprop="datePublished">Nov 1, 2024
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>The GNU Debugger is a tool used for debugging another program while
+it executes. You may set breakpoints, examine memory and registers,
+and step through the code line by line or instruction by instruction.</p>
+
+<p>This tool is most useful for reverse engineering an unknown
+executable or debugging a C program you are writing.  <a href="https://github.com/hugsy/gef">GDB Enhancement
+Features</a> is a popular addon specifically
+for reverse engineering and exploitation.</p>
+
+<h2 id="commands">Commands</h2>
+<p>There are many commands, but here are some common ones. Note that most
+commands may be abbreviated.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">layout</code></td>
+      <td>Set the layout of the TUI: <code class="language-plaintext highlighter-rouge">regs</code> <code class="language-plaintext highlighter-rouge">src</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">break</code></td>
+      <td>Set a breakpoint: <code class="language-plaintext highlighter-rouge">main</code> <code class="language-plaintext highlighter-rouge">*0xaddress</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">run</code></td>
+      <td>Run the program. Add arguments after <code class="language-plaintext highlighter-rouge">run</code> to use in ARGV</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">print</code></td>
+      <td>Print something: <code class="language-plaintext highlighter-rouge">$rax</code> <code class="language-plaintext highlighter-rouge">0x123</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">call</code></td>
+      <td>Call a function in the program</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">x</code></td>
+      <td>Examine memory: <code class="language-plaintext highlighter-rouge">x $rsp</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">refresh</code></td>
+      <td>Refresh the TUI</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">continue</code></td>
+      <td>Continue running the program</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">next</code></td>
+      <td>Run the next line of the program, then stop</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">step</code></td>
+      <td>Run the next instruction of the program, going into a sub-routine if there is one</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nexti</code></td>
+      <td>Run the next instruction of the program</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">stepi</code></td>
+      <td>Run the next instruction of the program, going into a sub-routine if there is one</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">commands</code></td>
+      <td>Execute commands when a breakpoint is reached</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">handle</code></td>
+      <td>Tell GDB how to handle signals (e.g. <code class="language-plaintext highlighter-rouge">handle SIGABRT nostop</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">inferiors</code></td>
+      <td>List child processes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">python-interactive</code></td>
+      <td>Start an interactive python prompt</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Most display commands accept a format for displaying the data as well.
+The FMT is specified like so: <code class="language-plaintext highlighter-rouge">CMD/FMT ...</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FMT is a repeat count followed by a format letter and a size letter.
+Format letters are o(octal), x(hex), d(decimal), u(unsigned decimal),
+  t(binary), f(float), a(address), i(instruction), c(char), s(string)
+  and z(hex, zero padded on the left).
+Size letters are b(byte), h(halfword), w(word), g(giant, 8 bytes).
+</code></pre></div></div>
+
+<h3 id="useful-commands">Useful Commands</h3>
+
+<ul>
+  <li><strong>Assembly TUI:</strong> <code class="language-plaintext highlighter-rouge">layout asm</code></li>
+  <li><strong>Code TUI:</strong> <code class="language-plaintext highlighter-rouge">layout src</code></li>
+  <li><strong>Register TUI:</strong> <code class="language-plaintext highlighter-rouge">layout reg</code></li>
+  <li><strong>Set assembly flavor to intel:</strong> <code class="language-plaintext highlighter-rouge">set disassembly-flavor intel</code></li>
+  <li><strong>Print mapped address space:</strong> <code class="language-plaintext highlighter-rouge">info proc map</code></li>
+  <li><strong>Print stack frame info:</strong> <code class="language-plaintext highlighter-rouge">info frame</code></li>
+  <li><strong>Write a string in memory:</strong> <code class="language-plaintext highlighter-rouge">set {char [12]} 0xdeadbeef = "hello world"</code></li>
+  <li><strong>Jump directly to instruction:</strong> <code class="language-plaintext highlighter-rouge">jump *0xdeadbeef</code></li>
+  <li><strong>Debug child spawned processes:</strong> <code class="language-plaintext highlighter-rouge">set follow-fork-mode child</code></li>
+  <li><strong>Keep parent / child in debug session:</strong> <code class="language-plaintext highlighter-rouge">set detach-on-fork off</code></li>
+  <li><strong>Execute commands on process exit (using python API):</strong>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python
+def onexit(event):
+  gdb.execute("inferior 1") # switch to parent
+  gdb.execute("continue")   # continue executing
+gdb.events.exited.connect(onexit)
+end
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+  </div><a class="u-url" href="/knowledge/gdb.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">miccah.io</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">miccah.io</li><li><a class="u-email" href="mailto:contact@miccah.io">contact@miccah.io</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mcastorina"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mcastorina</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A website for all my creations, thoughts, and projects. This website will serve as a collection of my interests, ideas, and lessons I have learned over time.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
