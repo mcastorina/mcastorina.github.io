@@ -1,0 +1,5 @@
+<div id="prompt">
+  <label for="cmd" class="cmd-prompt">{{ site.Title }}{{ .RelPermalink }}</label>
+  <input type="text" id="cmd" name="cmd" />
+</div>
+{{ partial "menu.html" (dict "menuID" "main" "page" .) }}

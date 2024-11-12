@@ -1,0 +1,12 @@
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  {{ range .Pages.GroupByParam "category" }}
+    <h3>{{ .Key }}</h3>
+    <ul class="group">
+    {{ range .Pages }}
+    <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+    {{ end }}
+    </ul>
+  {{ end }}
+{{ end }}

@@ -1,0 +1,40 @@
+baseurl = "https://miccah.io/"
+title = "miccah.io"
+# theme = "hugo-theme-console"
+# theme = "ananke"
+theme = "miccah"
+
+# Allow HTML in md files
+[markup.goldmark.renderer]
+unsafe = true
+
+[[menus.main]]
+name = '/about'
+pageRef = '/about'
+weight = 20
+
+[[menus.main]]
+name = '/posts/'
+pageRef = '/posts/'
+weight = 30
+
+[[menus.main]]
+name = '/kb/'
+pageRef = '/kb/'
+weight = 40
+
+[[menus.main]]
+name = '/now'
+pageRef = '/now'
+weight = 50
+
+[[menus.main]]
+name = '/github'
+url = 'https://github.com/mcastorina'
+weight = 60
+
+
+# [[menus.main]]
+# name = 'Tags'
+# pageRef = '/tags'
+# weight = 30
