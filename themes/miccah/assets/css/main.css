@@ -148,6 +148,9 @@ details {
     box-shadow: 2px 2px black;
     margin-bottom: 10px;
   }
+  summary {
+    cursor: pointer;
+  }
 }
 
 h3 {
