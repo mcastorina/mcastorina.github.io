@@ -9,7 +9,7 @@ and reconnected with old ones.
 
 Here's a laundry list of what happened in 2022 and my thoughts on them.
 
-{% details **Started keeping a diary** %}
+{{< details "**Started keeping a diary**" >}}
 
 For some reason, I like recording things. At the beginning of the year I
 started using [vimwiki](https://vimwiki.github.io/) and was able to tweak it to my liking. In the past
@@ -19,10 +19,10 @@ embedding, but I eventually stopped using it. I've been able to stick with
 (Monday - Sunday). The best part is that I started adding summaries for each
 week and month on the index, so I can glance through my past highlights.
 
-{% enddetails %}
+{{< /details >}}
 
 
-{% details **Never-graduated from Recurse** %}
+{{< details "**Never-graduated from Recurse**" >}}
 
 At the end of 2021 I decided to join the [Recurse Center](https://www.recurse.com/scout/click?t=bd78c8b557bd3fa6fb1a1e026cb63ddd).
 I was in a 12 week batch (W1'21) that ended in February of 2022, and I
@@ -31,9 +31,9 @@ connects me with amazingly kind people that are as interested in programming as
 I am! I'm so grateful that I can't ever graduate, and it has been a constant
 source of positive engagement and discourse throughout 2022.
 
-{% enddetails %}
+{{< /details >}}
 
-{% details **Started working at a security company** %}
+{{< details "**Started working at a security company**" >}}
 
 Thanks to the [Recurse Center](https://www.recurse.com/scout/click?t=bd78c8b557bd3fa6fb1a1e026cb63ddd) career services, I [interviewed a ton](https://miccah.io/posts/interviewing.html) and was able
 to land an amazing job. I was specifically looking for a place with good culture
@@ -42,9 +42,9 @@ back at the 8 months I've spent at [Truffle Security](https://trufflesecurity.co
 that I found all of that and more. This is my first time working at a startup, and
 I'm certain my perspective of startups is now skewed with how good it has been.
 
-{% enddetails %}
+{{< /details >}}
 
-{% details **Traveled!** %}
+{{< details "**Traveled!**" >}}
 
 I really wanted to travel more in 2022. Since I moved back in with my parents
 during the pandemic, I knew I needed to find a place I would like to live. Part
@@ -58,53 +58,53 @@ It was an amazing experience and one I'll never forget!
 
 ![Netherlands](/assets/nl.jpg)
 
-{% enddetails %}
+{{< /details >}}
 
-{% details **Made new friends and reconnected with old ones** %}
+{{< details "**Made new friends and reconnected with old ones**" >}}
 
 There's a special place in my heart for my friends. I'm someone who craves deep
 connections and would rather have a few really good friends than countless
 acquaintances. If you're reading this, thanks for being my friend!
 
-{% enddetails %}
+{{< /details >}}
 
-{% details **Practiced self love** %}
+{{< details "**Practiced self love**" >}}
 
 Not everything was rainbows and sunshine in 2022. There were many days and
 weeks where I felt down, lost, or received bad news. Practicing self love,
 giving myself the space and time to feel the feelings, and being my own
 cheerleader has been great for my mental health.
 
-{% enddetails %}
+{{< /details >}}
 
 <br>
 
 
 And with that, we're already in 2023! I have a few goals in mind for this year.
 
-{% details **Find and move to a place I like** %}
+{{< details "**Find and move to a place I like**" >}}
 
 This is actually a carry-over from 2022. The challenge will be in finding the
 place, so I'm setting a deadline to hold myself accountable.
 
-{% enddetails %}
+{{< /details >}}
 
-{% details **Dig into more hobbies** %}
+{{< details "**Dig into more hobbies**" >}}
 
 I have certainly scratched the surface or have otherwise identified hobbies
 that I would like to pursue. This includes woodworking, pottery, parkour,
 hiking, playing guitar, making chiptune music, and playing video games.
 
-{% enddetails %}
+{{< /details >}}
 
-{% details **Continue blogging** %}
+{{< details "**Continue blogging**" >}}
 
 It has been a great record of my thoughts and ideas, and I enjoy writing at my
 own pace.
 
-{% enddetails %}
+{{< /details >}}
 
-{% details **Learn more about architectural design** %}
+{{< details "**Learn more about architectural design**" >}}
 
 It is something that has piqued my interest as I have enjoyed creating
 buildings in the past, but it's something I know next to nothing about. I think
@@ -112,23 +112,23 @@ it would be fun to learn more about the design process from a hobbyist
 perspective. I would like to be able to sketch my ideas, model them, or even
 build replicas. Before all that, though, I need to learn about design.
 
-{% enddetails %}
+{{< /details >}}
 
-{% details **More embedded systems projects** %}
+{{< details "**More embedded systems projects**" >}}
 
 Usually I'll tend to do at least one embedded project a year, but 2022 saw no
 such project. It's always fun to design, build, and program a physical thing,
 and it would be really nice to hone those skills.
 
-{% enddetails %}
+{{< /details >}}
 
-{% details **Read more** %}
+{{< details "**Read more**" >}}
 
 Probably a common "new year's resolution," but I have so many cool books that I
 would like to dedicate time to reading. Instead of reaching for my phone when
 I'm bored, I want to reach for a book.
 
-{% enddetails %}
+{{< /details >}}
 
 <br>
 
