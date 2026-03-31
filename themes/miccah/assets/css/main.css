@@ -157,6 +157,10 @@ h3 {
   margin-bottom: 0;
 }
 
+blockquote {
+  font-style: italic;
+}
+
 .group {
   padding: 10px;
   border: 1px solid black;
