@@ -44,12 +44,25 @@ header {
   nav {
     margin-left: 10px;
     margin-top: 5px;
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        font-family: monospace;
+        pre {
+          display: inline-block;
+          margin: 0;
+          margin-right: 10px;
+        }
+      }
+    }
   }
 
   ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+    padding-left: 1rem;
+    margin: 4px;
   }
 
   .sym:before {
@@ -119,20 +132,6 @@ figure {
   justify-content: center;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-
-  li {
-    font-family: monospace;
-    pre {
-      display: inline-block;
-      margin: 0;
-      margin-right: 10px;
-    }
-  }
-}
 
 img {
   border: 3px double black;
