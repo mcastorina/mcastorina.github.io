@@ -5,9 +5,7 @@ title: /now
 permalink: /now
 ---
 
-Last updated: *April 1, 2026*
-
-My interests (in no particular order):
+**My interests (in no particular order):**
 
 * WireGuard guts
 * eBPF
@@ -15,3 +13,5 @@ My interests (in no particular order):
 * UX / design
 * Writing
 * Parkour
+
+*Last updated: April 1, 2026*
