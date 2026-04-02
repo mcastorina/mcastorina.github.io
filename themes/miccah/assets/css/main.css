@@ -168,3 +168,9 @@ blockquote {
   box-shadow: 2px 2px black;
   background-color: color-mix(in oklab, blanchedalmond 50%, white);
 }
+
+#\/now main ul {
+  list-style-type: disc;
+  padding-left: 1rem;
+  margin: 4px;
+}
